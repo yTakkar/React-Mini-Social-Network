@@ -7,18 +7,18 @@ A single-page social-network developed with MERN stack & Redux. Screenshots belo
 3. [Own the project](#own-the-project)
 
 # Screenshots
-![alt text]()
-![alt text]()
-![alt text]()
-![alt text]()
-![alt text]()
-![alt text]()
-![alt text]()
-![alt text]()
-![alt text]()
-![alt text]()
+![alt text](https://raw.githubusercontent.com/yTakkar/Single-Page-Social-Network/master/screenshots/Snap%202017-07-27%20at%2000.27.11.png)
+![alt text](https://raw.githubusercontent.com/yTakkar/Single-Page-Social-Network/master/screenshots/Snap%202017-07-27%20at%2000.27.24.png)
+![alt text](https://raw.githubusercontent.com/yTakkar/Single-Page-Social-Network/master/screenshots/Snap%202017-07-27%20at%2000.27.34.png)
+![alt text](https://raw.githubusercontent.com/yTakkar/Single-Page-Social-Network/master/screenshots/Snap%202017-07-27%20at%2000.27.45.png)
+![alt text](https://raw.githubusercontent.com/yTakkar/Single-Page-Social-Network/master/screenshots/Snap%202017-07-27%20at%2000.29.13.png)
+![alt text](https://raw.githubusercontent.com/yTakkar/Single-Page-Social-Network/master/screenshots/Snap%202017-07-27%20at%2000.29.48.png)
+![alt text](https://raw.githubusercontent.com/yTakkar/Single-Page-Social-Network/master/screenshots/Snap%202017-07-27%20at%2000.30.13.png)
+![alt text](https://raw.githubusercontent.com/yTakkar/Single-Page-Social-Network/master/screenshots/Snap%202017-07-27%20at%2000.31.06.png)
+![alt text](https://raw.githubusercontent.com/yTakkar/Single-Page-Social-Network/master/screenshots/Snap%202017-07-27%20at%2000.29.35.png)
+![alt text](https://raw.githubusercontent.com/yTakkar/Single-Page-Social-Network/master/screenshots/Snap%202017-07-27%20at%2000.28.54.png)
 
-[More screenshots]().
+[More screenshots](https://github.com/yTakkar/Single-Page-Social-Network/tree/master/screenshots).
 
 UI is taken from [Instagam-clone](https://github.com/yTakkar/Instagram-Clone) I created!!
 
