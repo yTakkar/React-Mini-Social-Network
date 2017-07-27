@@ -254,9 +254,13 @@ app.post('/get-note-details', (req, res) => {
 
 // FOR GETTING ALL THE DETAILS OF A NOTE BY A NOTE_ID
 app.post('/delete-note', (req, res) => {
-    db.query('DELETE FROM notes WHERE note_id=?', [ req.body.note ])
-        .then(s => res.json({ mssg: "Note deleted!" }) )
-        .catch(e => console.log(e) )
+    P.coroutine(function *(){
+        let
+            { note } = req.body,
+            likes = yield db.query('DELETE FROM likes WHERE note_id=?', [note]),
+            dlt_note = yield db.query('DELETE FROM notes WHERE note_id=?', [ note ])
+        res.json({ mssg: "Note deleted!" })
+    })()
 })
 
 // FOR EDITING THE NOTE
