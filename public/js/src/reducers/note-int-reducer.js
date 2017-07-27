@@ -1,12 +1,17 @@
 import $ from 'jquery'
 
 const note_int_def = {
+    note_details: {},
     liked: false,
     likes: []
 }
 
 const note_int = (state=note_int_def, action) => {
     switch (action.type) {
+        case "NOTE_DETAILS": 
+            return { ...state, note_details: action.payload }
+            break;
+
         case "LIKED_OR_NOT":
             return { ...state, liked: action.payload }
             break;

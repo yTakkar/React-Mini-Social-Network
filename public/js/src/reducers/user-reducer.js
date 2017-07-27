@@ -4,9 +4,9 @@ const def_user = {
 
 const user = (state=def_user, action) => {
     switch (action.type) {
-        case "USER_DETAILS": {
+        case "USER_DETAILS": 
             return { ...state, user_details: action.payload }
-        }
+            break;
     }
     return state
 }

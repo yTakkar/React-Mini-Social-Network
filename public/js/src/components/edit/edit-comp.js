@@ -125,6 +125,7 @@ export default class Edit extends React.Component{
                                 type="file" 
                                 name="avatar" 
                                 id="avatar_file" 
+                                accept="image/*"
                                 value={file}
                                 onChange={this.change_avatar}
                             />

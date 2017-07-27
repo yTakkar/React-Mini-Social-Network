@@ -1,5 +1,13 @@
 import axios from 'axios'
 
+const note_details = note => {
+    return dispatch => {
+        axios.post('/api/get-note-details', { note })
+            .then(s => dispatch({ type: "NOTE_DETAILS", payload: s.data }) )
+            .catch(e => dispatch({ type: "NOTE_DETAILS_ERR", payload: e }) )
+    }
+}
+
 const LikedOrNot = note => {
     return dispatch => {
         axios.post('/api/liked-or-not', { note })
@@ -31,6 +39,7 @@ const unliked = note => {
 }
 
 module.exports = {
+    note_details,
     LikedOrNot,
     likes,
     liked,

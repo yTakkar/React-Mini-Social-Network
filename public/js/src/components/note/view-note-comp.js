@@ -26,7 +26,6 @@ import * as note_int_action from '../../actions/note-int-action'
 export default class View_note extends React.Component{
 
     state = {
-        details: {},
         deleting: false,
         editing: false,
         liked: false
@@ -34,8 +33,7 @@ export default class View_note extends React.Component{
 
     componentDidMount() {
         let { match: { params: { note } }, dispatch } = this.props
-        axios.post('/api/get-note-details', { note })
-            .then(s => s.data ? this.setState({ details: s.data }) : location.href="/error/note_notfound" )
+        dispatch(note_int_action.note_details(note))
         dispatch(note_int_action.LikedOrNot(note))
         dispatch(note_int_action.likes(note))
     }
@@ -89,8 +87,8 @@ export default class View_note extends React.Component{
 
     render(){
         let 
-            { details: { user, username, title, content, note_time }, deleting, editing, liked } = this.state,
-            { note_int: { likes }, match } = this.props
+            { deleting, editing, liked } = this.state,
+            { note_int: { likes, note_details: { user, username, title, content, note_time } }, match } = this.props
 
         Tooltip({
             selector: $('.like_unlike'),
