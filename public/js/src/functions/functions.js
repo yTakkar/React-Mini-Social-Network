@@ -164,18 +164,25 @@ const change_avatar = options => {
 
 // FUNCTION FOR RE-SENDING EMAIL VERIFICATION LINK
 const resend_vl = () => {
-  $('.resend_vl')
+  let 
+    vl = $('.resend_vl'),
+    o = $('.overlay-2')
+
+  vl
     .addClass('a_disabled')
     .text('Sending verification link..')
+
+  o.show()
 
   axios.post('/api/resend_vl')
     .then(s => {
         console.log(s.data)
         Notify({ value: s.data.mssg })
-        $('.resend_vl')
+        vl
           .removeClass('a_disabled')
           .text('Send verification link')
           .blur()
+        o.hide()
     })
 
 }
