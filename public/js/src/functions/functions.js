@@ -73,18 +73,23 @@ const forProfile = (dispatch, username) => {
       valid = yield axios.post('/api/is-user-valid', { username }),
       s_username = $('.data').data('username')
 
-    valid.data == 0 ? location.href = "/error/notfound" : null
+    if(valid.data == 0){
+      location.href = "/error/notfound"
+    } else {
 
-    if(username != s_username){ 
-      axios.post('/api/view-profile', { username })
-      dispatch(follow_action.is_following(username))
+      if (username != s_username) {
+        axios.post('/api/view-profile', { username })
+        dispatch(follow_action.is_following(username))
+      }
+
+      dispatch(user_action.user_details(username))
+      dispatch(notes_action.getNotes(username))
+      dispatch(follow_action.get_followers(username))
+      dispatch(follow_action.get_followings(username))
+      dispatch(follow_action.get_profile_views(username))
+
     }
 
-    dispatch(user_action.user_details(username))
-    dispatch(notes_action.getNotes(username))
-    dispatch(follow_action.get_followers(username))
-    dispatch(follow_action.get_followings(username))
-    dispatch(follow_action.get_profile_views(username))
   })()
 }
 
