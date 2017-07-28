@@ -16,8 +16,8 @@ export default class Header extends React.Component{
                     <NavLink activeClassName="ha_active" to="/deactivate" >Deactivate</NavLink>
                 </div>
                 <div className="right">
-                    <NavLink activeClassName="ha_active" to={`/profile/${username}`} className='vp' >{username}</NavLink>
                     <NavLink activeClassName="ha_active" to="/edit" >Edit profile</NavLink>
+                    <NavLink activeClassName="ha_active" to={`/profile/${username}`} className='vp' >{username}</NavLink>
                     <a href="/logout" >Logout</a>
                 </div>
             </div>
