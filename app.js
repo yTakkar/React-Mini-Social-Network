@@ -18,6 +18,10 @@ const
     uRoutes = require('./routes/user-routes'),
     apiRoutes = require('./routes/api-routes'),
     mRoutes = require('./routes/main-routes'),
+    followRoutes = require('./routes/follow-routes'),
+    noteRoutes = require('./routes/note_routes'),
+    nIntRoutes = require('./routes/note-int-routes'),
+    editRoutes = require('./routes/edit-routes'),
     mw = require('./models/middlewares')
 
 // View engine
@@ -41,9 +45,13 @@ app.use(express.static(path.join(__dirname+"/public/")))
 // Middleware for some local variables to be used in the template
 app.use(mw.variables)
 
-// Route files
+// Route files (Order is important)
 app.use('/', uRoutes)
 app.use('/api', apiRoutes)
+app.use('/api', followRoutes)
+app.use('/api', noteRoutes)
+app.use('/api', nIntRoutes)
+app.use('/api', editRoutes)
 app.use('/', mRoutes)
 
 app.listen(port, () => console.log('App running..') )

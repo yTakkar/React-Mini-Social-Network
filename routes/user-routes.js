@@ -2,7 +2,7 @@ const
 	app = require('express').Router(),
 	mw = require('../models/middlewares'),
 	chalk = require('../models/chalk'),
-	login = require('../models/_login'),
+	login = require('../models//userFn'),
 	P = require('bluebird')
 
 app.get('/login', mw.NotLoggedIn, (req, res) => {

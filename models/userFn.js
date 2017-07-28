@@ -166,44 +166,6 @@ const activate = (req, res) => {
     })()
 }
 
-const edit = (req, res) => {
-    P.coroutine(function *(){
-        let { username, email, bio } = req.body,    
-            { id: session } = req.session
-
-        req.checkBody('username', 'Username is empty').notEmpty()
-        req.checkBody('username', 'Username must contain only leters').isAlpha()
-        req.checkBody('username', 'Username must be greater than 4').isLength({ min: 4 })
-        req.checkBody('username', 'Username must be less than 32').isLength({ max: 32 })
-
-        req.checkBody('email', 'Email is empty').notEmpty()
-        req.checkBody('email', 'Email is invalid').isEmail()
-
-        let errors = yield req.getValidationResult()
-
-        if(!errors.isEmpty()){
-            let 
-                result = errors.array()
-                array = []
-            result.forEach(item => array.push(item.msg) )
-            res.json({ mssg: array })
-        } else {
-            
-            req.session.username = username
-            let 
-                edit = yield db.query('UPDATE users SET username=?, email=?, bio=? WHERE id=?', [username, email, bio, session]),
-                notes = yield db.query('UPDATE notes SET username=? WHERE user=?', [username, session])
-                view = yield db.query('UPDATE profile_views SET view_by_username = ? WHERE view_by=?', [username, session]),
-                follower = yield db.query('UPDATE follow_system SET follow_by_username = ? WHERE follow_by=?', [username, session]),
-                following = yield db.query('UPDATE follow_system SET follow_to_username = ? WHERE follow_to=?', [username, session])
-
-            res.json({ mssg: 'Profile edited!', success: true })
-
-        }
-
-    })()
-}
-
 module.exports = {
     signup,
     login,
