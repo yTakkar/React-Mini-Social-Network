@@ -22,6 +22,7 @@ export default class Explores extends React.Component{
         return(
             <div className="explores" >
                 { explore.length == 0 ? <Nothing mssg={"No one to explore!"} /> : map_explore }
+                { explore.length != 0 ? <End/> : null }
             </div>
         )
     }
