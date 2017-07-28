@@ -20,7 +20,7 @@ export default class EmailVerification extends React.Component{
         return(
             <div>
                 <Helmet>
-                    <title>E-mail verification!!</title>
+                    <title>E-mail verification • Notes App</title>
                 </Helmet>
                 <FadeIn duration="300ms" >
                     <div class="registered">

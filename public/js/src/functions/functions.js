@@ -187,6 +187,27 @@ const resend_vl = () => {
 
 }
 
+// FUNCTION TO DEACTIVATE ACCOUNT
+const deactivate = () => {
+  let 
+    btn = $('.prompt-done'),
+    o = $('.overlay')
+
+  btn
+    .addClass('a_disabled')
+    .text('Deactivating..')
+
+  o.show()
+
+  axios.post('/api/deactivate')
+    .then(d => {
+        btn
+          .removeClass('a_disabled')
+          .text('Deactivated')
+        Notify({ value: "Deactivated", done: () => location.href = "/login" })
+    })
+}
+
 // FUNCTION FOR CREATING A NOTE
 const createNote = options => {
   let { title, content, dispatch, history } = options
@@ -336,6 +357,7 @@ module.exports = {
     edit_profile,
     change_avatar,
     resend_vl,
+    deactivate,
     createNote,
     deleteNote,
     editNote,

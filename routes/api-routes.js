@@ -5,6 +5,9 @@ const
     mail = require('../models/mail'),
     gm = require('../models/gm'),
     upload = require('multer')({ dest: `${process.cwd()}/public/temp/` }),
+    root = process.cwd(),
+    fs = require('fs'),
+    util = require('util'),
     file = require('../models/file-system')
 
 // FUNCTION TO GET ID FROM USERNAME
@@ -328,6 +331,33 @@ app.post('/likes', (req, res) => {
     db.query('SELECT * FROM likes WHERE note_id=? ORDER BY like_id DESC', [req.body.note])
         .then(likes => res.json(likes) )
         .catch(err => res.json(err) )
+})
+
+app.post('/deactivate', (req, res) => {
+    P.coroutine(function *(){
+        let 
+            { id, username } = req.session,
+            rmdir = util.promisify(fs.rmdir)
+
+        yield db.query('DELETE FROM profile_views WHERE view_by=?', [ id ])
+        yield db.query('DELETE FROM profile_views WHERE view_to=?', [ id ])
+        yield db.query('DELETE FROM follow_system WHERE follow_by=?', [ id ])
+        yield db.query('DELETE FROM follow_system WHERE follow_to=?', [ id ])
+        yield db.query('DELETE FROM likes WHERE like_by=?', [ id ])
+        let notes = yield db.query('SELECT note_id FROM notes WHERE user=?', [ id ])
+        notes.map(n => db.query('DELETE FROM likes WHERE note_id=?', [ n.note_id ]) )
+        yield db.query('DELETE FROM notes WHERE user=?', [ id ])
+        yield db.query('DELETE FROM users WHERE id=?', [ id ])
+
+        yield file.dlt_all_of_folder(`${root}/public/users/${id}/`)
+        yield rmdir(`${root}/public/users/${id}/`)
+
+        req.session.id = null
+
+        res.json({ success: true })
+
+    })().catch(e => console.log(e.stack) )
+
 })
 
 module.exports = app

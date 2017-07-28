@@ -1,10 +1,12 @@
-const db = require('../models/db')
-const mail = require('../models/mail')
-const chalk = require('./chalk')
-const P = require('bluebird')
-const fs = require('fs')
-const path = require('path')
-const dir = process.cwd()
+const 
+    db = require('../models/db'),
+    mail = require('../models/mail'),
+    chalk = require('./chalk'),
+    P = require('bluebird'),
+    fs = require('fs'),
+    util = require('util'),
+    path = require('path'),
+    dir = process.cwd()
 
 const signup = (req, res) => {
     let { body: { username, email, password, password_again }, session } = req
@@ -58,15 +60,16 @@ const signup = (req, res) => {
                         { affectedRows, insertId } = create_user
                         
                     if(affectedRows == 1){
-                        fs.mkdir(dir+`/public/users/${insertId}`, (err) => {
-                            if(err){
-                                console.log(err)
-                            } else {
+
+                        let mkdir = util.promisify(fs.mkdir)
+                        mkdir(dir+`/public/users/${insertId}`)
+                            .then(u => {
                                 fs
                                     .createReadStream(dir+'/public/images/spacecraft.jpg')
                                     .pipe(fs.createWriteStream(dir+`/public/users/${insertId}/user.jpg`))
-                            }
-                        })
+                            })
+                            .catch(e => console.log(e) )
+
                         let 
                             url = `http://localhost:${process.env.PORT}/deep/most/topmost/activate/${insertId}`,
                             options = {
@@ -80,7 +83,7 @@ const signup = (req, res) => {
                                 session.id = insertId
                                 session.username = username
                                 session.email_verified = "no"
-                                res.json({ mssg: "You are not registered successfully!!", success: true })
+                                res.json({ mssg: `Hello, ${username}!!`, success: true })
                             })
                             .catch(me =>{
                                 chalk.e(me)

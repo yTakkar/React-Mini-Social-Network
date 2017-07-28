@@ -71,13 +71,13 @@
     position: relative;
     top: 8px;
     left: 25px;
-    margin-right: 67%;
   }
 
   & .right {
     display: inline-block;
-    position: relative;
+    position: absolute;
     top: 8px;
+    right: 3%;
   }
 
 }
@@ -138,7 +138,6 @@
   font-size: 15px;
   border-radius: 5px;
   box-shadow: 0px 0px 15px 0px rgba(0,0,0,.1);
-  cursor: pointer;
 }
 
 // PROFILE PAGE
@@ -816,6 +815,30 @@
       z-index: -1;
     }
     
+  }
+
+}
+
+// DEACTIVATE
+.deactivate{
+  width: 500px;
+
+  & .deactivate_title{
+    font-weight: 600;
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  & .deactivate_btn{
+    display: block;
+    margin-top: 11px;
+    text-align: right;
+
+    & a{
+      display: inline-block;
+      padding: 4px 10px;
+    }
+
   }
 
 }

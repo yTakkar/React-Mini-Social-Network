@@ -38,7 +38,10 @@ export default class View_note extends React.Component{
         dispatch(note_int_action.likes(note))
     }
 
-    componentWillReceiveProps = ({ note_int: { liked } }) => this.setState({ liked })
+    componentWillReceiveProps = ({ note_int: { liked, note_details: { note_id } } }) => {
+        this.setState({ liked })
+        !note_id ? location.href="/error/note_notfound" : null
+    } 
 
     toggle_ = (e, what) => {
         e ? e.preventDefault() : null
@@ -66,8 +69,7 @@ export default class View_note extends React.Component{
         let
             title = $('.v_n_title').text(),
             content = $('.v_n_content').text(),
-            { dispatch } = this.props,
-            { details: { note_id } } = this.state
+            { dispatch, note_int: { note_details: { note_id } } } = this.props
         fn.editNote({ title, content, note_id, setState: this.setState, dispatch })
     }
 
@@ -196,6 +198,7 @@ export default class View_note extends React.Component{
                             content={"This post will be deleted. There's no undo so you won't be able to find it."}
                             actionText= "Delete"
                             action={this.delete}
+                            state_updater="deleting"
                             close={this.toggle_}
                         />
                     : null

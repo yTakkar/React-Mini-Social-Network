@@ -5,20 +5,20 @@ import { FadeIn } from 'animate-components'
 
 export default class Prompt extends React.Component{
     render(){
-        let { title, content, actionText, action, close } = this.props
+        let { title, content, actionText, action, state_updater, close } = this.props
         $('.prompt-done').focus()
         return(
             <div class="prompt">
                 <FadeIn duration="200ms" >
                     <div class="prompt-top">
                         <span class="prompt-title">{title}</span>
-                        <span onClick={() => close(null, "deleting")} ><i class="material-icons">clear</i></span>
+                        <span onClick={() => close(null, state_updater)} ><i class="material-icons">clear</i></span>
                     </div>
                     <div class="prompt-middle">
                         <span class="prompt-content">{content}</span>
                     </div>
                     <div class="prompt-bottom">
-                        <a href="#" class="sec_btn prompt-cancel" onClick={e => close(e, "deleting")} >Cancel</a>
+                        <a href="#" class="sec_btn prompt-cancel" onClick={e => close(e, state_updater)} >Cancel</a>
                         <a href="#" class="pri_btn prompt-done" autoFocus="true" onClick={action} >{actionText}</a>
                     </div>
                 </FadeIn>
