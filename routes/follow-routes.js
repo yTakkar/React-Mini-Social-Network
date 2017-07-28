@@ -81,6 +81,8 @@ app.post('/view-profile', (req, res) => {
             view = yield db.query('INSERT INTO profile_views SET ?', insert)
         }
 
+        res.json('Hello, World!!')
+
     })()
 })
 
