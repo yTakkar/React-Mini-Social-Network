@@ -1,5 +1,4 @@
 const db = require('./db')
-const file = require('./file-system')
 const P = require('bluebird')
 
 const LoggedIn = (req, res, next) => {

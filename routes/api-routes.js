@@ -1,14 +1,13 @@
 const
     app = require('express').Router(),
+    root = process.cwd(),
     db = require('../models/db'),
     P = require('bluebird'),
     mail = require('../models/mail'),
-    gm = require('../models/gm'),
-    upload = require('multer')({ dest: `${process.cwd()}/public/temp/` }),
-    root = process.cwd(),
+    upload = require('multer')({ dest: `${root}/public/temp/` }),
     fs = require('fs'),
     util = require('util'),
-    file = require('../models/file-system')
+    pi = require('handy-image-processor')
 
 // FUNCTION TO GET ID FROM USERNAME
 const getId = username => {
@@ -189,8 +188,8 @@ app.post('/change-avatar', upload.single('avatar'), (req, res) => {
                 height: 200,
                 destFile: `${process.cwd()}/public/users/${req.session.id}/user.jpg`
             },
-            modify = yield gm(obj),
-            dlt = yield file.dlt_all_of_folder(`${process.cwd()}/public/temp/`)
+            modify = yield pi.ProcessImage(obj),
+            dlt = yield pi.DeleteAllOfFolder(`${root}/public/temp/`)
         res.json({ mssg: "Avatar changed!" })
     })()
 })
@@ -349,7 +348,7 @@ app.post('/deactivate', (req, res) => {
         yield db.query('DELETE FROM notes WHERE user=?', [ id ])
         yield db.query('DELETE FROM users WHERE id=?', [ id ])
 
-        yield file.dlt_all_of_folder(`${root}/public/users/${id}/`)
+        yield pi.DeleteAllOfFolder(`${root}/public/users/${id}/`)
         yield rmdir(`${root}/public/users/${id}/`)
 
         req.session.id = null

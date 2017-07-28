@@ -1,5 +1,5 @@
 {
-  "name": "mern-one-page",
+  "name": "single-page-social-network",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -27,6 +27,7 @@
     "express-validator": "^3.2.0",
     "gm": "^1.23.0",
     "handy-copy": "^1.0.6",
+    "handy-image-processor": "^1.0.1",
     "handy-notification": "^1.0.23",
     "handy-timeago": "^1.0.1",
     "handy-tooltip": "^1.0.10",
