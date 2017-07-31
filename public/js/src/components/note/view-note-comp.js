@@ -33,13 +33,14 @@ export default class View_note extends React.Component{
 
     componentDidMount() {
         let { match: { params: { note } }, dispatch } = this.props
+
+        axios.post('/api/liked-or-not', { note }).then(l => this.setState({ liked: l.data }) )
+
         dispatch(note_int_action.note_details(note))
-        dispatch(note_int_action.LikedOrNot(note))
         dispatch(note_int_action.likes(note))
     }
 
-    componentWillReceiveProps = ({ note_int: { liked, note_details: { note_id } } }) => {
-        this.setState({ liked })
+    componentWillReceiveProps = ({ note_int: { note_details: { note_id } } }) => {
         !note_id ? location.href="/error/note_notfound" : null
     } 
 

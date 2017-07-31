@@ -16,6 +16,12 @@ const shortener = (elem, length) => {
   return (len >= parse) ? `${elem.substr(0, length-2)}..` : (len < parse) ? elem : null
 }
 
+// FUNCTION TO TOGGLE
+const toggle = el => {
+  let style = el.style.display
+  style === "none" ? el.style.display = "block" : el.style.display = "none"
+}
+
 // FUNCTION FOR COMMON LOGIN
 const commonLogin = options => {
     let { data, btn, url, redirect, defBtnValue } = options
@@ -64,6 +70,11 @@ const Me = user => {
 const e_v = () => {
   let ea = $('.data').data('email-verified')
   return ea == "yes" ? true : false
+}
+
+// TO REMOVE LINE OF LAST ELEMENT
+const last_line_remover = () => {
+  $('.modal_main').children().eq($('.display_content').children().length - 1).find('hr').remove()
 }
 
 // FUNCTION FOR PROFILE DATA UPDATING
@@ -353,10 +364,12 @@ const unlike = options => {
 
 module.exports = {
     shortener,
+    toggle,
     commonLogin,
     c_first,
     Me,
     e_v,
+    last_line_remover,
     forProfile,
     back,
     edit_profile,

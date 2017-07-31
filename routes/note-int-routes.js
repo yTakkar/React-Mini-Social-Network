@@ -9,7 +9,7 @@ app.post('/liked-or-not', (req, res) => {
         let
             { body, session } = req,
             [{ l }] = yield db.query('SELECT COUNT(like_id) AS l FROM likes WHERE like_by = ? AND note_id = ?', [session.id, body.note])
-        res.json(l == 1 ? true : false)
+        res.json(l == 0 ? false : true)
     })()
 })
 
@@ -25,7 +25,7 @@ app.post('/like', (req, res) => {
                 like_time: new Date().getTime()
             },
             like = yield db.query('INSERT INTO likes SET ?', insert)
-        res.json(Object.assign({}, insert, { liked: like.insertId }))
+        res.json(Object.assign({}, insert, { like_id: like.insertId }))
     })()
 })
 
