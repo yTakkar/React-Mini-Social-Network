@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { FadeIn } from 'animate-components'
-import { Link } from 'react-router-dom'
+import { Scrollbars } from 'react-custom-scrollbars'
 import * as fn from '../../functions/functions'
 
 import Goto from '../others/goto-comp'
@@ -18,6 +18,9 @@ import Like_items from './like-items'
 export default class Likes extends React.Component{
 
     back = e => fn.back(e, this.props.history)
+
+    componentDidMount = () => fn.last_line_remover()
+    componentDidUpdate = () => fn.last_line_remover()
 
     render(){
         let 
@@ -36,7 +39,7 @@ export default class Likes extends React.Component{
                         <span className="title" >Likes</span>
                         <Goto/>
                     </div>
-                    <div className="likes_middle modal_middle">
+                    <Scrollbars style={{ height: 450 }} className="likes_middle modal_middle">
                         <div className="modal_main">
                             {
                                 likes.length == 0 ?
@@ -45,9 +48,8 @@ export default class Likes extends React.Component{
                                     map_l
                             }
                         </div>
-                    </div>
+                    </Scrollbars>
                     <div className="likes_bottom modal_bottom">
-                        <Link to={`/view-note/${note_id}`} className="sec_btn" >Close to view note</Link>
                         <a href='#' className='likes_cancel pri_btn' onClick={this.back} >Back</a>
                     </div>
                 </FadeIn>

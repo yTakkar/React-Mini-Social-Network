@@ -624,8 +624,13 @@ select:focus {
 }
 .modal_big .modal_middle {
   height: 450px;
+  width: inherit;
+  overflow: auto;
+  padding: 0px !important;
+}
+.modal_big .modal_middle .modal_main {
   position: relative;
-  overflow-y: scroll;
+  padding: 5px 0px;
 }
 .modal_big .modal_middle .modal_main .modal_items {
   margin-bottom: 5px;
@@ -688,8 +693,9 @@ select:focus {
 .modal_big .modal_bottom {
   margin-top: 1px;
 }
-.modal_big .modal_bottom a {
+.modal_big .modal_bottom a:last-of-type {
   margin-right: 10px;
+  margin-left: 5px;
 }
 .fade-enter {
   opacity: 0.01;

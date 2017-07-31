@@ -1,8 +1,8 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
 import { FadeIn } from 'animate-components'
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { Scrollbars } from 'react-custom-scrollbars'
 
 import Following_items from './following-items'
 import Goto from '../../others/goto-comp'
@@ -40,18 +40,17 @@ export default class Followings extends React.Component{
                         <span className="title" >Followers</span>
                         <Goto/>
                     </div>
-                    <div className="fer_middle modal_middle">
+                    <Scrollbars style={{ height: 450 }} className="fer_middle modal_middle">
                         <div className="modal_main">
                             {
                                 followings.length == 0 ?
                                     <Nothing showMssg={false} />
-                                :
+                                    :
                                     map_f
                             }
                         </div>
-                    </div>
+                    </Scrollbars>
                     <div className="fer_bottom modal_bottom">
-                        <Link className="sec_btn" to={`/profile/${username}`} >Close to view profile</Link>
                         <a href='#' className='fer_cancel pri_btn' onClick={this.back} >Back</a>
                     </div>
                 </FadeIn>

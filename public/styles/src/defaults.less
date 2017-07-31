@@ -739,10 +739,13 @@ select:focus{
 
   & .modal_middle{
     height: 450px;
-    position: relative;
-    overflow-y: scroll;
+    width: inherit;
+    overflow: auto;
+    padding: 0px !important;
 
     & .modal_main{
+      position: relative;
+      padding: 5px 0px;
 
       & .modal_items{
         margin-bottom: 5px;
@@ -822,7 +825,12 @@ select:focus{
 
   & .modal_bottom{
     margin-top: 1px;
-    & a{ margin-right: 10px; }
+
+    & a:last-of-type{ 
+      margin-right: 10px; 
+      margin-left: 5px;
+    }
+
   }
 
 }
