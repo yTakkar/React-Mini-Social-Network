@@ -3,7 +3,7 @@ A single-page social-network developed with MERN stack & Redux. Screenshots belo
 
 # Quick liks
 1. [Screenshots](#screenshots)
-3. [Own the project](#own-the-project)
+2. [Own the project](#own-the-project)
 
 # Screenshots
 ![alt text](https://raw.githubusercontent.com/yTakkar/Single-Page-Social-Network/master/screenshots/Snap%202017-07-27%20at%2000.27.11.png)
