@@ -45,4 +45,9 @@ UI is taken from [Instagam-clone](https://github.com/yTakkar/Instagram-Clone) I 
     SESSION_SECRET_LETTER="anything-secret"
     ```
 
+4. Now start the server
+    ```javascript
+    npm run start
+    ```
+
 4. Enjoy!!
