@@ -3,8 +3,7 @@ A single-page social-network developed with MERN stack & Redux. Screenshots belo
 
 # Quick liks
 1. [Screenshots](#screenshots)
-2. [Requirements](#requirements)
-3. [Own the project](#own-the-project)
+2. [Own the project](#own-the-project)
 
 # Screenshots
 ![alt text](https://raw.githubusercontent.com/yTakkar/Single-Page-Social-Network/master/screenshots/Snap%202017-07-27%20at%2000.27.11.png)
@@ -21,18 +20,6 @@ A single-page social-network developed with MERN stack & Redux. Screenshots belo
 [More screenshots](https://github.com/yTakkar/Single-Page-Social-Network/tree/master/screenshots).
 
 UI is taken from [Instagam-clone](https://github.com/yTakkar/Instagram-Clone) I created!!
-
-# Requirements
-1. `Node v8.0` or latest (Currently, v8 is the latest).
-2. `npm v5` or latest.
-3. Latest version of `React` & `React-router-dom`.
-4. Following packages should be installed globally (with `-g` flag):
-    1. `Express`
-    2. `Less`
-    3. `Less-watch-compiler`
-    4. `Nodemon`
-    5. `serve` 
-    6. `Yarn`
 
 # Own the project
 1. First install all dependencies with npm or Yarn:
