@@ -45,9 +45,14 @@ UI is taken from [Instagam-clone](https://github.com/yTakkar/Instagram-Clone) I 
     SESSION_SECRET_LETTER="anything-secret"
     ```
 
-4. Now start the server
+4. Start the server
     ```javascript
     npm run start
     ```
 
-4. Enjoy!!
+5. Now load the app
+    ```javacript
+    localhost:[PORT YOU DEFINED IN .ENV FILE]
+    ```
+
+6. Enjoy!!
