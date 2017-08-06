@@ -35,8 +35,17 @@ UI is taken from [Instagam-clone](https://github.com/yTakkar/Instagram-Clone) I 
     6. `Yarn`
 
 # Own the project
-1. Open PHPMyAdmin, create a DB & import `notesapp.sql` file.
-2. Create a `.env` file and insert the following code. Replace values with yours!!
+1. First install all dependencies with npm or Yarn:
+    ```javascript
+    npm install
+    ```
+    or
+    ```javascript
+    yarn
+    ```
+
+2. Open PHPMyAdmin, create a DB & import `db.sql` file.
+3. Create a `.env` file and insert the following code. Replace values with yours!!
 
     ```javascript
     PORT=YOUR_PORT
@@ -49,4 +58,4 @@ UI is taken from [Instagam-clone](https://github.com/yTakkar/Instagram-Clone) I 
     SESSION_SECRET_LETTER="anything-secret"
     ```
 
-3. Enjoy!!
+4. Enjoy!!
