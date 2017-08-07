@@ -1,8 +1,6 @@
 import React from 'react'
 import $ from 'jquery'
 import { connect } from 'react-redux'
-import { TransitionGroup, CSSTransition } from 'react-transition-group'
-import { FadeTransition } from '../others/transitions-comp'
 
 import Nothing from '../others/nothing-comp'
 import End from '../others/end-comp'
@@ -20,11 +18,7 @@ export default class Feeds extends React.Component{
         let 
             { notes: { feeds } } = this.props,
             map_feeds = feeds.map(feed => {
-                return(
-                    <FadeTransition key={feed.note_id} >
-                        <Note {...feed} />
-                    </FadeTransition>
-                )
+                return <Note key={feed.note_id} {...feed} />
             })
     
         return(
@@ -33,9 +27,7 @@ export default class Feeds extends React.Component{
                     feeds.length == 0 ?
                         <Nothing mssg="No feeds available!" /> 
                     :
-                        <TransitionGroup>
-                           { map_feeds }
-                        </TransitionGroup>
+                        map_feeds 
                 }
                 { feeds.length != 0 ? <End/> : null } 
             </div>
