@@ -4,9 +4,12 @@ import PropTypes from 'prop-types'
 import { FadeIn } from 'animate-components'
 
 export default class Prompt extends React.Component{
+
+    componentDidMount = () => $('.prompt-done').focus()
+
     render(){
         let { title, content, actionText, action, state_updater, close } = this.props
-        $('.prompt-done').focus()
+
         return(
             <div class="prompt">
                 <FadeIn duration="200ms" >
@@ -19,7 +22,7 @@ export default class Prompt extends React.Component{
                     </div>
                     <div class="prompt-bottom">
                         <a href="#" class="sec_btn prompt-cancel" onClick={e => close(e, state_updater)} >Cancel</a>
-                        <a href="#" class="pri_btn prompt-done" autoFocus="true" onClick={action} >{actionText}</a>
+                        <a href="#" class="pri_btn prompt-done" onClick={action} >{actionText}</a>
                     </div>
                 </FadeIn>
             </div>
