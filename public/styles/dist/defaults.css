@@ -91,6 +91,20 @@ input[type="button"]:hover,
 .pri_btn:hover {
   opacity: .9;
 }
+input[type="submit"]:focus,
+input[type="button"]:focus,
+.pri_btn:focus {
+  background: #198bd0;
+}
+input[type="submit"]:disabled,
+input[type="button"]:disabled {
+  background: #6ab9e8 !important;
+  cursor: auto !important;
+}
+input[type="submit"]:disabled:hover,
+input[type="button"]:disabled:hover {
+  opacity: 1 !important;
+}
 .sec_btn {
   border: 1px solid #eee;
   background: #fbfbfb;
@@ -106,7 +120,6 @@ input[type="button"]:hover,
 }
 .sec_btn:focus {
   color: #1b2733;
-  /*background-color: #fff7f7;*/
   background: #f7ebeb;
 }
 .tir_btn {
@@ -128,24 +141,10 @@ input[type="button"]:hover,
 .a_pri {
   color: #2895F1;
 }
-input[type="submit"]:focus,
-input[type="button"]:focus,
-.pri_btn:focus {
-  background: #198bd0;
-}
-input[type="submit"]:disabled,
-input[type="button"]:disabled {
-  background: #6ab9e8 !important;
-  cursor: auto !important;
-}
-input[type="submit"][disabled]:hover,
-input[type="button"][disabled]:hover {
-  opacity: 1 !important;
-}
 .options {
   position: absolute;
   padding: 7px 6px;
-  background: white;
+  background: #fff;
   box-shadow: 0 0 0 1px rgba(99, 114, 130, 0.16), 0 8px 16px rgba(27, 39, 51, 0.08);
   -webkit-box-shadow: 0 0 0 1px rgba(99, 114, 130, 0.16), 0 8px 16px rgba(27, 39, 51, 0.08);
   -moz-box-shadow: 0 0 0 1px rgba(99, 114, 130, 0.16), 0 8px 16px rgba(27, 39, 51, 0.08);
@@ -153,14 +152,14 @@ input[type="button"][disabled]:hover {
   z-index: 1;
 }
 .options ul {
-  background: white;
+  background: #fff;
 }
-.options li {
-  background: white;
+.options ul li {
+  background: #fff;
 }
-.options a,
-.options label {
-  background: white;
+.options ul li a,
+.options ul li label {
+  background: #fff;
   font-size: 14px;
   color: #66757f;
   padding: 4px 12px 4px 8px;
@@ -168,42 +167,19 @@ input[type="button"][disabled]:hover {
   display: block;
   border-radius: 2px;
 }
-.options a:hover,
-.options label:hover {
+.options ul li a:hover,
+.options ul li label:hover {
   /*background: @second_border;*/
   background: #54BBFF;
   /*background: #f4f4f4;*/
   /*color: #1b2733;*/
-  color: white;
-}
-.options li.o_divider {
-  margin: 5px 0px 5px 0px;
-  /*display: none;*/
-}
-.options .o_li > .menu_divider {
-  border-top-color: #e6e8eb;
-}
-.inst {
-  border: 1px solid #f7f5f5;
-  color: #1b2733;
-  background: white;
-  /*cursor: pointer;*/
-  border-radius: 4px;
-}
-.inst:hover {
-  /*background: #fffefe;*/
-}
-.no_focus {
-  font-weight: 600;
-  background: #1b9be9;
-  border: 1px solid #1b9be9;
   color: #fff;
-  border-radius: 3px;
-  cursor: pointer;
-  outline: none;
 }
-.no_focus:hover {
-  opacity: .9;
+.options ul li.o_divider {
+  margin: 5px 0px 5px 0px;
+}
+.options ul li.menu_divider {
+  border-top-color: #e6e8eb;
 }
 input[type="range"] {
   -webkit-appearance: none;
@@ -213,6 +189,11 @@ input[type="range"] {
 }
 input[type="range"]:focus {
   outline: none;
+}
+input[type="range"]:focus::-ms-thumb {
+  transform: scale(1.2);
+  -webkit-transform: scale(1.2);
+  -moz-transform: scale(1.2);
 }
 input[type="range"]::-webkit-slider-runnable-track {
   width: 100%;
@@ -294,11 +275,6 @@ input[type="range"]::-ms-thumb {
   margin-top: 0px;
   cursor: pointer;
   border: 1px solid #4080ff;
-}
-input[type="range"]:focus::-ms-thumb {
-  transform: scale(1.2);
-  -webkit-transform: scale(1.2);
-  -moz-transform: scale(1.2);
 }
 input[type="file"] {
   width: 0.1px;
@@ -497,28 +473,6 @@ select:focus {
     transform: scale(1);
   }
 }
-@-webkit-keyframes pro_active {
-  0% {
-    -webkit-transform: scale(1);
-  }
-  50% {
-    -webkit-transform: scale(0.95);
-  }
-  100% {
-    -webkit-transform: scale(1);
-  }
-}
-@-moz-keyframes pro_active {
-  0% {
-    -moz-transform: scale(1);
-  }
-  50% {
-    -moz-transform: scale(0.95);
-  }
-  100% {
-    -moz-transform: scale(1);
-  }
-}
 .follow {
   background: #1b9be9 !important;
   border: 1px solid #1b9be9 !important;
@@ -529,11 +483,7 @@ select:focus {
   border: 1px solid #6ae03b !important;
 }
 .unfollow:focus {
-  /*background: #69b14c !important;*/
   background: #fbf2f2;
-}
-.textarea_toggle {
-  height: 32px !important;
 }
 .overlay_cursor {
   cursor: -webkit-zoom-out;

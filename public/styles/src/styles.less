@@ -85,46 +85,26 @@
 // for active links
 .ha_active{ background: @second_border; }
 
-.log_sign{
-  position: absolute;
-  right: 50px;
-  top: 88px;
-}
-
-.log_sign > a{
-  padding: 5px 18px;
-  border-radius: 4px;
-  font-size: 14px;
-}
-
-.display_text{
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-.display_text > span{
-  font-size: 23px;
-  color: #0b867a;
-}
-
 // REGISTER PAGE
 
 .cua{
-    width: 300px;
-    .center();
-}
+  width: 300px;
+  .center();
 
-.cua form > *{
+  & form > *{
     display: block;
     margin-bottom: 10px;
     width: 92%;
     padding: 8px 10px;
     font-size: 14px;
+  }
+
+  & input[type='submit']{
+      width: 99%;
+  }
+
 }
 
-.cua input[type='submit']{
-    width: 99%;
-}
 
 // REGISTERED PAGE
 .registered{
