@@ -27,24 +27,32 @@ import Followings from './follow/followings-comp'
 
 export default class Profile extends React.Component{
 
+    state = { invalid_user: false }
+
+    iur = () => this.setState({ invalid_user: true })
+
     componentDidMount = () => {
         let { match: { params: { username } }, dispatch, store: { user } } = this.props
-        fn.forProfile(dispatch, username)        
+        fn.forProfile(dispatch, username, this.iur )        
     }
 
     componentWillReceiveProps({ match, dispatch, store }) {
         if(this.props.match.url != match.url){
-            fn.forProfile(dispatch, match.params.username)
+            fn.forProfile(dispatch, match.params.username, this.iur )
         }
     }
 
     render(){
         let 
+            { invalid_user } = this.state,
             { match, match: { params: { username }, url }, store: { user } } = this.props,
             s_username = $('.data').data('username')
 
         return(
             <div>
+
+                { invalid_user ? <Redirect to="/error/notfound" /> : null }
+
                 <Helmet>
                     <title>{`@${username} • Notes App`}</title>
                 </Helmet>  

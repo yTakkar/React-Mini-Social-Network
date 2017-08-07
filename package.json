@@ -7,7 +7,8 @@
     "start": "nodemon app.js",
     "dev": "webpack -d --watch",
     "prod": "webpack -p --watch",
-    "less": "less-watch-compiler"
+    "less": "less-watch-compiler",
+    "public": "concurrently \"npm run dev\" \"npm run less\""
   },
   "author": "takkar <www.shtakkar@gmail.com>",
   "license": "ISC",

@@ -78,14 +78,14 @@ const last_line_remover = () => {
 }
 
 // FUNCTION FOR PROFILE DATA UPDATING
-const forProfile = (dispatch, username) => {
+const forProfile = (dispatch, username, iur) => {
   P.coroutine(function *(){
     let 
       valid = yield axios.post('/api/is-user-valid', { username }),
       s_username = $('.data').data('username')
 
     if(valid.data == 0){
-      location.href = "/error/notfound"
+      iur()
     } else {
 
       if (username != s_username) {

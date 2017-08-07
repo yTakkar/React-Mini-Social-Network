@@ -4,7 +4,7 @@ import axios from 'axios'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { FadeIn } from 'animate-components'
-import { Link, Route } from 'react-router-dom'
+import { Link, Route, Redirect } from 'react-router-dom'
 import Notify from 'handy-notification'
 import Tooltip from 'handy-tooltip'
 import Timeago from 'handy-timeago'
@@ -28,7 +28,8 @@ export default class View_note extends React.Component{
     state = {
         deleting: false,
         editing: false,
-        liked: false
+        liked: false,
+        invalid_note: false
     }
 
     componentDidMount() {
@@ -41,7 +42,7 @@ export default class View_note extends React.Component{
     }
 
     componentWillReceiveProps = ({ note_int: { note_details: { note_id } } }) => {
-        !note_id ? location.href="/error/note_notfound" : null
+        !note_id ? this.setState({ invalid_note: true }) : null
     } 
 
     toggle_ = (e, what) => {
@@ -90,7 +91,7 @@ export default class View_note extends React.Component{
 
     render(){
         let 
-            { deleting, editing, liked } = this.state,
+            { deleting, editing, liked, invalid_note } = this.state,
             { note_int: { likes, note_details: { user, username, title, content, note_time } }, match } = this.props
 
         Tooltip({
@@ -100,96 +101,95 @@ export default class View_note extends React.Component{
 
         return(
             <div class='view_note modal'>
+                
+                { invalid_note ? <Redirect to="/error/note_notfound" /> : null }
+
                 <Helmet>
                     <title>View note • Notes App</title>
                 </Helmet>
 
-                {
-                    title ?
-                        <FadeIn duration="300ms" >
-                            <div className="v_n_header modal_header">
-                                <span class='title' >View note</span>
-                                <Goto/>
+                <FadeIn duration="300ms" >
+                    <div className="v_n_header modal_header">
+                        <span class='title' >View note</span>
+                        <Goto />
+                    </div>
+                    <div className="v_n_middle modal_middle">
+                        <div className="v_n_info">
+                            <img src={user ? `/users/${user}/user.jpg` : '/images/spacecraft.jpg'} alt="" />
+                            <div className="v_n_left">
+                                <Link to={`/profile/${username}`} className='v_n_username' >{username}</Link>
+                                <span className="v_n_time">{Timeago(note_time)}</span>
                             </div>
-                            <div className="v_n_middle modal_middle">
-                                <div className="v_n_info">
-                                    <img src={user ? `/users/${user}/user.jpg` : '/images/spacecraft.jpg' } alt=""/>
-                                    <div className="v_n_left">
-                                        <Link to={`/profile/${username}`} className='v_n_username' >{username}</Link>
-                                        <span className="v_n_time">{Timeago(note_time)}</span>
-                                    </div>
-                                </div>
-                                <span 
-                                    className='v_n_title' 
-                                    contentEditable={editing} 
-                                    spellCheck='false' 
-                                    suppressContentEditableWarning={true} 
-                                >{title}</span>
-                                <span 
-                                    className={`v_n_content ${editing ? 'content_editor' : '' } `}
-                                    contentEditable={editing} 
-                                    spellCheck='false' 
-                                    suppressContentEditableWarning={true} 
-                                >{content}</span>
-                            </div>
-                            <div className="v_n_bottom modal_bottom">
-                                <div className="v_n_int">
-                                     {
-                                        liked ? 
-                                            <span 
-                                                className={`v_n_unlike like_unlike ${editing ? 'like_unlike_disabled' : '' }`} 
-                                                onClick={this.unlike}
-                                            ><i class="material-icons">favorite</i></span>
-                                        : 
-                                            <span 
-                                                className={`v_n_like like_unlike ${editing ? 'like_unlike_disabled' : ''}`} 
-                                                onClick={this.like}
-                                            ><i class="material-icons">favorite_border</i></span>
-                                    }
-                                </div>
+                        </div>
+                        <span
+                            className='v_n_title'
+                            contentEditable={editing}
+                            spellCheck='false'
+                            suppressContentEditableWarning={true}
+                        >{title}</span>
+                        <span
+                            className={`v_n_content ${editing ? 'content_editor' : ''} `}
+                            contentEditable={editing}
+                            spellCheck='false'
+                            suppressContentEditableWarning={true}
+                        >{content}</span>
+                    </div>
+                    <div className="v_n_bottom modal_bottom">
+                        <div className="v_n_int">
+                            {
+                                liked ?
+                                    <span
+                                        className={`v_n_unlike like_unlike ${editing ? 'like_unlike_disabled' : ''}`}
+                                        onClick={this.unlike}
+                                    ><i class="material-icons">favorite</i></span>
+                                    :
+                                    <span
+                                        className={`v_n_like like_unlike ${editing ? 'like_unlike_disabled' : ''}`}
+                                        onClick={this.like}
+                                    ><i class="material-icons">favorite_border</i></span>
+                            }
+                        </div>
 
-                                 <Link 
-                                    to={`${match.url}/likes`} 
-                                    className={`v_n_likes sec_btn ${editing ? 'sec_btn_disabled' : ''}`}  
-                                >{`${likes.length} likes`}</Link> 
-                                
-                                {
-                                    fn.Me(user) ?
-                                        editing ? 
-                                            <a 
-                                                href="#" 
-                                                className="v_n_edit sec_btn" 
-                                                onClick={this.edit}
-                                            >Done editing</a>
-                                        : 
-                                            <a 
-                                                href="#" 
-                                                className="v_n_edit sec_btn" 
-                                                onClick={e => this.toggle_(e, "editing") } 
-                                            >Edit note</a>
-                                    : null
-                                }  
+                        <Link
+                            to={`${match.url}/likes`}
+                            className={`v_n_likes sec_btn ${editing ? 'sec_btn_disabled' : ''}`}
+                        >{`${likes.length} likes`}</Link>
 
-                                { 
-                                    fn.Me(user) ?
-                                        <a 
-                                            href="#" 
-                                            className={`v_n_delete sec_btn ${editing ? 'sec_btn_disabled' : '' } `}
-                                            onClick={e => this.toggle_(e, "deleting")} 
-                                        >Delete note</a>
-                                    : null
-                                } 
+                        {
+                            fn.Me(user) ?
+                                editing ?
+                                    <a
+                                        href="#"
+                                        className="v_n_edit sec_btn"
+                                        onClick={this.edit}
+                                    >Done editing</a>
+                                    :
+                                    <a
+                                        href="#"
+                                        className="v_n_edit sec_btn"
+                                        onClick={e => this.toggle_(e, "editing")}
+                                    >Edit note</a>
+                                : null
+                        }
 
-                                <a 
-                                    href='#' 
-                                    className={`v_n_cancel pri_btn ${editing ? 'a_disabled' : '' } `}
-                                    onClick={this.back} 
-                                >Done</a>
+                        {
+                            fn.Me(user) ?
+                                <a
+                                    href="#"
+                                    className={`v_n_delete sec_btn ${editing ? 'sec_btn_disabled' : ''} `}
+                                    onClick={e => this.toggle_(e, "deleting")}
+                                >Delete note</a>
+                                : null
+                        }
 
-                            </div>
-                        </FadeIn>
-                    : null
-                }
+                        <a
+                            href='#'
+                            className={`v_n_cancel pri_btn ${editing ? 'a_disabled' : ''} `}
+                            onClick={this.back}
+                        >Done</a>
+
+                    </div>
+                </FadeIn>
 
                 { (deleting) ? <Overlay/> : null }
                 {
