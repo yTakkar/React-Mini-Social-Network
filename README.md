@@ -56,3 +56,8 @@ UI is taken from [Instagam-clone](https://github.com/yTakkar/Instagram-Clone) I 
     ```
 
 6. Enjoy!!
+
+# Contribute
+Show your support by 🌟 the project!!
+
+Feel free to contribute!!
