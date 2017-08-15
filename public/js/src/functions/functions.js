@@ -80,7 +80,7 @@ const last_line_remover = () => {
 // FUNCTION FOR PROFILE DATA UPDATING
 const forProfile = (dispatch, username, iur) => {
   P.coroutine(function *(){
-    let 
+    let
       valid = yield axios.post('/api/is-user-valid', { username }),
       s_username = $('.data').data('username')
 
@@ -114,7 +114,7 @@ const back = (e, history) => {
 const edit_profile = options => {
   P.coroutine(function *(){
 
-    let 
+    let
       { susername, semail } = options,
       username = $('.e_username').val(),
       email = $('.e_email').val(),
@@ -122,7 +122,7 @@ const edit_profile = options => {
       button = $('.e_done'),
       uCount = yield axios.post('/api/what-exists', { what: "username", value: username }),
       eCount = yield axios.post('/api/what-exists', { what: "email", value: email })
-    
+
     button.addClass('a_disabled').text('Processing..').blur()
 
     if(!username){
@@ -135,10 +135,10 @@ const edit_profile = options => {
         Notify({ value: "Email already exists!" })
     } else {
 
-        let 
+        let
           edit = yield axios.post('/api/edit-profile', { username, email, bio }),
           { mssg, success } = edit.data
-          
+
         Notify({ value: mssg, done: () => success ? location.reload() : null })
 
     }
@@ -151,18 +151,18 @@ const edit_profile = options => {
 
 // FUNCTION FOR CHANGING AVATAR
 const change_avatar = options => {
-  let 
+  let
     { file } = options,
     { name, size, type } = file,
     allowed = ['image/png', 'image/jpeg', 'image/gif']
-  
+
   if(!allowed.includes(type)){
     Notify({ value: "Only images allowed!" })
   } else {
 
     let form = new FormData()
     form.append('avatar', file)
-    
+
     $.ajax({
       url: "/api/change-avatar",
       method: "POST",
@@ -171,7 +171,7 @@ const change_avatar = options => {
       data: form,
       dataType: "JSON",
       success: data => Notify({ value: data.mssg, done: () => location.reload() })
-    
+
     })
 
   }
@@ -180,7 +180,7 @@ const change_avatar = options => {
 
 // FUNCTION FOR RE-SENDING EMAIL VERIFICATION LINK
 const resend_vl = () => {
-  let 
+  let
     vl = $('.resend_vl'),
     o = $('.overlay-2')
 
@@ -205,7 +205,7 @@ const resend_vl = () => {
 
 // FUNCTION TO DEACTIVATE ACCOUNT
 const deactivate = () => {
-  let 
+  let
     btn = $('.prompt-done'),
     o = $('.overlay')
 
@@ -269,16 +269,16 @@ const editNote = options => {
       .then(s => {
         Notify({ value: s.data.mssg })
         dispatch(notes_action.editNote({ note_id, title, content }))
-      })   
+      })
       .catch(e => console.log(e))
 
-  }  
+  }
 
 }
 
 // FUNCTION TO FOLLOW
 const follow = options => {
-  let 
+  let
     defaults = {
       user: null,
       username: null,
@@ -303,16 +303,16 @@ const follow = options => {
       update_followers ? dispatch(follow_action.follower(s.data)) : null
       update_followings ? dispatch(follow_action.following(fwing)) : null
 
-      Notify({ value: "Followed!" })
+      Notify({ value: "Followed" })
       done()
-      
+
     })
     .catch(e => console.log(e) )
 
 }
 
 const unfollow = options => {
-  let 
+  let
     defaults = {
       user: null,
       dispatch: null,
@@ -328,7 +328,7 @@ const unfollow = options => {
       update_followers ? dispatch(follow_action.unfollower($('.data').data('session'))) : null
       update_followings ? dispatch(follow_action.unfollowing(user)) : null
 
-      Notify({ value: "Unfollowed!" })
+      Notify({ value: "Unfollowed" })
       done()
     })
     .catch(e => console.log(e) )

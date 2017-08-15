@@ -29,8 +29,18 @@ app.post('/explore', (req, res) => {
 	P.coroutine(function *(){
 		let
 				{ id: session } = req.session,
-				followings = yield db.query('SELECT id, username, email FROM users WHERE id <> ? ORDER BY RAND() LIMIT 10', [session])
-		res.json(followings)
+				followings = yield db.query('SELECT id, username, email FROM users WHERE id <> ? ORDER BY RAND() LIMIT 10', [session]),
+				ps = [],
+				d = []
+
+		followings.forEach(e => {
+			ps.push(
+				db.is_following(session, e.id).then(s => !s ? d.push(e) : null )
+			)
+		})
+
+		Promise.all(ps).then(() => res.json(d) )
+
 	})()
 })
 
