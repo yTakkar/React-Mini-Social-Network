@@ -7,21 +7,21 @@ const note_int_def = {
 
 const note_int = (state=note_int_def, action) => {
     switch (action.type) {
-        case "NOTE_DETAILS": 
+        case "NOTE_DETAILS":
             return { ...state, note_details: action.payload }
-            break;
+            break
 
         case "LIKES":
             return { ...state, likes: action.payload }
-            break;
+            break
 
         case "LIKED":
             return { ...state, likes: liked(state.likes, action.payload) }
-            break;
+            break
 
         case "UNLIKED":
             return { ...state, likes: unliked(state.likes, action.payload) }
-            break;
+            break
     }
     return state
 }

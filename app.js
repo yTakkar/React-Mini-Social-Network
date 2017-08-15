@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 // Installed packages
-const  
+const
     express = require('express'),
     port = process.env.PORT,
     hbs = require('express-handlebars'),
@@ -14,7 +14,7 @@ const
     app = express()
 
 // Requiring route files
-const 
+const
     uRoutes = require('./routes/user-routes'),
     apiRoutes = require('./routes/rest-routes'),
     mRoutes = require('./routes/main-routes'),

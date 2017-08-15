@@ -6,10 +6,10 @@ const
 // CHECK IF SESSION LIKED THE NOTE OR NOT
 app.post('/liked-or-not', (req, res) => {
     P.coroutine(function* () {
-        let
-            { body, session } = req,
-            [{ l }] = yield db.query('SELECT COUNT(like_id) AS l FROM likes WHERE like_by = ? AND note_id = ?', [session.id, body.note])
-        res.json(l == 0 ? false : true)
+			let
+					{ body, session } = req,
+					[{ l }] = yield db.query('SELECT COUNT(like_id) AS l FROM likes WHERE like_by = ? AND note_id = ?', [session.id, body.note])
+			res.json(l == 0 ? false : true)
     })()
 })
 

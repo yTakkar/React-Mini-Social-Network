@@ -1,4 +1,4 @@
-const 
+const
     db = require('./mysql'),
     util = require('util'),
     bcrypt = require('bcrypt-nodejs')
@@ -39,9 +39,18 @@ const getId = username => {
     })
 }
 
+const is_following = (session, user) => {
+	return new Promise((resolve, reject) => {
+		query('SELECT COUNT(follow_id) AS is_following FROM follow_system WHERE follow_by=? AND follow_to=? LIMIT 1', [ session, user ])
+			.then(is => resolve((is[0].is_following == 1) ? true : false) )
+			.catch(e => reject(e) )
+	})
+}
+
 module.exports = {
     query,
     createUser,
     comparePassword,
-    getId
+		getId,
+		is_following
 }

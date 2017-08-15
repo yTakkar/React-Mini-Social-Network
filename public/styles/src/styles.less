@@ -37,7 +37,7 @@
       &:focus{ background: @second_border; }
 
     }
-  
+
   }
 
 }
@@ -63,7 +63,7 @@
     &:hover{ background: @second_border; }
 
     &:focus{ background: @second_border; }
-  
+
   }
 
   & .left{
@@ -79,6 +79,30 @@
     top: 8px;
     right: 3%;
   }
+
+}
+
+.display_text {
+  text-align: center;
+	margin-bottom: 30px;
+
+	& > span{
+		font-size: 23px;
+		color: #0b867a;
+	}
+
+}
+
+.log_sign{
+  position: absolute;
+  right: 50px;
+  top: 88px;
+
+	& > a{
+		padding: 5px 18px;
+		border-radius: 4px;
+		font-size: 14px;
+	}
 
 }
 
@@ -121,109 +145,116 @@
 }
 
 // PROFILE PAGE
-.user_banner{
-    text-align: center;
-    position: relative;
-    background: white;
-    width: 580px;
-    left: 367px;
-    padding: 15px;
-    border: 1px solid @header_border;
-    border-radius: 4px;
+.aligner{
+	position: relative;
+	width: 614px;
+	left: 367px;
 
-    .user_buttons{
-      position: absolute;
-      right: 15px;
-      top: 15px;
+	.user_banner{
+		text-align: center;
+		position: relative;
+		background: white;
+		padding: 15px;
+		border: 1px solid @header_border;
+		border-radius: 4px;
 
-      &>a{
-        padding: 5px 15px;
-        font-size: 14px;
-        display: inline-block;
-        margin-right: 5px;
+		.user_buttons{
+			position: absolute;
+			right: 15px;
+			top: 15px;
 
-      }
+			&>a{
+				padding: 5px 15px;
+				font-size: 14px;
+				display: inline-block;
+				margin-right: 5px;
 
-    }
+			}
 
-    & .profile_img_div{
-      margin-top: 10px;
-      & img{
-        border-radius: 50%;
-        height: 150px;
-        width: 150px;
-      }
-    }
+		}
 
-    & .user_info{
-      margin-top: 10px;
+		& .profile_img_div{
+			margin-top: 10px;
+			& img{
+				border-radius: 50%;
+				height: 150px;
+				width: 150px;
+			}
+		}
 
-      & a.user_main_link{
-        font-weight: 600;
-        color: @dark;
-        display: block;
-        font-size: 16px;
-      }
+		& .user_info{
+			margin-top: 10px;
 
-      & .user_no_notes{
-        color: @d_light;
-        font-size: 13px;
-      }
+			& a.user_main_link{
+				font-weight: 600;
+				color: @dark;
+				display: block;
+				font-size: 16px;
+			}
 
-      & .user_bio{
-        text-align: center;
-        font-size: 14px;
-        margin-top: 7px;
-      }
+			& .user_no_notes{
+				color: @d_light;
+				font-size: 13px;
+			}
 
-      & hr{
-        margin: 25px 0px 10px 0px;
-        border-top: 1px solid #f5eded;
-      }
+			& .user_bio{
+				text-align: center;
+				font-size: 14px;
+				margin-top: 7px;
+			}
 
-      & .user_stats{
-        text-align: center;
+			& hr{
+				margin: 25px 0px 10px 0px;
+				border-top: 1px solid #f5eded;
+			}
 
-        &>div, &>a{
-          display: inline-block;
-          padding: 7px 40px;
-          text-align: center;
-          position: relative;
-          cursor: pointer;
-          border-radius: 3px;
-          color: inherit;
+			& .user_stats{
+				text-align: center;
 
-          &:hover{
-            background: @second_border;
-          }
+				&>div, &>a{
+					display: inline-block;
+					padding: 7px 40px;
+					text-align: center;
+					position: relative;
+					cursor: pointer;
+					border-radius: 3px;
+					color: inherit;
 
-          & .stat_hg{
-            display: block;
-            font-size: 15px;
-            font-weight: 600;
-          }
+					&:hover{
+						background: @second_border;
+					}
 
-        }
+					& .stat_hg{
+						display: block;
+						font-size: 15px;
+						font-weight: 600;
+					}
 
-        & .stat_disabled{
-          cursor: text !important;
-          &:hover{ background: @ff; }
-        }
+				}
 
-      }
+				& .stat_disabled{
+					cursor: text !important;
+					&:hover{ background: @ff; }
+				}
 
-    }
+			}
+
+		}
+
+	}
+
+	.filter_notes{
+		margin-top: 10px;
+	}
+
+	.notes{
+		margin-top: 20px;
+		margin-bottom: 50px;
+	}
 
 }
 
-.notes{
-  margin-top: 20px;
-  display: inline-block;
-  margin-left: 365px;
-  margin-bottom: 50px;
-  width: 614px;
-}
-
+// FOR NOTE
 .note{
   background: @ff;
   padding: 10px;
@@ -240,7 +271,7 @@
 
   & .note_header{
     margin-bottom: 7px;
-    
+
     & img{
       height: 31px;
       width: 31px;
@@ -341,11 +372,11 @@
       padding: 4px 15px;
       font-weight: 600;
       font-size: 14px;
-    
+
       &:last-of-type{
         margin-left: 5px;
       }
-      
+
     }
 
   }
@@ -391,7 +422,7 @@
           top: -2px;
         }
 
-      } 
+      }
 
     }
 
@@ -420,7 +451,7 @@
   & .v_n_bottom {
 
     a{ margin-left: 5px; }
-  
+
     & .v_n_cancel{ margin-right: 5px; }
 
     & .v_n_int{
@@ -458,6 +489,7 @@
   margin-top: 5px;
 }
 
+// EDIT
 .edit{
   position: relative;
   width: 400px;
@@ -549,7 +581,6 @@
 }
 
 // HOME
-
 .home{
   position: relative;
   width: 607px;
@@ -572,7 +603,7 @@
     }
 
   }
-  
+
 }
 
 // PAGE END
@@ -632,7 +663,7 @@
           & div.exl_desc{
             color: @d_light;
 
-            & span.exl_desc_sep{ 
+            & span.exl_desc_sep{
               margin-left: 5px;
               margin-right: 5px;
             }
@@ -648,9 +679,9 @@
         right: 15px;
         top: 25px;
 
-        & a{ 
+        & a{
           padding: 5px 20px;
-          font-size: 14px; 
+          font-size: 14px;
         }
 
       }
@@ -794,7 +825,7 @@
       right: 9px;
       z-index: -1;
     }
-    
+
   }
 
 }

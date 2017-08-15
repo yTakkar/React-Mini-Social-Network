@@ -26,12 +26,12 @@ app.post('/get-details', (req, res) => {
 
 // FOR EXPLORING NEW USERS
 app.post('/explore', (req, res) => {
-    P.coroutine(function *(){
-        let 
-            { id: session } = req.session,
-            followings = yield db.query('SELECT id, username, email FROM users WHERE id <> ? ORDER BY RAND() LIMIT 10', [session])
-        res.json(followings)
-    })()
+	P.coroutine(function *(){
+		let
+				{ id: session } = req.session,
+				followings = yield db.query('SELECT id, username, email FROM users WHERE id <> ? ORDER BY RAND() LIMIT 10', [session])
+		res.json(followings)
+	})()
 })
 
 module.exports = app

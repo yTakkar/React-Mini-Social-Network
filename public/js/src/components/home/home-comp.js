@@ -20,7 +20,7 @@ export default class Home extends React.Component{
     componentDidMount = () => this.props.dispatch(note_action.getFeeds())
 
     render(){
-        let 
+        let
             s_username = $('.data').data('username'),
             { notes: { feeds } } = this.props,
             no_of_feeds = feeds.length == 0 ? "No feeds" : feeds.length == 1 ? '1 feed' : `${feeds.length} notes`
@@ -34,12 +34,12 @@ export default class Home extends React.Component{
 
                 <FadeIn duration="300ms" >
                     <div className="home_info">
-                        <span>{no_of_feeds}</span>
-                        <Link
-                            to={{ pathname: `/profile/${s_username}/create-note` }} 
-                            class={`pri_btn ${!fn.e_v() ? "a_disabled" : ""}`} 
-                        >{fn.e_v() ? "Create note" : "Verify email to create note"}
-                        </Link>
+											<span>{no_of_feeds}</span>
+											<Link
+													to={{ pathname: `/profile/${s_username}/create-note` }}
+													class={`pri_btn ${!fn.e_v() ? "a_disabled" : ""}`}
+											>{fn.e_v() ? "Create note" : "Verify email to create note"}
+											</Link>
                     </div>
                     <Feeds/>
                 </FadeIn>

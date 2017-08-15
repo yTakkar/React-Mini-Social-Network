@@ -1,4 +1,4 @@
-const 
+const
     app = require('express').Router(),
     P = require('bluebird'),
     db = require('../models/db')
@@ -9,8 +9,8 @@ app.post('/is-following', (req, res) => {
         let
             { body: { username }, session: { id: session } } = req,
             id = yield db.getId(username),
-            is = yield db.query('SELECT COUNT(follow_id) AS is_following FROM follow_system WHERE follow_by=? AND follow_to=? LIMIT 1', [session, id])
-        res.json((is[0].is_following == 1) ? true : false)
+						is = yield db.is_following(session, id)
+				res.json(is)
     })()
         .catch(e => res.json(e.stack))
 })

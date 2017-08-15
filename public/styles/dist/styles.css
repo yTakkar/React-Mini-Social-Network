@@ -722,6 +722,24 @@ select:focus {
   top: 8px;
   right: 3%;
 }
+.display_text {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.display_text > span {
+  font-size: 23px;
+  color: #0b867a;
+}
+.log_sign {
+  position: absolute;
+  right: 50px;
+  top: 88px;
+}
+.log_sign > a {
+  padding: 5px 18px;
+  border-radius: 4px;
+  font-size: 14px;
+}
 .ha_active {
   background: #f7f9fa;
 }
@@ -754,62 +772,65 @@ select:focus {
   border-radius: 5px;
   box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.1);
 }
-.user_banner {
+.aligner {
+  position: relative;
+  width: 614px;
+  left: 367px;
+}
+.aligner .user_banner {
   text-align: center;
   position: relative;
   background: white;
-  width: 580px;
-  left: 367px;
   padding: 15px;
   border: 1px solid #f7f5f5;
   border-radius: 4px;
 }
-.user_banner .user_buttons {
+.aligner .user_banner .user_buttons {
   position: absolute;
   right: 15px;
   top: 15px;
 }
-.user_banner .user_buttons > a {
+.aligner .user_banner .user_buttons > a {
   padding: 5px 15px;
   font-size: 14px;
   display: inline-block;
   margin-right: 5px;
 }
-.user_banner .profile_img_div {
+.aligner .user_banner .profile_img_div {
   margin-top: 10px;
 }
-.user_banner .profile_img_div img {
+.aligner .user_banner .profile_img_div img {
   border-radius: 50%;
   height: 150px;
   width: 150px;
 }
-.user_banner .user_info {
+.aligner .user_banner .user_info {
   margin-top: 10px;
 }
-.user_banner .user_info a.user_main_link {
+.aligner .user_banner .user_info a.user_main_link {
   font-weight: 600;
   color: #1b2733;
   display: block;
   font-size: 16px;
 }
-.user_banner .user_info .user_no_notes {
+.aligner .user_banner .user_info .user_no_notes {
   color: #66757f;
   font-size: 13px;
 }
-.user_banner .user_info .user_bio {
+.aligner .user_banner .user_info .user_bio {
   text-align: center;
   font-size: 14px;
   margin-top: 7px;
 }
-.user_banner .user_info hr {
+.aligner .user_banner .user_info hr {
   margin: 25px 0px 10px 0px;
   border-top: 1px solid #f5eded;
 }
-.user_banner .user_info .user_stats {
+.aligner .user_banner .user_info .user_stats {
   text-align: center;
 }
-.user_banner .user_info .user_stats > div,
-.user_banner .user_info .user_stats > a {
+.aligner .user_banner .user_info .user_stats > div,
+.aligner .user_banner .user_info .user_stats > a {
   display: inline-block;
   padding: 7px 40px;
   text-align: center;
@@ -818,28 +839,28 @@ select:focus {
   border-radius: 3px;
   color: inherit;
 }
-.user_banner .user_info .user_stats > div:hover,
-.user_banner .user_info .user_stats > a:hover {
+.aligner .user_banner .user_info .user_stats > div:hover,
+.aligner .user_banner .user_info .user_stats > a:hover {
   background: #f7f9fa;
 }
-.user_banner .user_info .user_stats > div .stat_hg,
-.user_banner .user_info .user_stats > a .stat_hg {
+.aligner .user_banner .user_info .user_stats > div .stat_hg,
+.aligner .user_banner .user_info .user_stats > a .stat_hg {
   display: block;
   font-size: 15px;
   font-weight: 600;
 }
-.user_banner .user_info .user_stats .stat_disabled {
+.aligner .user_banner .user_info .user_stats .stat_disabled {
   cursor: text !important;
 }
-.user_banner .user_info .user_stats .stat_disabled:hover {
+.aligner .user_banner .user_info .user_stats .stat_disabled:hover {
   background: #fff;
 }
-.notes {
+.aligner .filter_notes {
+  margin-top: 10px;
+}
+.aligner .notes {
   margin-top: 20px;
-  display: inline-block;
-  margin-left: 365px;
   margin-bottom: 50px;
-  width: 614px;
 }
 .note {
   background: #fff;
