@@ -50,9 +50,9 @@ UI is taken from [Instagam-clone](https://github.com/yTakkar/Instagram-Clone) I 
     npm run start
     ```
 
-5. Now load the app
+5. Now run the app
     ```javacript
-    localhost:[PORT YOU DEFINED IN .ENV FILE]
+    localhost:[PORT]     PORT = YOU DEFINED IN .ENV FILE. 1152 BY DEFAULT!!
     ```
 
 6. Enjoy!!
