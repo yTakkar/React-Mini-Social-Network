@@ -7,7 +7,9 @@ import * as fn from '../../functions/functions'
 import Goto from '../others/goto-comp'
 
 @connect(store => {
-    return {}
+	return {
+		notes: store.notes
+	}
 })
 
 export default class Create_note extends React.Component{
@@ -15,12 +17,12 @@ export default class Create_note extends React.Component{
     back = e => fn.back(e, this.props.history)
 
     addNote = e => {
-        e.preventDefault()
-        let
-            title = $('.c_n_middle input[type="text"]').val(),
-            content = $('.c_n_middle textarea').val(),
-            { dispatch, history } = this.props
-        fn.createNote({ title, content, dispatch, history })
+			e.preventDefault()
+			let
+				title = $('.c_n_middle input[type="text"]').val(),
+				content = $('.c_n_middle textarea').val(),
+				{ dispatch, history } = this.props
+			fn.createNote({ title, content, dispatch, history })
     }
 
     render(){

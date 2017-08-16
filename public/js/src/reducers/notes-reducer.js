@@ -1,10 +1,10 @@
 const def_notes = {
-    notes: [],
+		notes: [],
     feeds: []
 }
 
 const notes = (state=def_notes, action) => {
-	let py = action.payload
+	let { payload: py } = action
 
 	switch (action.type) {
 		case "GET_NOTES":

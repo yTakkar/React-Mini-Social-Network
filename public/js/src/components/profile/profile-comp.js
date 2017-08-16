@@ -13,6 +13,7 @@ import * as follow_action from '../../actions/follow-action'
 import * as fn from '../../functions/functions'
 
 import Banner from './banner-comp'
+import Filter_notes from './filter-notes-comp'
 import Notes from './notes-comp'
 import CreateNote from '../note/create-note-comp'
 import Overlay from '../others/overlay-comp'
@@ -20,67 +21,81 @@ import Followers from './follow/followers-comp'
 import Followings from './follow/followings-comp'
 
 @connect(store => {
-    return {
-        store
-    }
+	return {
+		store
+	}
 })
 
 export default class Profile extends React.Component{
 
-    state = { invalid_user: false }
+	state = {
+		invalid_user: false,
+		notes: []
+	}
 
-    iur = () => this.setState({ invalid_user: true })
+	iur = () => this.setState({ invalid_user: true })
 
-    componentDidMount = () => {
-			let { match: { params: { username } }, dispatch, store: { user } } = this.props
-			fn.forProfile(dispatch, username, this.iur )
-    }
+	componentDidMount = () => {
+		let { match: { params: { username } }, dispatch, store: { user } } = this.props
+		fn.forProfile({ dispatch, username, setState: this.iur })
+	}
 
-    componentWillReceiveProps({ match, dispatch, store }) {
-			if(this.props.match.url != match.url){
-					fn.forProfile(dispatch, match.params.username, this.iur )
-			}
-    }
+	componentWillReceiveProps = ({ match, dispatch, store }) => {
+		if(this.props.match.url != match.url){
+			fn.forProfile({ dispatch, username: match.params.username, setState: this.iur })
+		}
+		this.setState({ notes: store.notes.notes })
+	}
 
-    render(){
-        let
-          { invalid_user } = this.state,
-					{ match, match: { params: { username }, url }, store: { user } } = this.props,
-					s_username = $('.data').data('username')
+	filter = e => {
+		let
+			{ store: { notes: { notes } } } = this.props,
+			{ target: { value } } = e,
+			f = notes.filter(el => el.title.toLowerCase().includes(value.toLowerCase()) )
+		this.setState({ notes: f })
+	}
 
-        return(
-					<div>
+	render(){
+		let
+			{ invalid_user, notes } = this.state,
+			{ match, match: { params: { username }, url }, store: { user } } = this.props,
+			s_username = $('.data').data('username')
 
-						{ invalid_user ? <Redirect to="/error/notfound" /> : null }
+		return(
+			<div>
 
-						<Helmet>
-								<title>{`@${username} • Notes App`}</title>
-						</Helmet>
+				{ invalid_user ? <Redirect to="/error/notfound" /> : null }
 
-						<div
-								class='profile-data'
-								id="profile-data"
-								data-get-username={username}
-								data-getid={user.user_details.id}
-						></div>
+				<Helmet>
+						<title>{`@${username} • Notes App`}</title>
+				</Helmet>
 
-						<FadeIn duration="300ms" >
-							<div className="aligner">
-								<Banner url={match.url} />
-								<Notes/>
-							</div>
-						</FadeIn>
+				<div
+					class='profile-data'
+					id="profile-data"
+					data-get-username={username}
+					data-getid={user.user_details.id}
+				></div>
 
-						{ fn.e_v() ? <Route path={`/profile/${s_username}/create-note`} component={Overlay} /> : null }
-						{ fn.e_v() ? <Route path={`/profile/${s_username}/create-note`} component={CreateNote} /> : null }
-
-						<Route path={`${match.url}/followers`} component={Overlay} />
-						<Route path={`${match.url}/followers`} component={Followers} />
-
-						<Route path={`${match.url}/followings`} component={Overlay} />
-						<Route path={`${match.url}/followings`} component={Followings} />
-
+				<FadeIn duration="300ms" >
+					<div className="aligner">
+						<Banner url={match.url} notes={notes} />
+						<Filter_notes filter={this.filter} />
+						<Notes notes={notes} setState={this.setState} />
 					</div>
-        )
-    }
+				</FadeIn>
+
+				{ fn.e_v() ? <Route path={`/profile/${s_username}/create-note`} component={Overlay} /> : null }
+				{ fn.e_v() ? <Route path={`/profile/${s_username}/create-note`} component={CreateNote} some="takkar" /> : null }
+
+				<Route path={`${match.url}/followers`} component={Overlay} />
+				<Route path={`${match.url}/followers`} component={Followers} />
+
+				<Route path={`${match.url}/followings`} component={Overlay} />
+				<Route path={`${match.url}/followings`} component={Followings} />
+
+			</div>
+		)
+
+	}
 }

@@ -6,41 +6,43 @@ const follow_defaults = {
 }
 
 const follow = (state=follow_defaults, action) => {
-    switch (action.type) {
-        case "IS_FOLLOWING":
-            return { ...state, is_following: action.payload }
-            break
+	let { payload: py } = action
 
-        case "GET_PROFILE_VIEWS":
-            return { ...state, profile_views: action.payload }
-            break
+	switch (action.type) {
+			case "IS_FOLLOWING":
+					return { ...state, is_following: py }
+					break
 
-        case "GET_FOLLOWERS":
-            return { ...state, followers: action.payload }
-            break
+			case "GET_PROFILE_VIEWS":
+					return { ...state, profile_views: py }
+					break
 
-        case "GET_FOLLOWINGS":
-            return { ...state, followings: action.payload }
-            break
+			case "GET_FOLLOWERS":
+					return { ...state, followers: py }
+					break
 
-        case "FOLLOWER":
-            return { ...state, followers: follower(state.followers, action.payload) }
-            break
+			case "GET_FOLLOWINGS":
+					return { ...state, followings: py }
+					break
 
-        case "UNFOLLOWER":
-            return { ...state, followers: unfollower(state.followers, action.payload) }
-            break
+			case "FOLLOWER":
+					return { ...state, followers: follower(state.followers, py) }
+					break
 
-        case "FOLLOWING":
-            return { ...state, followings: following(state.followings, action.payload) }
-            break
+			case "UNFOLLOWER":
+					return { ...state, followers: unfollower(state.followers, py) }
+					break
 
-        case "UNFOLLOWING":
-            return { ...state, followings: unfollowing(state.followings, action.payload) }
-            break
+			case "FOLLOWING":
+					return { ...state, followings: following(state.followings, py) }
+					break
 
-    }
-    return state
+			case "UNFOLLOWING":
+					return { ...state, followings: unfollowing(state.followings, py) }
+					break
+
+	}
+	return state
 }
 
 const follower = (followers, n) => {

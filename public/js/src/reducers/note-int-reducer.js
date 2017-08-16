@@ -6,24 +6,26 @@ const note_int_def = {
 }
 
 const note_int = (state=note_int_def, action) => {
-    switch (action.type) {
-        case "NOTE_DETAILS":
-            return { ...state, note_details: action.payload }
-            break
+	let { payload: py } = action
 
-        case "LIKES":
-            return { ...state, likes: action.payload }
-            break
+	switch (action.type) {
+			case "NOTE_DETAILS":
+					return { ...state, note_details: py }
+					break
 
-        case "LIKED":
-            return { ...state, likes: liked(state.likes, action.payload) }
-            break
+			case "LIKES":
+					return { ...state, likes: py }
+					break
 
-        case "UNLIKED":
-            return { ...state, likes: unliked(state.likes, action.payload) }
-            break
-    }
-    return state
+			case "LIKED":
+					return { ...state, likes: liked(state.likes, py) }
+					break
+
+			case "UNLIKED":
+					return { ...state, likes: unliked(state.likes, py) }
+					break
+	}
+	return state
 }
 
 const liked = (likes, like) => {
