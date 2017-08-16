@@ -173,9 +173,7 @@ const change_avatar = options => {
       contentType: false,
       data: form,
       dataType: "JSON",
-      success: data => {
-				Notify({ value: data.mssg, done: () => location.reload() })
-			}
+      success: data => Notify({ value: data.mssg, done: () => location.reload() })
 
     })
 
