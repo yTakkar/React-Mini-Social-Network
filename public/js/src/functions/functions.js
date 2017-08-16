@@ -39,7 +39,6 @@ const commonLogin = options => {
         dataType: "JSON",
         success: (data) => {
             let { mssg, success } = data
-            console.log(data);
             if(success){
               Notify({ value: mssg, done: () => location.href = redirect })
               btn.attr('value', 'Redirecting..')
@@ -161,6 +160,9 @@ const change_avatar = options => {
     Notify({ value: "Only images allowed!" })
   } else {
 
+		$('.overlay-2').show()
+		$('.avatar_span').text('Changing avatar..').addClass('sec_btn_disabled')
+
     let form = new FormData()
     form.append('avatar', file)
 
@@ -171,7 +173,9 @@ const change_avatar = options => {
       contentType: false,
       data: form,
       dataType: "JSON",
-      success: data => Notify({ value: data.mssg, done: () => location.reload() })
+      success: data => {
+				Notify({ value: data.mssg, done: () => location.reload() })
+			}
 
     })
 
