@@ -10,10 +10,10 @@ const
     favicon = require('serve-favicon'),
     bodyParser = require('body-parser'),
     validator = require('express-validator'),
-    session = require('client-sessions'),
+		session = require('client-sessions'),
     app = express()
 
-// Requiring route files
+// Requiring project files
 const
     uRoutes = require('./routes/user-routes'),
     apiRoutes = require('./routes/rest-routes'),
@@ -22,7 +22,8 @@ const
     noteRoutes = require('./routes/note_routes'),
     nIntRoutes = require('./routes/note-int-routes'),
     editRoutes = require('./routes/edit-routes'),
-    mw = require('./models/middlewares')
+		mw = require('./models/middlewares'),
+		chalk = require('./models/chalk')
 
 // View engine
 app.engine('hbs', hbs({ extname: "hbs" }))
@@ -54,4 +55,4 @@ app.use('/api', nIntRoutes)
 app.use('/api', editRoutes)
 app.use('/', mRoutes)
 
-app.listen(port, () => console.log('App running..') )
+app.listen(port, () => chalk.rainbow('App running..') )
