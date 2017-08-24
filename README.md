@@ -1,4 +1,4 @@
-# MERN-Social-Network
+# Single-Page-Social-Network
 A single-page social-network developed with MERN stack & Redux. Screenshots below!!
 
 # Quick liks
