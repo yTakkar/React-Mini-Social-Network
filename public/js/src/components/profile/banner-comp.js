@@ -7,7 +7,8 @@ import * as fn from '../../functions/functions'
 @connect(store => {
 	return {
 		user: store.user,
-		follow: store.follow
+		follow: store.follow,
+		note: store.notes
 	}
 })
 

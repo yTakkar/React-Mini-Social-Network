@@ -80,12 +80,12 @@ const last_line_remover = () => {
 const forProfile = obj => {
   P.coroutine(function *(){
 		let
-			{ dispatch, username, setState } = obj,
+			{ dispatch, username, invalidUser } = obj,
       valid = yield axios.post('/api/is-user-valid', { username }),
       s_username = $('.data').data('username')
 
-    if(valid.data == 0){
-      setState()
+    if(!valid.data){
+			invalidUser()
     } else {
 
       if (username != s_username) {

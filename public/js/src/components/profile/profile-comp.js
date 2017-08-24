@@ -37,12 +37,12 @@ export default class Profile extends React.Component{
 
 	componentDidMount = () => {
 		let { match: { params: { username } }, dispatch, store: { user } } = this.props
-		fn.forProfile({ dispatch, username, setState: this.iur })
+		fn.forProfile({ dispatch, username, invalidUser: this.iur })
 	}
 
 	componentWillReceiveProps = ({ match, dispatch, store }) => {
 		if(this.props.match.url != match.url){
-			fn.forProfile({ dispatch, username: match.params.username, setState: this.iur })
+			fn.forProfile({ dispatch, username: match.params.username, invalidUser: this.iur })
 		}
 		this.setState({ notes: store.notes.notes })
 	}

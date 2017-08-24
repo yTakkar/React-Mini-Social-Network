@@ -13,7 +13,7 @@ app.post('/get-id', (req, res) => {
 // FOR CHECKING IF IT'S A VALID USER
 app.post('/is-user-valid', (req, res) => {
     db.query('SELECT COUNT(id) AS userCount FROM users WHERE username=? LIMIT 1', [req.body.username])
-        .then(is => res.json(is[0].userCount) )
+      	.then(is => res.json(is[0].userCount == 1 ? true : false) )
         .catch(err => res.json(err) )
 })
 

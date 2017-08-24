@@ -15,21 +15,21 @@ import * as fn from '../../functions/functions'
 
 export default class Feeds extends React.Component{
     render(){
-        let 
+        let
             { notes: { feeds } } = this.props,
             map_feeds = feeds.map(feed => {
                 return <Note key={feed.note_id} {...feed} />
             })
-    
+
         return(
             <div class='feeds_wrapper' >
                  {
                     feeds.length == 0 ?
-                        <Nothing mssg="No feeds available!" /> 
+                        <Nothing mssg="No feeds available!" />
                     :
-                        map_feeds 
+                        map_feeds
                 }
-                { feeds.length != 0 ? <End/> : null } 
+                { feeds.length != 0 ? <End/> : null }
             </div>
         )
     }
