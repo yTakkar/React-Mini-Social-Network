@@ -25,23 +25,18 @@ app.post('/get-details', (req, res) => {
 })
 
 // FOR EXPLORING NEW USERS
-app.post('/explore', (req, res) => {
-	P.coroutine(function *(){
-		let
-				{ id: session } = req.session,
-				followings = yield db.query('SELECT id, username, email FROM users WHERE id <> ? ORDER BY RAND() LIMIT 10', [session]),
-				ps = [],
-				d = []
+app.post('/explore', async function(req, res) {
+  let
+    { id: session } = req.session,
+    exp = [],
+    followings = await db.query('SELECT id, username, email FROM users WHERE id <> ? ORDER BY RAND() LIMIT 10', [session])
 
-		followings.forEach(e => {
-			ps.push(
-				db.is_following(session, e.id).then(s => !s ? d.push(e) : null )
-			)
-		})
+  for (let f of followings) {
+    let is = await db.is_following(session, f.id)
+    !is ? exp.push(f) : null
+  }
 
-		Promise.all(ps).then(() => res.json(d) )
-
-	})()
+  res.json(exp)
 })
 
 module.exports = app
