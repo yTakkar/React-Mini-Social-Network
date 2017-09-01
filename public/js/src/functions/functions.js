@@ -115,10 +115,7 @@ const edit_profile = options => {
   P.coroutine(function *(){
 
     let
-      { susername, semail } = options,
-      username = $('.e_username').val(),
-      email = $('.e_email').val(),
-      bio = $('.e_bio').val(),
+      { susername, semail, username, email, bio } = options,
       button = $('.e_done'),
       uCount = yield axios.post('/api/what-exists', { what: "username", value: username }),
       eCount = yield axios.post('/api/what-exists', { what: "email", value: email })

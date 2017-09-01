@@ -21,9 +21,10 @@ export default class Followers extends React.Component{
     back = e => fn.back(e, this.props.history)
 
     componentDidMount = () => fn.last_line_remover()
+
     componentWillReceiveProps = props => fn.last_line_remover()
 
-    render(){        
+    render(){
         let
             { follow: { followers }, user: { user_details: { username } } } = this.props,
             map_f = followers.map(f => <Follower_items key={f.follow_id} {...f} /> )

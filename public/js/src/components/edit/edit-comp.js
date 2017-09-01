@@ -6,9 +6,9 @@ import { Helmet } from 'react-helmet'
 import { FadeIn } from 'animate-components'
 import Notify from 'handy-notification'
 import TimeAgo from 'handy-timeago'
+import P from 'bluebird'
 import * as fn from '../../functions/functions'
 import * as user_action from '../../actions/user-action'
-import P from 'bluebird'
 
 @connect(store => {
     return {
@@ -25,9 +25,13 @@ export default class Edit extends React.Component{
         file: ""
     }
 
-    componentDidMount = () => this.props.dispatch(user_action.user_details($('.data').data('username')))
+    componentDidMount = () => {
+      this.props.dispatch(user_action.user_details($('.data').data('username')))
+    }
 
-    componentWillReceiveProps = ({ user: { user_details: { username, email, bio } }}) => this.setState({ username, email, bio })
+    componentWillReceiveProps = ({ user: { user_details: { username, email, bio } }}) => {
+      this.setState({ username, email, bio })
+    }
 
     update_ = (e, of) => {
         let v = e.target.value
@@ -49,8 +53,10 @@ export default class Edit extends React.Component{
 
     edit_profile = e => {
         e.preventDefault()
-        let { username: susername, email: semail } = this.props.user.user_details
-        fn.edit_profile({ susername, semail })
+        let
+          { username: susername, email: semail } = this.props.user.user_details,
+          { username, email, bio } = this.state
+        fn.edit_profile({ susername, semail, username, email, bio })
     }
 
     change_avatar = e => {
