@@ -2,7 +2,7 @@ import React from 'react'
 import $ from 'jquery'
 import axios from 'axios'
 import { FadeIn } from 'animate-components'
-import { Helmet } from 'react-helmet'
+import Title from '../others/title-comp'
 import * as fn from '../../functions/functions'
 
 import Overlay from '../others/overlay-comp'
@@ -31,9 +31,7 @@ export default class Deactivate extends React.Component{
 
         return(
             <div>
-                <Helmet>
-                    <title>Deactivate your account • Notes App</title>
-                </Helmet>
+                <Title value="Deactivate your account • Notes App" />
                 <FadeIn duration="300ms" >
                     <div class="registered deactivate" >
                         <span className="deactivate_title" >Deactivate your account?</span>
