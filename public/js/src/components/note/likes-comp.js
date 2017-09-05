@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Helmet } from 'react-helmet'
+import Title from '../others/title-comp'
 import { FadeIn } from 'animate-components'
 import { Scrollbars } from 'react-custom-scrollbars'
 import * as fn from '../../functions/functions'
@@ -23,16 +23,14 @@ export default class Likes extends React.Component{
     componentDidUpdate = () => fn.last_line_remover()
 
     render(){
-        let 
+        let
             { note_int: { likes, note_details: { note_id } } } = this.props,
             map_l = likes.map(l => <Like_items key={l.like_id} {...l} /> )
-        
+
         return(
             <div class='likes modal modal_big' >
 
-                <Helmet>
-                    <title>Likes • Notes App</title>
-                </Helmet>
+                <Title value="Likes • Notes App" />
 
                 <FadeIn duration="300ms" >
                     <div className="likes_header modal_header">
@@ -44,7 +42,7 @@ export default class Likes extends React.Component{
                             {
                                 likes.length == 0 ?
                                     <Nothing showMssg={false} />
-                                : 
+                                :
                                     map_l
                             }
                         </div>

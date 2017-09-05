@@ -1,7 +1,7 @@
 import React from 'react'
 import $ from 'jquery'
 import axios from 'axios'
-import { Helmet } from 'react-helmet'
+import Title from '../others/title-comp'
 import { connect } from 'react-redux'
 import { Route, Link, Redirect } from 'react-router-dom'
 import { FadeIn } from 'animate-components'
@@ -66,9 +66,7 @@ export default class Profile extends React.Component{
 
 				{ invalid_user ? <Redirect to="/error/notfound" /> : null }
 
-				<Helmet>
-						<title>{`@${username} • Notes App`}</title>
-				</Helmet>
+        <Title value={`@${username} • Notes App`} />
 
 				<div
 					class='profile-data'

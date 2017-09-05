@@ -1,5 +1,5 @@
 import React from 'react'
-import { Helmet } from 'react-helmet'
+import Title from '../../others/title-comp'
 import { FadeIn } from 'animate-components'
 import { connect } from 'react-redux'
 import { Scrollbars } from 'react-custom-scrollbars'
@@ -23,7 +23,7 @@ export default class Followings extends React.Component{
     componentWillReceiveProps = props => fn.last_line_remover()
     componentDidMount = () => fn.last_line_remover()
 
-    render(){        
+    render(){
         let
             { follow: { followings }, user: { user_details: { username } } } = this.props,
             map_f = followings.map(f => <Following_items key={f.follow_id} {...f} /> )
@@ -31,9 +31,7 @@ export default class Followings extends React.Component{
         return(
             <div class='followers modal modal_big' >
 
-                <Helmet>
-                    <title>Followings • {`@${username}`}</title>
-                </Helmet>
+                <Title value={`Followings • @${username}`} />
 
                 <FadeIn duration="300ms" >
                     <div className="fer_header modal_header">

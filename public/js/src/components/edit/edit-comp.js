@@ -2,7 +2,7 @@ import React from 'react'
 import $ from 'jquery'
 import axios from 'axios'
 import { connect } from 'react-redux'
-import { Helmet } from 'react-helmet'
+import Title from '../others/title-comp'
 import { FadeIn } from 'animate-components'
 import Notify from 'handy-notification'
 import TimeAgo from 'handy-timeago'
@@ -77,9 +77,7 @@ export default class Edit extends React.Component{
         return(
             <div class='edit'>
 
-                <Helmet>
-                    <title>Edit profile • Notes App</title>
-                </Helmet>
+                <Title value="Edit profile • Notes App" />
 
                 <FadeIn duration="300ms" className="edit_animation" >
                     <div class="edit_info">

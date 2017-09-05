@@ -1,6 +1,6 @@
 import React from 'react'
 import $ from 'jquery'
-import { Helmet } from 'react-helmet'
+import Title from '../others/title-comp'
 import { FadeIn } from 'animate-components'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -28,9 +28,7 @@ export default class Home extends React.Component{
         return(
             <div class='home' >
 
-                <Helmet>
-                    <title>Notes App</title>
-                </Helmet>
+                <Title value="Notes App" />
 
                 <FadeIn duration="300ms" >
                     <div className="home_info">

@@ -1,7 +1,7 @@
 import React from 'react'
 import $ from 'jquery'
 import { FadeIn } from 'animate-components'
-import { Helmet } from 'react-helmet'
+import Title from '../others/title-comp'
 import { connect } from 'react-redux'
 import * as fn from '../../functions/functions'
 import Goto from '../others/goto-comp'
@@ -28,9 +28,7 @@ export default class Create_note extends React.Component{
     render(){
         return(
             <div class='create_note modal'>
-                <Helmet>
-                    <title>Create note • Notes App</title>
-                </Helmet>
+                <Title value="Create note • Notes App" />
                 <FadeIn duration="300ms" >
                     <form onSubmit={this.addNote} >
                         <div className="c_n_header modal_header">

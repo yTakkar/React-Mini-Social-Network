@@ -2,7 +2,7 @@ import React from 'react'
 import $ from 'jquery'
 import axios from 'axios'
 import { connect } from 'react-redux'
-import { Helmet } from 'react-helmet'
+import Title from '../others/title-comp'
 import { FadeIn } from 'animate-components'
 import { Link, Route, Redirect } from 'react-router-dom'
 import Notify from 'handy-notification'
@@ -104,9 +104,7 @@ export default class View_note extends React.Component{
 
 						{ invalid_note ? <Redirect to="/error/note_notfound" /> : null }
 
-						<Helmet>
-								<title>View note • Notes App</title>
-						</Helmet>
+            <Title value="View note • Notes App" />
 
 						<FadeIn duration="300ms" >
 								<div className="v_n_header modal_header">

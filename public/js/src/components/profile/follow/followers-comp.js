@@ -1,5 +1,5 @@
 import React from 'react'
-import { Helmet } from 'react-helmet'
+import Title from '../../others/title-comp'
 import { FadeIn } from 'animate-components'
 import { connect } from 'react-redux'
 import { Scrollbars } from 'react-custom-scrollbars'
@@ -32,9 +32,7 @@ export default class Followers extends React.Component{
         return(
             <div class='followers modal modal_big' >
 
-                <Helmet>
-                    <title>Followers • {`@${username}`}</title>
-                </Helmet>
+                <Title value={`Followers • @${username}`} />
 
                 <FadeIn duration="300ms" >
                     <div className="fer_header modal_header">
