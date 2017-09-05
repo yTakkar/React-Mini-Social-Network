@@ -18,19 +18,30 @@ export default class Explores_list extends React.Component{
     }
 
     follow = e => {
-        e.preventDefault()
-        let 
-            { id, username } = this.props,
-            obj = {
-                user: id,
-                username,
-                done: () => this.setState({ is_following: true })
-            }
-        fn.follow(obj)
+			e.preventDefault()
+			let
+				{ id, username } = this.props,
+				obj = {
+						user: id,
+						username,
+						done: () => this.setState({ is_following: true })
+				}
+			fn.follow(obj)
     }
 
+		unfollow = e => {
+			e.preventDefault()
+			let
+				{ id, username } = this.props,
+				obj = {
+					user: id,
+					done: () => this.setState({ is_following: false })
+				}
+			fn.unfollow(obj)
+		}
+
     render(){
-        let 
+        let
             { id, username, email } = this.props,
             { no_of_notes, is_following } = this.state,
             n = no_of_notes == 0 ? '0 notes' : no_of_notes == 1 ? '1 note' : `${no_of_notes} notes`
@@ -48,11 +59,11 @@ export default class Explores_list extends React.Component{
                         </div>
                     </div>
                 </div>
-                <div className="exl_ff"> 
+                <div className="exl_ff">
                     {
                         is_following ?
-                            <a href="#" className="sec_btn sec_btn_disabled exl_unfollow" >Followed</a> 
-                        :   
+                            <a href="#" className="pri_btn unfollow exl_unfollow" onClick={this.unfollow} >Followed</a>
+                        :
                             <a href="#" className="pri_btn follow exl_follow" onClick={this.follow} >Follow</a>
                     }
                 </div>

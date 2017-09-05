@@ -16,6 +16,12 @@ const shortener = (elem, length) => {
   return (len >= parse) ? `${elem.substr(0, length-2)}..` : (len < parse) ? elem : null
 }
 
+// FUNCTION TO TOGGLE
+const toggle = el => {
+  let style = el.style.display
+  style === "none" ? el.style.display = "block" : el.style.display = "none"
+}
+
 // FUNCTION FOR COMMON LOGIN
 const commonLogin = options => {
     let { data, btn, url, redirect, defBtnValue } = options
@@ -33,7 +39,6 @@ const commonLogin = options => {
         dataType: "JSON",
         success: (data) => {
             let { mssg, success } = data
-            console.log(data);
             if(success){
               Notify({ value: mssg, done: () => location.href = redirect })
               btn.attr('value', 'Redirecting..')
@@ -66,25 +71,36 @@ const e_v = () => {
   return ea == "yes" ? true : false
 }
 
+// TO REMOVE LINE OF LAST ELEMENT
+const last_line_remover = () => {
+  $('.modal_main').children().eq($('.display_content').children().length - 1).find('hr').remove()
+}
+
 // FUNCTION FOR PROFILE DATA UPDATING
-const forProfile = (dispatch, username) => {
+const forProfile = obj => {
   P.coroutine(function *(){
-    let 
+		let
+			{ dispatch, username, invalidUser } = obj,
       valid = yield axios.post('/api/is-user-valid', { username }),
       s_username = $('.data').data('username')
 
-    valid.data == 0 ? location.href = "/error/notfound" : null
+    if(!valid.data){
+			invalidUser()
+    } else {
 
-    if(username != s_username){ 
-      axios.post('/api/view-profile', { username })
-      dispatch(follow_action.is_following(username))
+      if (username != s_username) {
+        axios.post('/api/view-profile', { username })
+        dispatch(follow_action.is_following(username))
+      }
+
+      dispatch(user_action.user_details(username))
+      dispatch(notes_action.getNotes(username))
+      dispatch(follow_action.get_followers(username))
+      dispatch(follow_action.get_followings(username))
+      dispatch(follow_action.get_profile_views(username))
+
     }
 
-    dispatch(user_action.user_details(username))
-    dispatch(notes_action.getNotes(username))
-    dispatch(follow_action.get_followers(username))
-    dispatch(follow_action.get_followings(username))
-    dispatch(follow_action.get_profile_views(username))
   })()
 }
 
@@ -98,15 +114,12 @@ const back = (e, history) => {
 const edit_profile = options => {
   P.coroutine(function *(){
 
-    let 
-      { susername, semail } = options,
-      username = $('.e_username').val(),
-      email = $('.e_email').val(),
-      bio = $('.e_bio').val(),
+    let
+      { susername, semail, username, email, bio } = options,
       button = $('.e_done'),
       uCount = yield axios.post('/api/what-exists', { what: "username", value: username }),
       eCount = yield axios.post('/api/what-exists', { what: "email", value: email })
-    
+
     button.addClass('a_disabled').text('Processing..').blur()
 
     if(!username){
@@ -119,10 +132,10 @@ const edit_profile = options => {
         Notify({ value: "Email already exists!" })
     } else {
 
-        let 
+        let
           edit = yield axios.post('/api/edit-profile', { username, email, bio }),
           { mssg, success } = edit.data
-          
+
         Notify({ value: mssg, done: () => success ? location.reload() : null })
 
     }
@@ -135,18 +148,21 @@ const edit_profile = options => {
 
 // FUNCTION FOR CHANGING AVATAR
 const change_avatar = options => {
-  let 
+  let
     { file } = options,
     { name, size, type } = file,
     allowed = ['image/png', 'image/jpeg', 'image/gif']
-  
+
   if(!allowed.includes(type)){
     Notify({ value: "Only images allowed!" })
   } else {
 
+		$('.overlay-2').show()
+		$('.avatar_span').text('Changing avatar..').addClass('sec_btn_disabled')
+
     let form = new FormData()
     form.append('avatar', file)
-    
+
     $.ajax({
       url: "/api/change-avatar",
       method: "POST",
@@ -155,7 +171,7 @@ const change_avatar = options => {
       data: form,
       dataType: "JSON",
       success: data => Notify({ value: data.mssg, done: () => location.reload() })
-    
+
     })
 
   }
@@ -164,20 +180,48 @@ const change_avatar = options => {
 
 // FUNCTION FOR RE-SENDING EMAIL VERIFICATION LINK
 const resend_vl = () => {
-  $('.resend_vl')
+  let
+    vl = $('.resend_vl'),
+    o = $('.overlay-2')
+
+  vl
     .addClass('a_disabled')
     .text('Sending verification link..')
+
+  o.show()
 
   axios.post('/api/resend_vl')
     .then(s => {
         console.log(s.data)
         Notify({ value: s.data.mssg })
-        $('.resend_vl')
+        vl
           .removeClass('a_disabled')
           .text('Send verification link')
           .blur()
+        o.hide()
     })
 
+}
+
+// FUNCTION TO DEACTIVATE ACCOUNT
+const deactivate = () => {
+  let
+    btn = $('.prompt-done'),
+    o = $('.overlay')
+
+  btn
+    .addClass('a_disabled')
+    .text('Deactivating..')
+
+  o.show()
+
+  axios.post('/api/deactivate')
+    .then(d => {
+        btn
+          .removeClass('a_disabled')
+          .text('Deactivated')
+        Notify({ value: "Deactivated", done: () => location.href = "/login" })
+    })
 }
 
 // FUNCTION FOR CREATING A NOTE
@@ -225,16 +269,16 @@ const editNote = options => {
       .then(s => {
         Notify({ value: s.data.mssg })
         dispatch(notes_action.editNote({ note_id, title, content }))
-      })   
+      })
       .catch(e => console.log(e))
 
-  }  
+  }
 
 }
 
 // FUNCTION TO FOLLOW
 const follow = options => {
-  let 
+  let
     defaults = {
       user: null,
       username: null,
@@ -259,16 +303,16 @@ const follow = options => {
       update_followers ? dispatch(follow_action.follower(s.data)) : null
       update_followings ? dispatch(follow_action.following(fwing)) : null
 
-      Notify({ value: "Followed!" })
+      Notify({ value: "Followed" })
       done()
-      
+
     })
     .catch(e => console.log(e) )
 
 }
 
 const unfollow = options => {
-  let 
+  let
     defaults = {
       user: null,
       dispatch: null,
@@ -284,7 +328,7 @@ const unfollow = options => {
       update_followers ? dispatch(follow_action.unfollower($('.data').data('session'))) : null
       update_followings ? dispatch(follow_action.unfollowing(user)) : null
 
-      Notify({ value: "Unfollowed!" })
+      Notify({ value: "Unfollowed" })
       done()
     })
     .catch(e => console.log(e) )
@@ -320,15 +364,18 @@ const unlike = options => {
 
 module.exports = {
     shortener,
+    toggle,
     commonLogin,
     c_first,
     Me,
     e_v,
+    last_line_remover,
     forProfile,
     back,
     edit_profile,
     change_avatar,
     resend_vl,
+    deactivate,
     createNote,
     deleteNote,
     editNote,

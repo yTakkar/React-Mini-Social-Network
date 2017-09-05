@@ -2,6 +2,7 @@ import React from 'react'
 import { Helmet } from 'react-helmet'
 import { FadeIn } from 'animate-components'
 import { connect } from 'react-redux'
+import { Scrollbars } from 'react-custom-scrollbars'
 
 import Follower_items from './follower-items'
 import Goto from '../../others/goto-comp'
@@ -19,7 +20,11 @@ export default class Followers extends React.Component{
 
     back = e => fn.back(e, this.props.history)
 
-    render(){        
+    componentDidMount = () => fn.last_line_remover()
+
+    componentWillReceiveProps = props => fn.last_line_remover()
+
+    render(){
         let
             { follow: { followers }, user: { user_details: { username } } } = this.props,
             map_f = followers.map(f => <Follower_items key={f.follow_id} {...f} /> )
@@ -36,18 +41,18 @@ export default class Followers extends React.Component{
                         <span className="title" >Followers</span>
                         <Goto/>
                     </div>
-                    <div className="fer_middle modal_middle">
+                    <Scrollbars style={{ height: 450 }} className="fer_middle modal_middle" >
                         <div className="modal_main">
                             {
                                 followers.length == 0 ?
                                     <Nothing showMssg={false} />
-                                :
+                                    :
                                     map_f
                             }
                         </div>
-                    </div>
+                    </Scrollbars>
                     <div className="fer_bottom modal_bottom">
-                        <a href='#' className='fer_cancel pri_btn' onClick={this.back} >Close</a>
+                        <a href='#' className='fer_cancel pri_btn' onClick={this.back} >Back</a>
                     </div>
                 </FadeIn>
 
