@@ -10,7 +10,7 @@ const
     favicon = require('serve-favicon'),
     bodyParser = require('body-parser'),
     validator = require('express-validator'),
-		session = require('client-sessions'),
+	  session = require('client-sessions'),
     app = express()
 
 // Requiring project files
@@ -22,8 +22,8 @@ const
     noteRoutes = require('./routes/note_routes'),
     nIntRoutes = require('./routes/note-int-routes'),
     editRoutes = require('./routes/edit-routes'),
-		mw = require('./models/middlewares'),
-		chalk = require('./models/chalk')
+    mw = require('./models/middlewares'),
+    chalk = require('./models/chalk')
 
 // View engine
 app.engine('hbs', hbs({ extname: "hbs" }))
