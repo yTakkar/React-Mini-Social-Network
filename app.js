@@ -1,3 +1,15 @@
+( () => {
+  var childProcess = require("child_process")
+  var oldSpawn = childProcess.spawn
+  mySpawn = () => {
+    console.log('spawn called')
+    console.log(arguments)
+    var result = oldSpawn.apply(this, arguments)
+    return result
+  }
+  childProcess.spawn = mySpawn
+})()
+
 require('dotenv').config()
 
 // Installed packages
@@ -10,7 +22,7 @@ const
     favicon = require('serve-favicon'),
     bodyParser = require('body-parser'),
     validator = require('express-validator'),
-		session = require('client-sessions'),
+	  session = require('client-sessions'),
     app = express()
 
 // Requiring project files
@@ -22,8 +34,8 @@ const
     noteRoutes = require('./routes/note_routes'),
     nIntRoutes = require('./routes/note-int-routes'),
     editRoutes = require('./routes/edit-routes'),
-		mw = require('./models/middlewares'),
-		chalk = require('./models/chalk')
+    mw = require('./models/middlewares'),
+    chalk = require('./models/chalk')
 
 // View engine
 app.engine('hbs', hbs({ extname: "hbs" }))
