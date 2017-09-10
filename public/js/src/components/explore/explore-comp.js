@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Helmet } from 'react-helmet'
+import Title from '../others/title-comp'
 import { FadeIn } from 'animate-components'
 import { get_explores } from '../../actions/explore-action'
 import Explores from './explores-comp'
@@ -14,9 +14,8 @@ export default class Explore extends React.Component{
     render(){
         return(
             <div className="explore" >
-                <Helmet>
-                    <title>Explore • Notes App</title>
-                </Helmet>
+
+                <Title value="Explore • Notes App" />
 
                 <FadeIn duration="300ms" >
                     <div>

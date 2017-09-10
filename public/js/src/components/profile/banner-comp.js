@@ -5,99 +5,100 @@ import { connect } from 'react-redux'
 import * as fn from '../../functions/functions'
 
 @connect(store => {
-    return {
-        user: store.user,
-        notes: store.notes,
-        follow: store.follow
-    }
+	return {
+		user: store.user,
+		follow: store.follow,
+		note: store.notes
+	}
 })
 
 export default class Banner extends React.Component{
 
-    state = { is_following: false }
+	state = { is_following: false }
 
-    componentWillReceiveProps = ({ follow: { is_following } }) => this.setState({ is_following })
+	componentWillReceiveProps = ({ follow: { is_following } }) => this.setState({ is_following })
 
-    follow = e => {
-        e.preventDefault()
-        let 
-            { dispatch, user: { user_details: { id, username } } } = this.props,
-            obj = { user: id, username, dispatch, update_followers: true, done: () => this.setState({ is_following: true }) }
-        fn.follow(obj)
-    }
+	follow = e => {
+		e.preventDefault()
+		let
+				{ dispatch, user: { user_details: { id, username } } } = this.props,
+				obj = { user: id, username, dispatch, update_followers: true, done: () => this.setState({ is_following: true }) }
+		fn.follow(obj)
+	}
 
-    unfollow = e => {
-        e.preventDefault()
-        let
-            { dispatch, user: { user_details: { id } } } = this.props,
-            obj = { user: id, dispatch, update_followers: true, done: () => this.setState({ is_following: false }) }
-        fn.unfollow(obj)
-    }
+	unfollow = e => {
+			e.preventDefault()
+			let
+					{ dispatch, user: { user_details: { id } } } = this.props,
+					obj = { user: id, dispatch, update_followers: true, done: () => this.setState({ is_following: false }) }
+			fn.unfollow(obj)
+	}
 
-    toNotes = () => $('html, body').animate({ scrollTop: 390 }, 450)
+	toNotes = () => $('html, body').animate({ scrollTop: 390 }, 450)
 
-    render(){
-        let 
-            { url, user: { user_details }, notes: { notes }, follow: { profile_views, followers, followings} } = this.props,
-            { is_following } = this.state,
-            s_username = $('.data').data('username')
+	render(){
+			let
+					{ url, user: { user_details }, notes, follow: { profile_views, followers, followings} } = this.props,
+					{ is_following } = this.state,
+					s_username = $('.data').data('username')
 
-        return(
-            <div>
-                <div class='user_banner'>
+			return(
+					<div>
+							<div class='user_banner'>
 
-                    <div className="profile_img_div">
-                        <img src={ user_details.id ? `/users/${user_details.id}/user.jpg` : '/images/spacecraft.jpg' } alt="Your profile"/>
-                    </div>
+									<div className="profile_img_div">
+											<img src={ user_details.id ? `/users/${user_details.id}/user.jpg` : '/images/spacecraft.jpg' } alt="Your profile"/>
+									</div>
 
-                    <div className="user_buttons">
-                        {
-                            fn.Me(user_details.id) ?
-                                <Link 
-                                    to={{
-                                        pathname: `/profile/${s_username}/create-note`,
-                                        state: { modal: true }
-                                    }} 
-                                    className={`create_note_btn pri_btn ${!fn.e_v() ? "a_disabled" : ""}`} 
-                                >{fn.e_v() ? "Create note" : "Verify email to create note"}</Link>
-                            :
-                            is_following ?
-                                <a href="#" className="unfollow pri_btn" onClick={this.unfollow} >Unfollow</a>
-                            :
-                                <a href="#" className="follow pri_btn" onClick={this.follow} >Follow</a>
-                        }  
-                    </div>
+									<div className="user_buttons">
+											{
+													fn.Me(user_details.id) ?
+															<Link
+																	to={{
+																			pathname: `/profile/${s_username}/create-note`,
+																			state: { modal: true }
+																	}}
+																	className={`create_note_btn pri_btn ${!fn.e_v() ? "a_disabled" : ""}`}
+															>{fn.e_v() ? "Create note" : "Verify email to create note"}</Link>
+													:
+													is_following ?
+															<a href="#" className="unfollow pri_btn" onClick={this.unfollow} >Unfollow</a>
+													:
+															<a href="#" className="follow pri_btn" onClick={this.follow} >Follow</a>
+											}
+									</div>
 
-                    <div className="user_info">
-                        <Link to='#' className="user_main_link">{user_details.username}</Link>
-                        <span className="user_no_notes">{user_details.email}</span>
-                        <div className="user_bio">
-                            <span>{user_details.bio}</span>
-                        </div>
-                        <hr/>
-                        <div className="user_stats">
-                            <div class="stat_post" onClick={this.toNotes} >
-                                <span class="stat_hg">{notes.length}</span>
-                                <span class="stat_nhg">Notes</span>
-                            </div>
-                            <Link to={`${url}/followers`} class="stat_followers" >
-                                <span class="stat_hg">{followers.length}</span>
-                                <span class="stat_nhg">Followers</span>
-                            </Link>
-                            <Link to={`${url}/followings`} class="stat_followings">
-                                <span class="stat_hg">{followings.length}</span>
-                                <span class="stat_nhg">Followings</span>
-                            </Link>
-                            <div class="stat_views stat_disabled ">
-                                <span class="stat_hg">{profile_views}</span>
-                                <span class="stat_nhg">Profile views</span>
-                            </div>
-                        </div>
-                    </div>
+									<div className="user_info">
+											<Link to='#' className="user_main_link">{user_details.username}</Link>
+											<span className="user_no_notes">{user_details.email}</span>
+											<div className="user_bio">
+													<span>{user_details.bio}</span>
+											</div>
+											<hr/>
+											<div className="user_stats">
+													<div class="stat_post" onClick={this.toNotes} >
+															<span class="stat_hg">{notes.length}</span>
+															<span class="stat_nhg">Notes</span>
+													</div>
+													<Link to={`${url}/followers`} class="stat_followers" >
+															<span class="stat_hg">{followers.length}</span>
+															<span class="stat_nhg">Followers</span>
+													</Link>
+													<Link to={`${url}/followings`} class="stat_followings">
+															<span class="stat_hg">{followings.length}</span>
+															<span class="stat_nhg">Followings</span>
+													</Link>
+													<div class="stat_views stat_disabled ">
+															<span class="stat_hg">{profile_views}</span>
+															<span class="stat_nhg">Profile views</span>
+													</div>
+											</div>
+									</div>
 
-                </div>
+							</div>
 
-            </div>
-        )
-    }
+					</div>
+			)
+	}
+
 }

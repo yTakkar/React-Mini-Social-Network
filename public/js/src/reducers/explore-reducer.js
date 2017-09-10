@@ -6,7 +6,7 @@ const explore = (state=explore_defaults, action) => {
     switch (action.type) {
         case "GET_EXPLORES":
             return { ...state, explores: action.payload }
-            break;
+            break
     }
     return state
 }
