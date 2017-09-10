@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 // Installed packages
-const  
+const
     express = require('express'),
     port = process.env.PORT,
     hbs = require('express-handlebars'),
@@ -10,15 +10,20 @@ const
     favicon = require('serve-favicon'),
     bodyParser = require('body-parser'),
     validator = require('express-validator'),
-    session = require('client-sessions'),
+	  session = require('client-sessions'),
     app = express()
 
-// Requiring route files
-const 
+// Requiring project files
+const
     uRoutes = require('./routes/user-routes'),
-    apiRoutes = require('./routes/api-routes'),
+    apiRoutes = require('./routes/rest-routes'),
     mRoutes = require('./routes/main-routes'),
-    mw = require('./models/middlewares')
+    followRoutes = require('./routes/follow-routes'),
+    noteRoutes = require('./routes/note_routes'),
+    nIntRoutes = require('./routes/note-int-routes'),
+    editRoutes = require('./routes/edit-routes'),
+    mw = require('./models/middlewares'),
+    chalk = require('./models/chalk')
 
 // View engine
 app.engine('hbs', hbs({ extname: "hbs" }))
@@ -41,9 +46,13 @@ app.use(express.static(path.join(__dirname+"/public/")))
 // Middleware for some local variables to be used in the template
 app.use(mw.variables)
 
-// Route files
+// Route files (Order is important)
 app.use('/', uRoutes)
 app.use('/api', apiRoutes)
+app.use('/api', followRoutes)
+app.use('/api', noteRoutes)
+app.use('/api', nIntRoutes)
+app.use('/api', editRoutes)
 app.use('/', mRoutes)
 
-app.listen(port, () => console.log('App running..') )
+app.listen(port, () => chalk.rainbow('App running..') )

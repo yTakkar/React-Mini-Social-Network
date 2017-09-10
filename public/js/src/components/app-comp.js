@@ -8,6 +8,7 @@ import Edit from './edit/edit-comp'
 import Explore from './explore/explore-comp'
 import Error from './error/error-comp'
 import EmailVerification from './email-verification/email-ver-comp'
+import Deactivate from './deactivate/deactivate-comp'
 import Viewnote from './note/view-note-comp'
 import Overlay from './others/overlay-comp'
 
@@ -26,6 +27,7 @@ export default class App extends Component{
                             <Route path="/profile/:username" component={Profile} />
                             <Route path="/email-verification/:is" component={EmailVerification} />
                             <Route path="/view-note/:note" component={Viewnote} />
+                            <Route path='/deactivate' component={Deactivate} />
                             <Route path="/error/:what" component={Error} />
                             <Route component={Error} />
                         </Switch>

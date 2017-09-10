@@ -1,7 +1,8 @@
 import React from 'react'
-import { Helmet } from 'react-helmet'
+import Title from '../../others/title-comp'
 import { FadeIn } from 'animate-components'
 import { connect } from 'react-redux'
+import { Scrollbars } from 'react-custom-scrollbars'
 
 import Following_items from './following-items'
 import Goto from '../../others/goto-comp'
@@ -19,7 +20,10 @@ export default class Followings extends React.Component{
 
     back = e => fn.back(e, this.props.history)
 
-    render(){        
+    componentWillReceiveProps = props => fn.last_line_remover()
+    componentDidMount = () => fn.last_line_remover()
+
+    render(){
         let
             { follow: { followings }, user: { user_details: { username } } } = this.props,
             map_f = followings.map(f => <Following_items key={f.follow_id} {...f} /> )
@@ -27,27 +31,25 @@ export default class Followings extends React.Component{
         return(
             <div class='followers modal modal_big' >
 
-                <Helmet>
-                    <title>Followings • {`@${username}`}</title>
-                </Helmet>
+                <Title value={`Followings • @${username}`} />
 
                 <FadeIn duration="300ms" >
                     <div className="fer_header modal_header">
                         <span className="title" >Followers</span>
                         <Goto/>
                     </div>
-                    <div className="fer_middle modal_middle">
+                    <Scrollbars style={{ height: 450 }} className="fer_middle modal_middle">
                         <div className="modal_main">
                             {
                                 followings.length == 0 ?
                                     <Nothing showMssg={false} />
-                                :
+                                    :
                                     map_f
                             }
                         </div>
-                    </div>
+                    </Scrollbars>
                     <div className="fer_bottom modal_bottom">
-                        <a href='#' className='fer_cancel pri_btn' onClick={this.back} >Close</a>
+                        <a href='#' className='fer_cancel pri_btn' onClick={this.back} >Back</a>
                     </div>
                 </FadeIn>
 

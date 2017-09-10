@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-export default class Hidden_overlay extends React.Component{
+export default class Overlay extends React.Component{
     render(){
         let { visible } = this.props
         return(
@@ -10,10 +10,10 @@ export default class Hidden_overlay extends React.Component{
     }
 }
 
-Hidden_overlay.defaultProps = {
+Overlay.defaultProps = {
     visible: true
 }
 
-Hidden_overlay.propTypes = {
+Overlay.propTypes = {
     visible: PropTypes.bool
 }
