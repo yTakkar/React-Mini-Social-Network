@@ -9,21 +9,21 @@ import Explores from './explores-comp'
 
 export default class Explore extends React.Component{
 
-    componentDidMount = () => this.props.dispatch(get_explores())
+  componentDidMount = () => this.props.dispatch(get_explores())
 
-    render(){
-        return(
-            <div className="explore" >
+  render(){
+    return(
+      <div className="explore" >
 
-                <Title value="Explore • Notes App" />
+        <Title value="Explore • Notes App" />
 
-                <FadeIn duration="300ms" >
-                    <div>
-                        <Explores/>
-                    </div>
-                </FadeIn>
+        <FadeIn duration="300ms" >
+          <div>
+            <Explores />
+          </div>
+        </FadeIn>
 
-            </div>
-        )
-    }
+      </div>
+    )
+  }
 }

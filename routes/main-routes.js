@@ -1,6 +1,6 @@
-const 
-	app = require('express').Router(),
-	mw = require('../models/middlewares')
+const
+  app = require('express').Router(),
+  mw = require('../models/middlewares')
 
 app.get('/welcome', mw.NotLoggedIn, (req, res) => {
 	let options = { title: "Welcome to Notes App!" }

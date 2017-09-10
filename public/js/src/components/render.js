@@ -5,11 +5,11 @@ import { Provider } from 'react-redux'
 import App from './app-comp'
 
 let element = document.getElementById('root')
-if (element){ 
-    ReactDOM.render(
-        <Provider store={store} >
-            <App/>
-        </Provider>,
-        element
-    )
+if (element){
+  ReactDOM.render(
+    <Provider store={store} >
+      <App/>
+    </Provider>,
+    element
+  )
 }

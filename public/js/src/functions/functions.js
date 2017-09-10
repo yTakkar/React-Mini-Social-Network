@@ -10,8 +10,9 @@ import * as note_int_action from '../actions/note-int-action'
 
 // FUNCTION FOR SHORTENING
 const shortener = (elem, length) => {
-  let parse = parseInt(length),
-      len = elem.length
+  let
+    parse = parseInt(length),
+    len = elem.length
   if (!parse) { return; }
   return (len >= parse) ? `${elem.substr(0, length-2)}..` : (len < parse) ? elem : null
 }
@@ -24,35 +25,36 @@ const toggle = el => {
 
 // FUNCTION FOR COMMON LOGIN
 const commonLogin = options => {
-    let { data, btn, url, redirect, defBtnValue } = options
-    let overlay2 = $('.overlay-2')
+  let
+    { data, btn, url, redirect, defBtnValue } = options,
+    overlay2 = $('.overlay-2')
 
-    btn
-      .attr('value', 'Please wait..')
-      .addClass('a_disabled')
-    overlay2.show()
+  btn
+    .attr('value', 'Please wait..')
+    .addClass('a_disabled')
+  overlay2.show()
 
-    $.ajax({
-        url,
-        data,
-        method: "POST",
-        dataType: "JSON",
-        success: (data) => {
-            let { mssg, success } = data
-            if(success){
-              Notify({ value: mssg, done: () => location.href = redirect })
-              btn.attr('value', 'Redirecting..')
-              overlay2.show()
-            } else {
-              Notify({ value: mssg })
-              btn
-                .attr('value', defBtnValue)
-                .removeClass('a_disabled')
-              overlay2.hide()
-            }
-            btn.blur()
-        }
-    })
+  $.ajax({
+    url,
+    data,
+    method: "POST",
+    dataType: "JSON",
+    success: data => {
+      let { mssg, success } = data
+      if(success){
+        Notify({ value: mssg, done: () => location.href = redirect })
+        btn.attr('value', 'Redirecting..')
+        overlay2.show()
+      } else {
+        Notify({ value: mssg })
+        btn
+          .attr('value', defBtnValue)
+          .removeClass('a_disabled')
+        overlay2.hide()
+      }
+      btn.blur()
+    }
+  })
 }
 
 // FUNCTION TO CAPITALIZE FIRST LETTER OF A WORD
@@ -73,7 +75,10 @@ const e_v = () => {
 
 // TO REMOVE LINE OF LAST ELEMENT
 const last_line_remover = () => {
-  $('.modal_main').children().eq($('.display_content').children().length - 1).find('hr').remove()
+  let
+    f = $('.modal_main').children(),
+    s = $('.display_content').children().length - 1
+  f.eq(s).find('hr').remove()
 }
 
 // FUNCTION FOR PROFILE DATA UPDATING
@@ -132,11 +137,11 @@ const edit_profile = options => {
         Notify({ value: "Email already exists!" })
     } else {
 
-        let
-          edit = yield axios.post('/api/edit-profile', { username, email, bio }),
-          { mssg, success } = edit.data
+      let
+        edit = yield axios.post('/api/edit-profile', { username, email, bio }),
+        { mssg, success } = edit.data
 
-        Notify({ value: mssg, done: () => success ? location.reload() : null })
+      Notify({ value: mssg, done: () => success ? location.reload() : null })
 
     }
 
@@ -192,13 +197,13 @@ const resend_vl = () => {
 
   axios.post('/api/resend_vl')
     .then(s => {
-        console.log(s.data)
-        Notify({ value: s.data.mssg })
-        vl
-          .removeClass('a_disabled')
-          .text('Send verification link')
-          .blur()
-        o.hide()
+      console.log(s.data)
+      Notify({ value: s.data.mssg })
+      vl
+        .removeClass('a_disabled')
+        .text('Send verification link')
+        .blur()
+      o.hide()
     })
 
 }
@@ -217,10 +222,10 @@ const deactivate = () => {
 
   axios.post('/api/deactivate')
     .then(d => {
-        btn
-          .removeClass('a_disabled')
-          .text('Deactivated')
-        Notify({ value: "Deactivated", done: () => location.href = "/login" })
+      btn
+        .removeClass('a_disabled')
+        .text('Deactivated')
+      Notify({ value: "Deactivated", done: () => location.href = "/login" })
     })
 }
 
@@ -229,17 +234,17 @@ const createNote = options => {
   let { title, content, dispatch, history } = options
 
   if(!title || !content){
-      Notify({ value: "Values are missing!" })
+    Notify({ value: "Values are missing!" })
   } else {
 
-    axios.post('/api/create-note', { title, content })
-      .then(s => {
-          let { content, title, user, username, note_id, note_time, mssg } = s.data
-          dispatch(notes_action.updateNote({ content, title, user, username, note_id, note_time }))
-          history.goBack()
-          Notify({ value: mssg })
-      })
-      .catch(e => console.log(e) )
+  axios.post('/api/create-note', { title, content })
+    .then(s => {
+      let { content, title, user, username, note_id, note_time, mssg } = s.data
+      dispatch(notes_action.updateNote({ content, title, user, username, note_id, note_time }))
+      history.goBack()
+      Notify({ value: mssg })
+    })
+    .catch(e => console.log(e) )
 
   }
 }
@@ -249,9 +254,9 @@ const deleteNote = options => {
   let { note, dispatch, history } = options
   axios.post('/api/delete-note', { note })
     .then(s => {
-        dispatch(notes_action.deleteNote(note))
-        history.goBack()
-        Notify({ value: s.data.mssg })
+      dispatch(notes_action.deleteNote(note))
+      history.goBack()
+      Notify({ value: s.data.mssg })
     })
     .catch(e => console.log(e) )
 }
@@ -363,24 +368,24 @@ const unlike = options => {
 }
 
 module.exports = {
-    shortener,
-    toggle,
-    commonLogin,
-    c_first,
-    Me,
-    e_v,
-    last_line_remover,
-    forProfile,
-    back,
-    edit_profile,
-    change_avatar,
-    resend_vl,
-    deactivate,
-    createNote,
-    deleteNote,
-    editNote,
-    follow,
-    unfollow,
-    like,
-    unlike
+  shortener,
+  toggle,
+  commonLogin,
+  c_first,
+  Me,
+  e_v,
+  last_line_remover,
+  forProfile,
+  back,
+  edit_profile,
+  change_avatar,
+  resend_vl,
+  deactivate,
+  createNote,
+  deleteNote,
+  editNote,
+  follow,
+  unfollow,
+  like,
+  unlike
 }
