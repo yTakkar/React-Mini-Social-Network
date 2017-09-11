@@ -1,31 +1,31 @@
 const def_notes = {
-		notes: [],
-    feeds: []
+  notes: [],
+  feeds: []
 }
 
 const notes = (state=def_notes, action) => {
 	let { payload: py } = action
 
 	switch (action.type) {
-		case "GET_NOTES":
-			return { ...state, notes: py }
-			break
+  case "GET_NOTES":
+    return { ...state, notes: py }
+    break
 
-		case "GET_FEEDS":
-			return { ...state, feeds: py }
-			break
+  case "GET_FEEDS":
+    return { ...state, feeds: py }
+    break
 
-		case "UPDATE_NOTES":
-			return { ...state, notes: update(state.notes, py) }
-			break
+  case "UPDATE_NOTES":
+    return { ...state, notes: update(state.notes, py) }
+    break
 
-		case "DELETE_NOTES":
-			return { ...state, notes: dlt(state.notes, py) }
-			break
+  case "DELETE_NOTES":
+    return { ...state, notes: dlt(state.notes, py) }
+    break
 
-		case "EDIT_NOTE":
-			return { ...state, notes: edit(state.notes, py) }
-			break
+  case "EDIT_NOTE":
+    return { ...state, notes: edit(state.notes, py) }
+    break
 
 	}
 	return state
