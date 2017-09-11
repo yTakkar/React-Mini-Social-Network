@@ -2,9 +2,9 @@ import React from 'react'
 import $ from 'jquery'
 import axios from 'axios'
 import { connect } from 'react-redux'
-import { Helmet } from 'react-helmet'
+import Title from '../others/title-comp'
 import { FadeIn } from 'animate-components'
-import { Link, Route } from 'react-router-dom'
+import { Link, Route, Redirect } from 'react-router-dom'
 import Notify from 'handy-notification'
 import Tooltip from 'handy-tooltip'
 import Timeago from 'handy-timeago'
@@ -18,195 +18,197 @@ import * as fn from '../../functions/functions'
 import * as note_int_action from '../../actions/note-int-action'
 
 @connect(store => {
-    return {
-        note_int: store.note_int
-    }
+  return {
+    note_int: store.note_int
+  }
 })
 
 export default class View_note extends React.Component{
 
-    state = {
-        details: {},
-        deleting: false,
-        editing: false,
-        liked: false
+  state = {
+    deleting: false,
+    editing: false,
+    liked: false,
+    invalid_note: false
+  }
+
+  componentDidMount() {
+    let { match: { params: { note } }, dispatch } = this.props
+
+    axios.post('/api/liked-or-not', { note }).then(l => this.setState({ liked: l.data }) )
+
+    dispatch(note_int_action.note_details(note))
+    dispatch(note_int_action.likes(note))
+  }
+
+  componentWillReceiveProps = ({ note_int: { note_details: { note_id } } }) => {
+    !note_id ? this.setState({ invalid_note: true }) : null
+  }
+
+  toggle_ = (e, what) => {
+    e ? e.preventDefault() : null
+    switch (what) {
+      case "deleting":
+        this.setState({ deleting: !this.state.deleting })
+        break
+      case "editing":
+        this.setState({ editing: !this.state.editing })
+        $('.v_n_edit').blur()
+        break
     }
+  }
 
-    componentDidMount() {
-        let { match: { params: { note } }, dispatch } = this.props
-        axios.post('/api/get-note-details', { note })
-            .then(s => s.data ? this.setState({ details: s.data }) : location.href="/error/note_notfound" )
-        dispatch(note_int_action.LikedOrNot(note))
-        dispatch(note_int_action.likes(note))
-    }
+  back = e => fn.back(e, this.props.history)
 
-    componentWillReceiveProps = ({ note_int: { liked } }) => this.setState({ liked })
+  delete = e => {
+    e.preventDefault()
+    let { dispatch, history, match: { params: { note } } } = this.props
+    fn.deleteNote({ note, dispatch, history })
+  }
 
-    toggle_ = (e, what) => {
-        e ? e.preventDefault() : null
-        switch (what) {
-            case "deleting":
-                this.setState({ deleting: !this.state.deleting })
-                break;
-            case "editing":
-                this.setState({ editing: !this.state.editing })
-                $('.v_n_edit').blur()
-                break;
-        }
-    }
+  edit = e => {
+    this.toggle_(e, "editing")
+    let
+      title = $('.v_n_title').text(),
+      content = $('.v_n_content').text(),
+      { dispatch, note_int: { note_details: { note_id } } } = this.props
+    fn.editNote({ title, content, note_id, setState: this.setState, dispatch })
+  }
 
-    back = e => fn.back(e, this.props.history)
+  like = e => {
+    let
+      { dispatch, match: { params: { note } } } = this.props,
+      options = { note, dispatch, done: () => this.setState({ liked: true }) }
+    fn.like(options)
+  }
 
-    delete = e => {
-        e.preventDefault()
-        let { dispatch, history, match: { params: { note } } } = this.props
-        fn.deleteNote({ note, dispatch, history })
-    }
+  unlike = e => {
+    let
+      { dispatch, match: { params: { note } } } = this.props,
+      options = { note, dispatch, done: () => this.setState({ liked: false }) }
+    fn.unlike(options)
+  }
 
-    edit = e => {
-        this.toggle_(e, "editing")
-        let
-            title = $('.v_n_title').text(),
-            content = $('.v_n_content').text(),
-            { dispatch } = this.props,
-            { details: { note_id } } = this.state
-        fn.editNote({ title, content, note_id, setState: this.setState, dispatch })
-    }
+  render(){
+    let
+      { deleting, editing, liked, invalid_note } = this.state,
+      { note_int: { likes, note_details: { user, username, title, content, note_time } }, match } = this.props
 
-    like = e => {
-        let 
-            { dispatch, match: { params: { note } } } = this.props,
-            options = { note, dispatch, done: () => this.setState({ liked: true }) }
-        fn.like(options)
-    }
+    Tooltip({
+      selector: $('.like_unlike'),
+      value: liked ? "Unlike" : "Like"
+    })
 
-    unlike = e => {
-        let
-            { dispatch, match: { params: { note } } } = this.props,
-            options = { note, dispatch, done: () => this.setState({ liked: false }) }
-        fn.unlike(options)   
-    }
+    return (
+      <div class='view_note modal'>
 
-    render(){
-        let 
-            { details: { user, username, title, content, note_time }, deleting, editing, liked } = this.state,
-            { note_int: { likes }, match } = this.props
+        { invalid_note ? <Redirect to="/error/note_notfound" /> : null }
 
-        Tooltip({
-            selector: $('.like_unlike'),
-            value: liked ? "Unlike" : "Like"
-        })
+        <Title value="View note • Notes App" />
 
-        return(
-            <div class='view_note modal'>
-                <Helmet>
-                    <title>View note • Notes App</title>
-                </Helmet>
-
-                {
-                    title ?
-                        <FadeIn duration="300ms" >
-                            <div className="v_n_header modal_header">
-                                <span class='title' >View note</span>
-                                <Goto/>
-                            </div>
-                            <div className="v_n_middle modal_middle">
-                                <div className="v_n_info">
-                                    <img src={user ? `/users/${user}/user.jpg` : '/images/spacecraft.jpg' } alt=""/>
-                                    <div className="v_n_left">
-                                        <Link to={`/profile/${username}`} className='v_n_username' >{username}</Link>
-                                        <span className="v_n_time">{Timeago(note_time)}</span>
-                                    </div>
-                                </div>
-                                <span 
-                                    className='v_n_title' 
-                                    contentEditable={editing} 
-                                    spellCheck='false' 
-                                    suppressContentEditableWarning={true} 
-                                >{title}</span>
-                                <span 
-                                    className={`v_n_content ${editing ? 'content_editor' : '' } `}
-                                    contentEditable={editing} 
-                                    spellCheck='false' 
-                                    suppressContentEditableWarning={true} 
-                                >{content}</span>
-                            </div>
-                            <div className="v_n_bottom modal_bottom">
-                                <div className="v_n_int">
-                                     {
-                                        liked ? 
-                                            <span 
-                                                className={`v_n_unlike like_unlike ${editing ? 'like_unlike_disabled' : '' }`} 
-                                                onClick={this.unlike}
-                                            ><i class="material-icons">favorite</i></span>
-                                        : 
-                                            <span 
-                                                className={`v_n_like like_unlike ${editing ? 'like_unlike_disabled' : ''}`} 
-                                                onClick={this.like}
-                                            ><i class="material-icons">favorite_border</i></span>
-                                    }
-                                </div>
-
-                                 <Link 
-                                    to={`${match.url}/likes`} 
-                                    className={`v_n_likes sec_btn ${editing ? 'sec_btn_disabled' : ''}`}  
-                                >{`${likes.length} likes`}</Link> 
-                                
-                                {
-                                    fn.Me(user) ?
-                                        editing ? 
-                                            <a 
-                                                href="#" 
-                                                className="v_n_edit sec_btn" 
-                                                onClick={this.edit}
-                                            >Done editing</a>
-                                        : 
-                                            <a 
-                                                href="#" 
-                                                className="v_n_edit sec_btn" 
-                                                onClick={e => this.toggle_(e, "editing") } 
-                                            >Edit note</a>
-                                    : null
-                                }  
-
-                                { 
-                                    fn.Me(user) ?
-                                        <a 
-                                            href="#" 
-                                            className={`v_n_delete sec_btn ${editing ? 'sec_btn_disabled' : '' } `}
-                                            onClick={e => this.toggle_(e, "deleting")} 
-                                        >Delete note</a>
-                                    : null
-                                } 
-
-                                <a 
-                                    href='#' 
-                                    className={`v_n_cancel pri_btn ${editing ? 'a_disabled' : '' } `}
-                                    onClick={this.back} 
-                                >Done</a>
-
-                            </div>
-                        </FadeIn>
-                    : null
-                }
-
-                { (deleting) ? <Overlay/> : null }
-                {
-                    deleting ? 
-                        <Prompt
-                            title={"Delete note"} 
-                            content={"This post will be deleted. There's no undo so you won't be able to find it."}
-                            actionText= "Delete"
-                            action={this.delete}
-                            close={this.toggle_}
-                        />
-                    : null
-                }
-
-                <Route path={`${match.url}/likes`} component={() => <Overlay visible={false} /> } />
-                <Route path={`${match.url}/likes`} component={Likes} />
-
+        <FadeIn duration="300ms" >
+          <div className="v_n_header modal_header">
+            <span class='title' >View note</span>
+            <Goto />
+          </div>
+          <div className="v_n_middle modal_middle">
+            <div className="v_n_info">
+              <img src={user ? `/users/${user}/user.jpg` : '/images/spacecraft.jpg'} alt="" />
+              <div className="v_n_left">
+                <Link to={`/profile/${username}`} className='v_n_username' >{username}</Link>
+                <span className="v_n_time">{Timeago(note_time)}</span>
+              </div>
             </div>
-        )
-    }
+            <span
+              className='v_n_title'
+              contentEditable={editing}
+              spellCheck='false'
+              suppressContentEditableWarning={true}
+            >{title}</span>
+            <span
+              className={`v_n_content ${editing ? 'content_editor' : ''} `}
+              contentEditable={editing}
+              spellCheck='false'
+              suppressContentEditableWarning={true}
+            >{content}</span>
+          </div>
+          <div className="v_n_bottom modal_bottom">
+            <div className="v_n_int">
+              {
+                liked ?
+                  <span
+                    className={`v_n_unlike like_unlike ${editing ? 'like_unlike_disabled' : ''}`}
+                    onClick={this.unlike}
+                  ><i class="material-icons">favorite</i></span>
+                :
+                  <span
+                    className={`v_n_like like_unlike ${editing ? 'like_unlike_disabled' : ''}`}
+                    onClick={this.like}
+                  ><i class="material-icons">favorite_border</i></span>
+              }
+            </div>
+
+            <Link
+              to={`${match.url}/likes`}
+              className={`v_n_likes sec_btn ${editing ? 'sec_btn_disabled' : ''}`}
+            >{`${likes.length} likes`}</Link>
+
+            {
+              fn.Me(user) ?
+                editing ?
+                  <a
+                    href="#"
+                    className="v_n_edit sec_btn"
+                    onClick={this.edit}
+                  >Done editing</a>
+                :
+                  <a
+                    href="#"
+                    className="v_n_edit sec_btn"
+                    onClick={e => this.toggle_(e, "editing")}
+                  >Edit note</a>
+              : null
+            }
+
+            {
+              fn.Me(user) ?
+                <a
+                  href="#"
+                  className={`v_n_delete sec_btn ${editing ? 'sec_btn_disabled' : ''} `}
+                  onClick={e => this.toggle_(e, "deleting")}
+                >Delete note</a>
+              : null
+            }
+
+            <a
+              href='#'
+              className={`v_n_cancel pri_btn ${editing ? 'a_disabled' : ''} `}
+              onClick={this.back}
+            >Done</a>
+
+          </div>
+        </FadeIn>
+
+        { (deleting) ? <Overlay/> : null }
+        {
+          deleting ?
+            <Prompt
+              title={"Delete note"}
+              content={"This post will be deleted. There's no undo so you won't be able to find it."}
+              actionText= "Delete"
+              action={this.delete}
+              state_updater="deleting"
+              close={this.toggle_}
+            />
+          : null
+        }
+
+        <Route path={`${match.url}/likes`} component={() => <Overlay visible={false} /> } />
+        <Route path={`${match.url}/likes`} component={Likes} />
+
+      </div>
+    )
+
+  }
+
 }

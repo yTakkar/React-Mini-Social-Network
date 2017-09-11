@@ -1,8 +1,8 @@
-const 
+const
 	app = require('express').Router(),
 	mw = require('../models/middlewares'),
 	chalk = require('../models/chalk'),
-	login = require('../models/_login'),
+	login = require('../models//userFn'),
 	P = require('bluebird')
 
 app.get('/login', mw.NotLoggedIn, (req, res) => {
@@ -32,7 +32,7 @@ app.post('/user/login', (req, res) => {
 })
 
 app.get('/logout', mw.LoggedIn, (req, res) => {
-    req.session.id = null
+  req.session.id = null
 	let url = (req.session.id == null) ? "/login" : "/"
 	res.redirect(url)
 })

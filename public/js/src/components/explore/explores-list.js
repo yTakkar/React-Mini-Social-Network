@@ -6,57 +6,68 @@ import * as fn from '../../functions/functions'
 
 export default class Explores_list extends React.Component{
 
-    state = {
-        no_of_notes: 0,
-        is_following: false
-    }
+  state = {
+    no_of_notes: 0,
+    is_following: false
+  }
 
-    componentDidMount = () => {
-        let { dispatch, id, username } = this.props
-        axios.post('/api/no-of-notes', { user: id }).then(s => this.setState({ no_of_notes: s.data }) )
-        axios.post('/api/is-following', { username }).then(s => this.setState({ is_following: s.data }) )
-    }
+  componentDidMount = () => {
+    let { dispatch, id, username } = this.props
+    axios.post('/api/no-of-notes', { user: id }).then(s => this.setState({ no_of_notes: s.data }) )
+    axios.post('/api/is-following', { username }).then(s => this.setState({ is_following: s.data }) )
+  }
 
-    follow = e => {
-        e.preventDefault()
-        let 
-            { id, username } = this.props,
-            obj = {
-                user: id,
-                username,
-                done: () => this.setState({ is_following: true })
-            }
-        fn.follow(obj)
-    }
+  follow = e => {
+    e.preventDefault()
+    let
+      { id, username } = this.props,
+      obj = {
+        user: id,
+        username,
+        done: () => this.setState({ is_following: true })
+      }
+    fn.follow(obj)
+  }
 
-    render(){
-        let 
-            { id, username, email } = this.props,
-            { no_of_notes, is_following } = this.state,
-            n = no_of_notes == 0 ? '0 notes' : no_of_notes == 1 ? '1 note' : `${no_of_notes} notes`
+  unfollow = e => {
+    e.preventDefault()
+    let
+      { id, username } = this.props,
+      obj = {
+        user: id,
+        done: () => this.setState({ is_following: false })
+      }
+    fn.unfollow(obj)
+  }
 
-        return(
-            <div className="explores_list" >
-                <div className="exl_main">
-                    <img src={ id ? `/users/${id}/user.jpg` : '/images/spacecraft.jpg'} />
-                    <div className="exl_content">
-                        <Link to={`/profile/${username}`} className="exl_username" >{username}</Link>
-                        <div className="exl_desc">
-                            <span className="exl_email">{email}</span>
-                            <span className="exl_desc_sep">•</span>
-                            <span className="exl_followers">{n}</span>
-                        </div>
-                    </div>
-                </div>
-                <div className="exl_ff"> 
-                    {
-                        is_following ?
-                            <a href="#" className="sec_btn sec_btn_disabled exl_unfollow" >Followed</a> 
-                        :   
-                            <a href="#" className="pri_btn follow exl_follow" onClick={this.follow} >Follow</a>
-                    }
-                </div>
+  render(){
+    let
+      { id, username, email } = this.props,
+      { no_of_notes, is_following } = this.state,
+      n = no_of_notes == 0 ? '0 notes' : no_of_notes == 1 ? '1 note' : `${no_of_notes} notes`
+
+    return(
+      <div className="explores_list" >
+        <div className="exl_main">
+          <img src={id ? `/users/${id}/user.jpg` : '/images/spacecraft.jpg'} />
+          <div className="exl_content">
+            <Link to={`/profile/${username}`} className="exl_username" >{username}</Link>
+            <div className="exl_desc">
+              <span className="exl_email">{email}</span>
+              <span className="exl_desc_sep">•</span>
+              <span className="exl_followers">{n}</span>
             </div>
-        )
-    }
+          </div>
+        </div>
+        <div className="exl_ff">
+          {
+            is_following ?
+              <a href="#" className="pri_btn unfollow exl_unfollow" onClick={this.unfollow} >Followed</a>
+              :
+              <a href="#" className="pri_btn follow exl_follow" onClick={this.follow} >Follow</a>
+          }
+        </div>
+      </div>
+    )
+  }
 }
