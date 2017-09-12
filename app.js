@@ -11,6 +11,7 @@ const
   bodyParser = require('body-parser'),
   validator = require('express-validator'),
   session = require('client-sessions'),
+  hl = require('handy-log'),
   app = express()
 
 // Requiring project files
@@ -22,8 +23,7 @@ const
   noteRoutes = require('./routes/note_routes'),
   nIntRoutes = require('./routes/note-int-routes'),
   editRoutes = require('./routes/edit-routes'),
-  mw = require('./models/middlewares'),
-  chalk = require('./models/chalk')
+  mw = require('./models/middlewares')
 
 // View engine
 app.engine('hbs', hbs({
@@ -61,4 +61,4 @@ app.use('/api', nIntRoutes)
 app.use('/api', editRoutes)
 app.use('/', mRoutes)
 
-app.listen(port, () => chalk.rainbow('App running..'))
+app.listen(port, () => hl.rainbow('App running..'))
