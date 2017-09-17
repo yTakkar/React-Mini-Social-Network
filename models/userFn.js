@@ -1,7 +1,7 @@
 const
   db = require('../models/db'),
   mail = require('../models/mail'),
-  chalk = require('./chalk'),
+  hl = require('handy-log'),
   P = require('bluebird'),
   fs = require('fs'),
   util = require('util'),
@@ -79,14 +79,14 @@ const signup = (req, res) => {
               }
             mail(options)
               .then(m =>{
-                chalk.s(m)
+                hl.s(m)
                 session.id = insertId
                 session.username = username
                 session.email_verified = "no"
                 res.json({ mssg: `Hello, ${session.username}!!`, success: true })
               })
               .catch(me =>{
-                chalk.e(me)
+                hl.e(me)
                 res.json({ mssg: "Error sending email!" })
               })
 

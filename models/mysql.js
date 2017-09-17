@@ -1,5 +1,6 @@
-const mysql = require('mysql')
-const chalk = require('./chalk')
+const
+  mysql = require('mysql'),
+  hl = require('handy-log')
 
 const db = mysql.createConnection({
   host: process.env.MYSQL_HOST,
@@ -11,7 +12,7 @@ const db = mysql.createConnection({
 
 db.connect(err => {
   if(err){
-    chalk.e(err)
+    hl.e(err)
   }
 })
 
