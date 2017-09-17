@@ -19,7 +19,7 @@ export default class App extends Component{
         <div className="app">
           <Header />
           <div className="notes_wrapper">
-            <Route path="/view-note/:note" component={Overlay} />
+            <Route path="/view-note/:note" component={() => <Overlay type='colored' /> } />
             <Switch>
               <Route path="/" exact component={Home} />
               <Route path="/explore" component={Explore} />

@@ -189,7 +189,7 @@ export default class View_note extends React.Component{
           </div>
         </FadeIn>
 
-        { (deleting) ? <Overlay/> : null }
+        { (deleting) ? <Overlay type="white" /> : null }
         {
           deleting ?
             <Prompt
@@ -203,7 +203,7 @@ export default class View_note extends React.Component{
           : null
         }
 
-        <Route path={`${match.url}/likes`} component={() => <Overlay visible={false} /> } />
+        <Route path={`${match.url}/likes`} component={() => <Overlay type="white" /> } />
         <Route path={`${match.url}/likes`} component={Likes} />
 
       </div>
