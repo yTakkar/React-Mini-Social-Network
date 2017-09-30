@@ -36,9 +36,9 @@ const signup = (req, res) => {
     } else {
       let
         user_q = yield db.query('SELECT COUNT(*) as usernameCount from users WHERE username = ?', [username]),
-        [{ usernameCount: userCount }] = user_q
+        [{ usernameCount }] = user_q
 
-      if(userCount == 1){
+      if(usernameCount == 1){
         res.json({ mssg: "Username already exists!" })
       } else {
         let
@@ -62,13 +62,10 @@ const signup = (req, res) => {
           if(affectedRows == 1){
 
             let mkdir = util.promisify(fs.mkdir)
-            mkdir(dir+`/public/users/${insertId}`)
-              .then(u => {
-                fs
-                  .createReadStream(dir+'/public/images/spacecraft.jpg')
-                  .pipe(fs.createWriteStream(dir+`/public/users/${insertId}/user.jpg`))
-              })
-              .catch(e => console.log(e) )
+            yield mkdir(dir+`/public/users/${insertId}`)
+            fs
+              .createReadStream(dir+'/public/images/spacecraft.jpg')
+              .pipe(fs.createWriteStream(dir+`/public/users/${insertId}/user.jpg`))
 
             let
               url = `http://localhost:${process.env.PORT}/deep/most/topmost/activate/${insertId}`,
@@ -112,7 +109,7 @@ const login = (req, res) => {
 
     if(!errors.isEmpty()){
       let
-        result = errors.array()
+        result = errors.array(),
         array = []
       result.forEach(item => array.push(item.msg) )
       res.json({ mssg: array })
