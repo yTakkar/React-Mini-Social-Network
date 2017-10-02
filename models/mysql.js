@@ -13,7 +13,7 @@ const db = mysql.createConnection({
 
 db.connect(err => {
   if(err){
-    hl.e(err)
+    hl.error(err)
   }
 })
 

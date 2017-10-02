@@ -83,7 +83,7 @@ const signup = (req, res) => {
                 res.json({ mssg: `Hello, ${session.username}!!`, success: true })
               })
               .catch(me =>{
-                hl.e(me)
+                hl.error(me)
                 res.json({ mssg: "Error sending email!" })
               })
 
