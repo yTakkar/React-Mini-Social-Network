@@ -194,7 +194,7 @@ export default class View_note extends React.Component{
           deleting ?
             <Prompt
               title={"Delete note"}
-              content={"This post will be deleted. There's no undo so you won't be able to find it."}
+              content={"This note will be deleted. There's no undo so you won't be able to find it."}
               actionText= "Delete"
               action={this.delete}
               state_updater="deleting"
