@@ -51,7 +51,7 @@ UI is taken from [Instagam-clone](https://github.com/yTakkar/Instagram-Clone) I 
 
 5. Now run the app
     ```javacript
-    localhost:[PORT]     PORT = YOU DEFINED IN .ENV FILE. 1156 BY DEFAULT!!
+    localhost:[PORT]     PORT = YOU DEFINED IN .ENV FILE. 1157 BY DEFAULT!!
     ```
 
 6. Enjoy!!

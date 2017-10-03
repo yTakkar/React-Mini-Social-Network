@@ -33,7 +33,7 @@ const getFeeds = () => {
 	return dispatch => {
 		axios.post('/api/feeds')
 			.then(notes => dispatch({ type: "GET_FEEDS", payload: notes.data }) )
-			.catch(err => dispatch({ type: "GET_FEEDS_ERR", payload: err }) )
+			.catch(err => console.log(err) )
 	}
 }
 

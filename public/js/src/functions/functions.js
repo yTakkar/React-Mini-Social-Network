@@ -34,15 +34,14 @@ const commonLogin = options => {
     .addClass('a_disabled')
   overlay2.show()
 
-  $.ajax({
-    url,
-    data,
-    method: "POST",
-    dataType: "JSON",
-    success: data => {
-      let { mssg, success } = data
-      if(success){
-        Notify({ value: mssg, done: () => location.href = redirect })
+  axios.post(url, data)
+    .then(s => {
+      let { data: { mssg, success } } = s
+      if (success) {
+        Notify({
+          value: mssg,
+          done: () => location.href = redirect
+        })
         btn.attr('value', 'Redirecting..')
         overlay2.show()
       } else {
@@ -53,8 +52,9 @@ const commonLogin = options => {
         overlay2.hide()
       }
       btn.blur()
-    }
-  })
+    })
+    .catch(e => console.log(e))
+
 }
 
 // FUNCTION TO CAPITALIZE FIRST LETTER OF A WORD
@@ -122,30 +122,39 @@ const edit_profile = options => {
     let
       { susername, semail, username, email, bio } = options,
       button = $('.e_done'),
-      uCount = yield axios.post('/api/what-exists', { what: "username", value: username }),
-      eCount = yield axios.post('/api/what-exists', { what: "email", value: email })
+      { data: uCount} = yield axios.post('/api/what-exists', { what: "username", value: username }),
+      { data: eCount } = yield axios.post('/api/what-exists', { what: "email", value: email })
 
-    button.addClass('a_disabled').text('Processing..').blur()
+    button.
+      addClass('a_disabled')
+      .text('Processing..')
+      .blur()
 
     if(!username){
-        Notify({ value: "Username must not be empty!" })
+        Notify({ value: "Username must not be empty!!" })
     } else if(!email){
-        Notify({ value: "Email must not be empty!" })
-    } else if(uCount.data == 1 && username != susername){
-        Notify({ value: "Username already exists!" })
-    } else if(eCount.data == 1 && email != semail){
-        Notify({ value: "Email already exists!" })
+        Notify({ value: "Email must not be empty!!" })
+    } else if(uCount == 1 && username != susername){
+        Notify({ value: "Username already exists!!" })
+    } else if(eCount == 1 && email != semail){
+        Notify({ value: "Email already exists!!" })
     } else {
 
       let
         edit = yield axios.post('/api/edit-profile', { username, email, bio }),
         { mssg, success } = edit.data
 
-      Notify({ value: mssg, done: () => success ? location.reload() : null })
+      Notify({
+        value: mssg,
+        done: () => success ? location.reload() : null
+      })
 
     }
 
-    button.removeClass('a_disabled').text('Done Editing').blur()
+    button
+      .removeClass('a_disabled')
+      .text('Done Editing')
+      .blur()
 
   })().catch(e => console.log(e.stack) )
 
@@ -155,17 +164,13 @@ const edit_profile = options => {
 const change_avatar = options => {
   let
     { file } = options,
-    { name, size, type } = file,
-    allowed = ['image/png', 'image/jpeg', 'image/gif']
-
-  if(!allowed.includes(type)){
-    Notify({ value: "Only images allowed!" })
-  } else {
+    form = new FormData()
 
 		$('.overlay-2').show()
-		$('.avatar_span').text('Changing avatar..').addClass('sec_btn_disabled')
+    $('.avatar_span')
+      .text('Changing avatar..')
+      .addClass('sec_btn_disabled')
 
-    let form = new FormData()
     form.append('avatar', file)
 
     $.ajax({
@@ -175,10 +180,13 @@ const change_avatar = options => {
       contentType: false,
       data: form,
       dataType: "JSON",
-      success: data => Notify({ value: data.mssg, done: () => location.reload() })
+      success: data => {
+        Notify({
+          value: data.mssg,
+          done: () => location.reload()
+        })
+      }
     })
-
-  }
 
 }
 

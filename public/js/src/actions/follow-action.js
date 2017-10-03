@@ -4,7 +4,7 @@ const get_profile_views = username => {
   return dispatch => {
     axios.post('/api/get-profile-views', { username })
       .then(view => dispatch({ type: "GET_PROFILE_VIEWS", payload: view.data }) )
-      .catch(err => dispatch({ type: "GET_PROFILE_VIEWS_ERR", payload: err }) )
+      .catch(err => console.log(err) )
   }
 }
 
@@ -12,7 +12,7 @@ const is_following = username => {
   return dispatch => {
     axios.post('/api/is-following', { username })
       .then(is => dispatch({ type: "IS_FOLLOWING", payload: is.data }) )
-      .catch(err => dispatch({ type: "IS_FOLLOWING_ERR", payload: err }) )
+      .catch(err => console.log(err) )
   }
 }
 
@@ -20,7 +20,7 @@ const get_followers = username => {
   return dispatch => {
     axios.post('/api/get-followers', { username })
       .then(followers => dispatch({ type: "GET_FOLLOWERS", payload: followers.data }) )
-      .catch(err => dispatch({ type: "GET_FOLLOWERS_ERR", payload: err }) )
+      .catch(err => console.log(err) )
   }
 }
 
@@ -28,7 +28,7 @@ const get_followings = username => {
   return dispatch => {
     axios.post('/api/get-followings', { username })
       .then(following => dispatch({ type: "GET_FOLLOWINGS", payload: following.data }) )
-      .catch(err => dispatch({ type: "GET_FOLLOWINGS_ERR", payload: err }) )
+      .catch(err => console.log(err) )
   }
 }
 
