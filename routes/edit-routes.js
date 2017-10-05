@@ -4,10 +4,12 @@ const
   root = process.cwd(),
   db = require('../models/db'),
   mail = require('../models/mail'),
-  upload = require('multer')({ dest: `${root}/public/temp/` }),
+  upload = require('multer')({
+    dest: `${root}/public/temp/`
+  }),
   fs = require('fs'),
-  util = require('util'),
-  pi = require('handy-image-processor')
+  { promisify } = require('util'),
+  { ProcessImage, DeleteAllOfFolder } = require('handy-image-processor')
 
 // FOR GETTING THE COUNT OF GIVEN FIELD
 app.post('/what-exists', (req, res) => {
@@ -35,22 +37,24 @@ app.post('/edit-profile', (req, res) => {
     let errors = yield req.getValidationResult()
 
     if (!errors.isEmpty()) {
-        let
-          result = errors.array(),
-          array = []
-        result.forEach(item => array.push(item.msg))
+        let array = []
+        result = errors.array().forEach(item => array.push(item.msg))
         res.json({ mssg: array })
     } else {
 
       req.session.username = username
-      let
-        edit = yield db.query('UPDATE users SET username=?, email=?, bio=? WHERE id=?', [username, email, bio, session]),
-        notes = yield db.query('UPDATE notes SET username=? WHERE user=?', [username, session])
-        view = yield db.query('UPDATE profile_views SET view_by_username = ? WHERE view_by=?', [username, session]),
-        follower = yield db.query('UPDATE follow_system SET follow_by_username = ? WHERE follow_by=?', [username, session]),
-        following = yield db.query('UPDATE follow_system SET follow_to_username = ? WHERE follow_to=?', [username, session])
 
-      res.json({ mssg: 'Profile edited!!', success: true })
+      yield db.query('UPDATE users SET username=?, email=?, bio=? WHERE id=?', [username, email, bio, session]),
+      yield db.query('UPDATE notes SET username=? WHERE user=?', [username, session])
+      yield db.query('UPDATE profile_views SET view_by_username = ? WHERE view_by=?', [username, session]),
+      yield db.query('UPDATE follow_system SET follow_by_username = ? WHERE follow_by=?', [username, session]),
+      yield db.query('UPDATE follow_system SET follow_to_username = ? WHERE follow_to=?', [username, session])
+      yield db.query('UPDATE likes SET like_by_username = ? WHERE like_by = ?', [username, session])
+
+      res.json({
+        mssg: 'Profile edited!!',
+        success: true
+      })
 
     }
 
@@ -60,15 +64,16 @@ app.post('/edit-profile', (req, res) => {
 // FOR CHANGING AVATAR
 app.post('/change-avatar', upload.single('avatar'), (req, res) => {
   P.coroutine(function* () {
-    let
-      obj = {
-          srcFile: req.file.path,
-          width: 200,
-          height: 200,
-          destFile: `${process.cwd()}/public/users/${req.session.id}/user.jpg`
-      },
-      modify = yield pi.ProcessImage(obj),
-      dlt = yield pi.DeleteAllOfFolder(`${root}/public/temp/`)
+    let obj = {
+      srcFile: req.file.path,
+      width: 200,
+      height: 200,
+      destFile: `${process.cwd()}/public/users/${req.session.id}/user.jpg`
+    }
+
+    yield ProcessImage(obj)
+    yield DeleteAllOfFolder(`${root}/public/temp/`)
+
     res.json({ mssg: "Avatar changed!" })
   })()
 })
@@ -86,7 +91,8 @@ app.post('/resend_vl', (req, res) => {
           subject: "Activate your Notes App account",
           html: `<span>Hello, You received this message because you created an account on Notes App.<span><br><span>Click on button below to activate your account and explore.</span><br><br><a href='${url}' style='border: 1px solid #1b9be9; font-weight: 600; color: #fff; border-radius: 3px; cursor: pointer; outline: none; background: #1b9be9; padding: 4px 15px; display: inline-block; text-decoration: none;'>Activate</a>`
       }
-      mail(options).then(re => res.json({ mssg: "Verification link sent to your email!" }))
+      yield mail(options)
+      res.json({ mssg: "Verification link sent to your email!" })
   })()
 })
 
@@ -94,7 +100,7 @@ app.post('/deactivate', (req, res) => {
   P.coroutine(function* () {
     let
       { id, username } = req.session,
-      rmdir = util.promisify(fs.rmdir)
+      rmdir = promisify(fs.rmdir)
 
     yield db.query('DELETE FROM profile_views WHERE view_by=?', [id])
     yield db.query('DELETE FROM profile_views WHERE view_to=?', [id])
@@ -106,7 +112,7 @@ app.post('/deactivate', (req, res) => {
     yield db.query('DELETE FROM notes WHERE user=?', [id])
     yield db.query('DELETE FROM users WHERE id=?', [id])
 
-    yield pi.DeleteAllOfFolder(`${root}/public/users/${id}/`)
+    yield DeleteAllOfFolder(`${root}/public/users/${id}/`)
     yield rmdir(`${root}/public/users/${id}/`)
 
     req.session.id = null

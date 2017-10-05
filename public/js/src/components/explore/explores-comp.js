@@ -15,13 +15,11 @@ export default class Explores extends React.Component{
   render(){
     let
       { explore } = this.props,
-      map_explore = explore.map(e => {
-        return <Explores_list key={e.id} {...e} />
-      })
+      map_explore = explore.map(e => <Explores_list key={e.id} {...e} /> )
 
     return(
       <div className="explores" >
-        { explore.length == 0 ? <Nothing mssg={"No one to explore!"} /> : map_explore }
+        { explore.length == 0 ? <Nothing mssg="No one to explore!!" /> : map_explore }
         { explore.length != 0 ? <End/> : null }
       </div>
     )

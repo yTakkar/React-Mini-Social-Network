@@ -1,6 +1,6 @@
 import $ from 'jquery'
 import Notify from 'handy-notification'
-import * as fn from '../functions/functions'
+import { commonLogin } from '../functions/functions'
 
 $('form.form_register').submit(e => {
   e.preventDefault()
@@ -29,7 +29,7 @@ $('form.form_register').submit(e => {
       redirect: "/registered",
       defBtnValue: "Sign up for free",
     }
-    fn.commonLogin(signupOpt)
+    commonLogin(signupOpt)
 
   }
 
@@ -56,7 +56,7 @@ $('form.form_login').submit(e => {
       redirect: "/",
       defBtnValue: "Login to continue",
     }
-    fn.commonLogin(loginOpt)
+    commonLogin(loginOpt)
 
   }
 

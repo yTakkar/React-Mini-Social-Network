@@ -7,7 +7,7 @@ import Explores from './explores-comp'
 
 @connect(store => { return {} })
 
-export default class Explore extends React.Component{
+export default class Explore extends React.Component {
 
   componentDidMount = () => this.props.dispatch(get_explores())
 

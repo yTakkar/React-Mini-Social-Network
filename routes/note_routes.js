@@ -23,11 +23,10 @@ app.post('/get-note-details', (req, res) => {
 // FOR GETTING ALL THE DETAILS OF A NOTE BY A NOTE_ID
 app.post('/delete-note', (req, res) => {
   P.coroutine(function* () {
-    let
-      { note } = req.body,
-      likes = yield db.query('DELETE FROM likes WHERE note_id=?', [note]),
-      dlt_note = yield db.query('DELETE FROM notes WHERE note_id=?', [note])
-    res.json({ mssg: "Note deleted!" })
+    let { note } = req.body
+    yield db.query('DELETE FROM likes WHERE note_id=?', [note]),
+    yield db.query('DELETE FROM notes WHERE note_id=?', [note])
+    res.json({ mssg: "Note Deleted!!" })
   })()
 })
 
@@ -44,15 +43,15 @@ app.post('/create-note', (req, res) => {
   let
     { session, body } = req,
     insert = {
-        user: session.id,
-        username: session.username,
-        title: body.title,
-        content: body.content,
-        note_time: new Date().getTime()
+      user: session.id,
+      username: session.username,
+      title: body.title,
+      content: body.content,
+      note_time: new Date().getTime()
     }
   db.query('INSERT INTO notes SET ?', insert)
     .then(s => {
-      let n = Object.assign({}, insert, { note_id: s.insertId, mssg: "Note created!" })
+      let n = Object.assign({}, insert, { note_id: s.insertId })
       s.affectedRows == 1 ? res.json(n) : null
     })
     .catch(e => res.json(e))

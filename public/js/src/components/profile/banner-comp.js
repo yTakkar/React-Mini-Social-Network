@@ -20,18 +20,25 @@ export default class Banner extends React.Component{
 
 	follow = e => {
 		e.preventDefault()
-		let
-      { dispatch, user: { user_details: { id, username } } } = this.props,
-      obj = { user: id, username, dispatch, update_followers: true, done: () => this.setState({ is_following: true }) }
-		fn.follow(obj)
+		let { dispatch, user: { user_details: { id, username } } } = this.props
+    fn.follow({
+      user: id,
+      username,
+      dispatch,
+      update_followers: true,
+      done: () => this.setState({ is_following: true })
+    })
 	}
 
 	unfollow = e => {
     e.preventDefault()
-    let
-      { dispatch, user: { user_details: { id } } } = this.props,
-      obj = { user: id, dispatch, update_followers: true, done: () => this.setState({ is_following: false }) }
-    fn.unfollow(obj)
+    let { dispatch, user: { user_details: { id } } } = this.props
+    fn.unfollow({
+      user: id,
+      dispatch,
+      update_followers: true,
+      done: () => this.setState({ is_following: false })
+    })
 	}
 
 	toNotes = () => $('html, body').animate({ scrollTop: 390 }, 450)

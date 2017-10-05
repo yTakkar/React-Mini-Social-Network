@@ -58,7 +58,7 @@ export default class Profile extends React.Component{
 	render(){
 		let
 			{ invalid_user, notes } = this.state,
-			{ match, match: { params: { username }, url }, store: { user } } = this.props,
+			{ match, match: { params: { username }, url }, store: { user, notes: p_notes } } = this.props,
 			s_username = $('.data').data('username')
 
 		return(
@@ -78,13 +78,13 @@ export default class Profile extends React.Component{
 				<FadeIn duration="300ms" >
 					<div className="aligner">
 						<Banner url={match.url} notes={notes} />
-						<Filter_notes filter={this.filter} />
+						<Filter_notes filter={this.filter} notes_length={p_notes.notes.length} />
 						<Notes notes={notes} setState={this.setState} />
 					</div>
 				</FadeIn>
 
 				{ fn.e_v() ? <Route path={`/profile/${s_username}/create-note`} component={Overlay} /> : null }
-				{ fn.e_v() ? <Route path={`/profile/${s_username}/create-note`} component={CreateNote} some="takkar" /> : null }
+				{ fn.e_v() ? <Route path={`/profile/${s_username}/create-note`} component={CreateNote} /> : null }
 
 				<Route path={`${match.url}/followers`} component={Overlay} />
 				<Route path={`${match.url}/followers`} component={Followers} />

@@ -1,5 +1,5 @@
 import $ from 'jquery'
-import axios from 'axios'
+import { post } from 'axios'
 import Notify from 'handy-notification'
 import P from 'bluebird'
 
@@ -34,7 +34,7 @@ const commonLogin = options => {
     .addClass('a_disabled')
   overlay2.show()
 
-  axios.post(url, data)
+  post(url, data)
     .then(s => {
       let { data: { mssg, success } } = s
       if (success) {
@@ -58,14 +58,12 @@ const commonLogin = options => {
 }
 
 // FUNCTION TO CAPITALIZE FIRST LETTER OF A WORD
-const c_first = str => {
-  return str.charAt(0).toUpperCase()+str.substr(1)
-}
+const c_first = str =>
+  str.charAt(0).toUpperCase()+str.substr(1)
 
 // FUNCTION TO CHECK WHETHER ITS ME OR NOT
-const Me = user => {
-  return user == $('#data').data('session') ? true : false
-}
+const Me = user =>
+  user == $('#data').data('session') ? true : false
 
 // FUNCTION TO CHECK WHETHER EMAIL IS ACTIVATED ON NOT
 const e_v = () => {
@@ -86,7 +84,7 @@ const forProfile = obj => {
   P.coroutine(function *(){
 		let
 			{ dispatch, username, invalidUser } = obj,
-      valid = yield axios.post('/api/is-user-valid', { username }),
+      valid = yield post('/api/is-user-valid', { username }),
       s_username = $('.data').data('username')
 
     if(!valid.data){
@@ -94,7 +92,7 @@ const forProfile = obj => {
     } else {
 
       if (username != s_username) {
-        axios.post('/api/view-profile', { username })
+        post('/api/view-profile', { username })
         dispatch(follow_action.is_following(username))
       }
 
@@ -122,8 +120,8 @@ const edit_profile = options => {
     let
       { susername, semail, username, email, bio } = options,
       button = $('.e_done'),
-      { data: uCount} = yield axios.post('/api/what-exists', { what: "username", value: username }),
-      { data: eCount } = yield axios.post('/api/what-exists', { what: "email", value: email })
+      { data: uCount} = yield post('/api/what-exists', { what: "username", value: username }),
+      { data: eCount } = yield post('/api/what-exists', { what: "email", value: email })
 
     button.
       addClass('a_disabled')
@@ -140,9 +138,7 @@ const edit_profile = options => {
         Notify({ value: "Email already exists!!" })
     } else {
 
-      let
-        edit = yield axios.post('/api/edit-profile', { username, email, bio }),
-        { mssg, success } = edit.data
+      let { data: { mssg, success } } = yield post('/api/edit-profile', { username, email, bio })
 
       Notify({
         value: mssg,
@@ -202,10 +198,10 @@ const resend_vl = () => {
 
   o.show()
 
-  axios.post('/api/resend_vl')
+  post('/api/resend_vl')
     .then(s => {
-      console.log(s.data)
-      Notify({ value: s.data.mssg })
+      let { mssg } = s.data
+      Notify({ value: mssg })
       vl
         .removeClass('a_disabled')
         .text('Send verification link')
@@ -227,12 +223,15 @@ const deactivate = () => {
 
   o.show()
 
-  axios.post('/api/deactivate')
+  post('/api/deactivate')
     .then(d => {
       btn
         .removeClass('a_disabled')
         .text('Deactivated')
-      Notify({ value: "Deactivated", done: () => location.href = "/login" })
+      Notify({
+        value: "Deactivated",
+        done: () => location.href = "/login"
+      })
     })
 }
 
@@ -241,15 +240,14 @@ const createNote = options => {
   let { title, content, dispatch, history } = options
 
   if(!title || !content){
-    Notify({ value: "Values are missing!" })
+    Notify({ value: "Values are missing!!" })
   } else {
 
-  axios.post('/api/create-note', { title, content })
+  post('/api/create-note', { title, content })
     .then(s => {
-      let { content, title, user, username, note_id, note_time, mssg } = s.data
-      dispatch(notes_action.updateNote({ content, title, user, username, note_id, note_time }))
+      dispatch(notes_action.updateNote(s.data))
       history.goBack()
-      Notify({ value: mssg })
+      Notify({ value: 'Note Created!!' })
     })
     .catch(e => console.log(e) )
 
@@ -259,7 +257,7 @@ const createNote = options => {
 // FUNCTION FOR DELETING NOTE
 const deleteNote = options => {
   let { note, dispatch, history } = options
-  axios.post('/api/delete-note', { note })
+  post('/api/delete-note', { note })
     .then(s => {
       dispatch(notes_action.deleteNote(note))
       history.goBack()
@@ -277,7 +275,7 @@ const editNote = options => {
     setState({ editing: true })
   } else {
 
-    axios.post('/api/edit-note', { title, content, note_id })
+    post('/api/edit-note', { title, content, note_id })
       .then(s => {
         Notify({ value: s.data.mssg })
         dispatch(notes_action.editNote({ note_id, title, content }))
@@ -302,7 +300,7 @@ const follow = options => {
     obj = { ...defaults, ...options },
     { user, username, dispatch, update_followers, update_followings, done } = obj
 
-  axios.post('/api/follow', { user, username })
+  post('/api/follow', { user, username })
     .then(s => {
 
       let fwing = {
@@ -335,7 +333,7 @@ const unfollow = options => {
     obj = { ...defaults, ...options },
     { user, dispatch, update_followers, update_followings, done } = obj
 
-  axios.post('/api/unfollow', { user })
+  post('/api/unfollow', { user })
     .then(s => {
       update_followers ? dispatch(follow_action.unfollower($('.data').data('session'))) : null
       update_followings ? dispatch(follow_action.unfollowing(user)) : null
@@ -351,7 +349,7 @@ const unfollow = options => {
 const like = options => {
   let { note, dispatch, done } = options
 
-  axios.post('/api/like', { note })
+  post('/api/like', { note })
     .then(s => {
       Notify({ value: "Liked" })
       dispatch(note_int_action.liked(s.data))
@@ -364,9 +362,8 @@ const like = options => {
 const unlike = options => {
   let { note, dispatch, done } = options
 
-  axios.post('/api/unlike', { note })
+  post('/api/unlike', { note })
     .then(u => {
-      console.log(u.data)
       Notify({ value: "Unliked" })
       dispatch(note_int_action.unliked(note))
       done()

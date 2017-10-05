@@ -1,8 +1,8 @@
-import axios from 'axios'
+import { post } from 'axios'
 
 const getNotes = get => {
 	return dispatch => {
-		axios.post('/api/get-notes', { get })
+		post('/api/get-notes', { get })
 			.then(notes => dispatch({ type: "GET_NOTES", payload: notes.data }) )
 			.catch(err => dispatch({ type: "GET_NOTES_ERR", payload: err }) )
 	}
@@ -31,7 +31,7 @@ const editNote = note_details => {
 
 const getFeeds = () => {
 	return dispatch => {
-		axios.post('/api/feeds')
+		post('/api/feeds')
 			.then(notes => dispatch({ type: "GET_FEEDS", payload: notes.data }) )
 			.catch(err => console.log(err) )
 	}
