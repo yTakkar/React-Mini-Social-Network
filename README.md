@@ -1,6 +1,13 @@
 # Single-Page-Social-Network
 A reactive single-page-social-network created with React. Screenshots below!!
 
+# Another Versions
+**[Vue Version](https://github.com/yTakkar/Vue-Mini-Social-Network)**
+
+**[Golang Version](https://github.com/yTakkar/Go-Page-Social-Network)**
+
+**[Ruby On Rails Version](https://github.com/yTakkar/Rails-Mini-Social-Network)**
+
 # Quick liks
 1. [Screenshots](#screenshots)
 2. [Own the project](#own-the-project)
