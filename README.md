@@ -1,5 +1,5 @@
 # Single-Page-Social-Network
-A single-page social-network developed with MERN stack & Redux. Screenshots below!!
+A reactive single-page-social-network created with React. Screenshots below!!
 
 # Quick liks
 1. [Screenshots](#screenshots)
