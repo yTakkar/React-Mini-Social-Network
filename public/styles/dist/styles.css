@@ -316,7 +316,7 @@ input[type="file"] {
   right: 0px;
   bottom: 0px;
   z-index: 2;
-  background: #eeeeee;
+  background: #eeeeee !important;
 }
 .overlay-2 {
   position: fixed;
@@ -833,6 +833,10 @@ select:focus {
   text-align: center;
   font-size: 14px;
   margin-top: 7px;
+}
+.aligner .user_banner .user_info .no_bio {
+  font-style: italic;
+  color: #66757f;
 }
 .aligner .user_banner .user_info hr {
   margin: 25px 0px 10px 0px;

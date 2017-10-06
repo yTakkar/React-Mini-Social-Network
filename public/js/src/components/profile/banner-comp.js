@@ -12,7 +12,7 @@ import * as fn from '../../functions/functions'
 	}
 })
 
-export default class Banner extends React.Component{
+export default class Banner extends React.Component {
 
 	state = { is_following: false }
 
@@ -78,8 +78,16 @@ export default class Banner extends React.Component{
           <div className="user_info">
             <Link to='#' className="user_main_link">{user_details.username}</Link>
             <span className="user_no_notes">{user_details.email}</span>
-            <div className="user_bio">
-              <span>{user_details.bio}</span>
+            <div className={`user_bio ${!user_details.bio ? 'no_bio' : null}`}>
+              {
+                user_details.bio ?
+                  <span>{user_details.bio}</span>
+                :
+                  fn.Me(user_details.id) ?
+                    <span>You have no bio!!</span>
+                  :
+                    <span>{`${user_details.username} has no bio!!`}</span>
+              }
             </div>
             <hr />
             <div className="user_stats">
