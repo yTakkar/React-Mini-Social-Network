@@ -146,12 +146,11 @@ export default class View_note extends React.Component{
                     onClick={this.like}
                   ><i class="material-icons">favorite_border</i></span>
               }
+              <Link
+                to={`${match.url}/likes`}
+                className={`v_n_likes sec_btn ${editing ? 'sec_btn_disabled' : ''}`}
+              >{`${likes.length} likes`}</Link>
             </div>
-
-            <Link
-              to={`${match.url}/likes`}
-              className={`v_n_likes sec_btn ${editing ? 'sec_btn_disabled' : ''}`}
-            >{`${likes.length} likes`}</Link>
 
             {
               fn.Me(user) ?

@@ -17,7 +17,7 @@ const
 // Requiring project files
 const
   uRoutes = require('./routes/user-routes'),
-  apiRoutes = require('./routes/rest-routes'),
+  apiRoutes = require('./routes/api-routes'),
   mRoutes = require('./routes/main-routes'),
   followRoutes = require('./routes/follow-routes'),
   noteRoutes = require('./routes/note_routes'),

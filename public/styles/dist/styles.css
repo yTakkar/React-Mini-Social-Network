@@ -1047,6 +1047,7 @@ select:focus {
 }
 .view_note .v_n_bottom .v_n_int {
   position: absolute;
+  display: flex;
   color: #66757f;
   bottom: 10px;
   left: 10px;

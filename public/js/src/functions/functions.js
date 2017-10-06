@@ -292,7 +292,7 @@ const follow = options => {
     defaults = {
       user: null,
       username: null,
-      dispatch,
+      dispatch: () => { return null },
       update_followers: false,
       update_followings: false,
       done: () => { return null }
@@ -303,12 +303,16 @@ const follow = options => {
   post('/api/follow', { user, username })
     .then(s => {
 
-      let fwing = {
-        follow_id: s.data.follow_id,
-        follow_time: s.data.follow_time,
-        follow_to: user,
-        follow_to_username: username
-      }
+      let
+        { follow_id, follow_time } = s.data,
+        fwing = {
+          follow_id: follow_id,
+          follow_by: $('.data').data('session'),
+          follow_by_username: $('.data').data('username'),
+          follow_time: follow_time,
+          follow_to: user,
+          follow_to_username: username
+        }
 
       update_followers ? dispatch(follow_action.follower(s.data)) : null
       update_followings ? dispatch(follow_action.following(fwing)) : null
@@ -325,7 +329,7 @@ const unfollow = options => {
   let
     defaults = {
       user: null,
-      dispatch: null,
+      dispatch: () => { return null },
       update_followers: false,
       update_followings: false,
       done: () => { return null }

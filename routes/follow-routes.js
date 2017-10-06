@@ -22,14 +22,12 @@ app.post('/follow', (req, res) => {
       insert = {
         follow_by: session,
         follow_by_username: susername,
+        follow_to: user,
+        follow_to_username: username,
         follow_time: new Date().getTime()
       },
-      insert_two = {
-        follow_to: user,
-        follow_to_username: username
-      },
-      f = yield db.query('INSERT INTO follow_system SET ?', Object.assign({}, insert, insert_two))
-    res.json(Object.assign({}, insert, { follow_id: f.insertId }))
+      f = yield db.query('INSERT INTO follow_system SET ?', insert)
+    res.json({ ...insert, follow_id: f.insertId })
   })()
 })
 
@@ -45,7 +43,7 @@ app.post('/get-followers', (req, res) => {
   P.coroutine(function* () {
     let
       id = yield db.getId(req.body.username),
-      followers = yield db.query('SELECT follow_id, follow_by, follow_by_username, follow_time FROM follow_system WHERE follow_to = ? ORDER BY follow_time DESC', [ id ])
+      followers = yield db.query('SELECT * FROM follow_system WHERE follow_to = ? ORDER BY follow_time DESC', [ id ])
     res.json(followers)
   })()
 })

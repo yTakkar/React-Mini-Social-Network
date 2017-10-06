@@ -26,12 +26,9 @@ export default class Like_items extends React.Component{
     let
       { like_by, like_by_username, dispatch } = this.props,
       getid = $('.profile_data').data('getid'),
-      user = getid ? getid : null,
       obj = {
         user: like_by,
-        username: like_by_username,    // only when update_followings=true
-        dispatch,
-        update_followings: fn.Me(user),
+        username: like_by_username,
         done: () => this.setState({ is_following: true })
       }
     fn.follow(obj)
@@ -42,11 +39,8 @@ export default class Like_items extends React.Component{
     let
       { like_by, dispatch } = this.props,
       getid = $('.profile_data').data('getid'),
-      user = getid ? getid : null,
       obj = {
         user: like_by,
-        dispatch,
-        update_followings: fn.Me(user),
         done: () => this.setState({ is_following: false })
       }
     fn.unfollow(obj)
