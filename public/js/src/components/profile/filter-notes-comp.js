@@ -7,13 +7,19 @@ export default class Filter_notes extends React.Component {
 
 		return (
 			<div className="filter_notes" >
-				<input
-					type="text"
-					placeholder="Search notes by title.."
-					autoFocus={ notes_length > 0 }
-					autoComplete={false}
-					spellCheck={false}
-					onChange={filter} />
+        {
+          notes_length != 0 ?
+            <input
+              type="text"
+              placeholder="Search notes by title.."
+              autoFocus={notes_length > 0}
+              autoComplete={false}
+              spellCheck={false}
+              onChange={filter}
+            />
+          :
+            null
+        }
 			</div>
     )
 
