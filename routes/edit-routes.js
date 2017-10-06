@@ -87,12 +87,12 @@ app.post('/resend_vl', (req, res) => {
       [{ email }] = e_q,
       url = `http://localhost:${process.env.PORT}/deep/most/topmost/activate/${id}`,
       options = {
-          to: email,
-          subject: "Activate your Notes App account",
-          html: `<span>Hello, You received this message because you created an account on Notes App.<span><br><span>Click on button below to activate your account and explore.</span><br><br><a href='${url}' style='border: 1px solid #1b9be9; font-weight: 600; color: #fff; border-radius: 3px; cursor: pointer; outline: none; background: #1b9be9; padding: 4px 15px; display: inline-block; text-decoration: none;'>Activate</a>`
+        to: email,
+        subject: "Activate your Notes App account",
+        html: `<span>Hello, You received this message because you created an account on Notes App.<span><br><span>Click on button below to activate your account and explore.</span><br><br><a href='${url}' style='border: 1px solid #1b9be9; font-weight: 600; color: #fff; border-radius: 3px; cursor: pointer; outline: none; background: #1b9be9; padding: 4px 15px; display: inline-block; text-decoration: none;'>Activate</a>`
       }
       yield mail(options)
-      res.json({ mssg: "Verification link sent to your email!" })
+      res.json({ mssg: "Verification link sent to your email!~" })
   })()
 })
 

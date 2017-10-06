@@ -71,13 +71,13 @@ app.post('/view-profile', (req, res) => {
       time = parseInt(new Date().getTime() - parseInt(dtime))
 
     if (time >= 120000 || !dtime) {
-      insert = {
-          view_by: session,
-          view_by_username: username,
-          view_to: id,
-          view_time: new Date().getTime()
-      },
-      view = yield db.query('INSERT INTO profile_views SET ?', insert)
+      let insert = {
+        view_by: session,
+        view_by_username: username,
+        view_to: id,
+        view_time: new Date().getTime()
+      }
+      yield db.query('INSERT INTO profile_views SET ?', insert)
     }
 
     res.json('Hello, World!!')

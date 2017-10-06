@@ -31,10 +31,9 @@ app.post('/like', (req, res) => {
 
 app.post('/unlike', (req, res) => {
   P.coroutine(function* () {
-    let
-      { session, body } = req,
-      unlike = yield db.query('DELETE FROM likes WHERE note_id=? AND like_by=?', [body.note, session.id])
-    res.json(unlike)
+    let { session, body } = req
+    yield db.query('DELETE FROM likes WHERE note_id=? AND like_by=?', [body.note, session.id])
+    res.json(null)
   })()
 })
 
