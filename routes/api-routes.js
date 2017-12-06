@@ -25,7 +25,7 @@ app.post('/get-details', (req, res) => {
 })
 
 // FOR EXPLORING NEW USERS
-app.post('/explore', async function(req, res) {
+app.post('/explore', async (req, res) => {
   let
     { id: session } = req.session,
     exp = [],
