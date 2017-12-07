@@ -31,7 +31,7 @@ app.post('/user/login', (req, res) => {
 })
 
 app.get('/logout', mw.LoggedIn, (req, res) => {
-  req.session.id = null
+  req.session = {}
 	let url = (req.session.id == null) ? "/login" : "/"
 	res.redirect(url)
 })

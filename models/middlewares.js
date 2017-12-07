@@ -2,11 +2,11 @@ const db = require('./db')
 const P = require('bluebird')
 
 const LoggedIn = (req, res, next) => {
-  req.session.id ? next() : res.redirect('/login')
+  !req.session.id ? res.redirect('/login') : next()
 }
 
 const NotLoggedIn = (req, res, next) => {
-  !req.session.id ? next() : res.redirect('/')
+  req.session.id ? res.redirect('/') : next()
 }
 
 const MainRedirect = (req, res, next) => {

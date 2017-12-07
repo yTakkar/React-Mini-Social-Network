@@ -78,11 +78,17 @@ const signup = (req, res) => {
               session.id = insertId
               session.username = username
               session.email_verified = "no"
-              res.json({ mssg: `Hello, ${session.username}!!`, success: true })
+              res.json({
+                mssg: `Hello, ${session.username}!!`,
+                success: true
+              })
             })
             .catch(me => {
               hl.error(me)
-              res.json({ mssg: `Hello, ${session.username}. Mail could not be sent!!`, success: true })
+              res.json({
+                mssg: `Hello, ${session.username}. Mail could not be sent!!`,
+                success: true
+              })
             })
 
         }
@@ -138,14 +144,15 @@ const login = (req, res) => {
 const registered = (req, res) => {
   P.coroutine(function *(){
     let
-      title = "You are now registered!",
-      mssg = "Email has been sent. Check your inbox and click on the provided link!!",
       { id } = req.session,
       [{ email_verified }] = yield db.query("SELECT email_verified FROM users WHERE id=? LIMIT 1", [id]),
-      options = Object.assign({}, { title }, { mssg })
+      options = {
+        title: "You are now registered!!",
+        mssg: "Email has been sent. Check your inbox and click on the provided link!!"
+      }
 
     email_verified == "yes" ?
-      res.redirect(`/deep/most/topmost/activate/${id}`)
+      res.redirect('/')
     :
       res.render("registered", { options })
 
