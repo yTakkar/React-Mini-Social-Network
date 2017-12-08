@@ -3,7 +3,7 @@ require('dotenv').config()
 // Installed packages
 const
   express = require('express'),
-  port = process.env.PORT,
+  { env: { PORT, SESSION_SECRET_LETTER } } = process,
   hbs = require('express-handlebars'),
   path = require('path'),
   logger = require('morgan'),
@@ -43,7 +43,7 @@ app.use(bodyParser.urlencoded({
 app.use(validator())
 app.use(session({
   cookieName: "session",
-  secret: process.env.SESSION_SECRET_LETTER,
+  secret: SESSION_SECRET_LETTER,
   duration: 30 * 60 * 1000,
   activeDuration: 5 * 60 * 1000
 }))
@@ -61,4 +61,4 @@ app.use('/api', nIntRoutes)
 app.use('/api', editRoutes)
 app.use('/', mRoutes)
 
-app.listen(port, () => hl.rainbow('App running..'))
+app.listen(PORT, () => hl.rainbow('App running..'))
