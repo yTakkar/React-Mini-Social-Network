@@ -33,7 +33,7 @@ app.set('view engine', 'hbs')
 
 // Middlewares
 app.use(favicon(
-  path.join(__dirname + "/public/images/favicon/favicon.ico")
+  path.join(__dirname + "/public/images/favicon/favicon.png")
 ))
 // app.use(logger("dev"))
 app.use(bodyParser.json())
