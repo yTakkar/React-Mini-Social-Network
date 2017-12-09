@@ -66,7 +66,7 @@ export default class Profile extends React.Component{
 
 				{ invalid_user ? <Redirect to="/error/notfound" /> : null }
 
-        <Title value={`@${username} • Notes App`} />
+        <Title value={`@${username}`} />
 
 				<div
 					class='profile-data'

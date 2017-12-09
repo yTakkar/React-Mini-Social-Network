@@ -29,7 +29,7 @@ export default class Likes extends React.Component{
 
     return(
         <div class='likes modal modal_big' >
-          <Title value="Likes • Notes App" />
+          <Title value="Likes" />
           <FadeIn duration="300ms" >
             <div className="likes_header modal_header">
               <span className="title" >Likes</span>

@@ -31,7 +31,7 @@ export default class Deactivate extends React.Component{
 
     return (
       <div>
-        <Title value="Deactivate your account • Notes App" />
+        <Title value="Deactivate your account" />
         <FadeIn duration="300ms" >
           <div class="registered deactivate" >
             <span className="deactivate_title" >Deactivate your account?</span>

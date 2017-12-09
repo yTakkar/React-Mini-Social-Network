@@ -28,7 +28,7 @@ export default class Create_note extends React.Component{
   render(){
     return (
       <div class='create_note modal'>
-        <Title value="Create note • Notes App" />
+        <Title value="Create note" />
         <FadeIn duration="300ms" >
           <form onSubmit={this.addNote} >
             <div className="c_n_header modal_header">

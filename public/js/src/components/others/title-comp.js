@@ -6,7 +6,7 @@ export default class Title extends React.Component {
   render(){
     return (
       <Helmet>
-        <title>{ this.props.value }</title>
+        <title>{ this.props.value } • Mini Social Network</title>
       </Helmet>
     )
   }

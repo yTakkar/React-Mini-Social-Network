@@ -104,7 +104,7 @@ export default class View_note extends React.Component{
 
         { invalid_note ? <Redirect to="/error/note_notfound" /> : null }
 
-        <Title value="View note • Notes App" />
+        <Title value="View note" />
 
         <FadeIn duration="300ms" >
           <div className="v_n_header modal_header">

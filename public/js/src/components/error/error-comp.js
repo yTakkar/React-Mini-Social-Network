@@ -25,7 +25,7 @@ export default class Error extends React.Component{
 
     return(
       <div class='error' >
-        <Title value="Oops! {title} • Notes App" />
+        <Title value="Oops! {title}" />
         <FadeIn duration="300ms" >
           <div className="welcome_div error_div">
             <div className="error_info">

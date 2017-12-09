@@ -77,7 +77,7 @@ export default class Edit extends React.Component{
       return(
         <div class='edit'>
 
-          <Title value="Edit profile • Notes App" />
+          <Title value="Edit profile" />
 
           <FadeIn duration="300ms" className="edit_animation" >
             <div class="edit_info">

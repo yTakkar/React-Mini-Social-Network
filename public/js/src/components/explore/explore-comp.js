@@ -25,7 +25,7 @@ export default class Explore extends React.Component {
     return(
       <div className="explore" >
 
-        <Title value="Explore • Notes App" />
+        <Title value="Explore" />
 
         <FadeIn duration="300ms" >
           <div className="explores" >
