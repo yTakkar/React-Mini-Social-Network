@@ -12,6 +12,6 @@ export default class Title extends React.Component {
   }
 }
 
-React.propTypes = {
+Title.propTypes = {
   value: PropTypes.string
 }
