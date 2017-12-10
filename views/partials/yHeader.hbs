@@ -1,1 +1,11 @@
 {{> tophead }}
+
+<div class="header_loggedin">
+  <div class="left">
+    <a href="/">Home</a>
+  </div>
+  <div class="right">
+    <a href="/profile/{{ session.username }}">Profile</a>
+    <a href="/logout">Logout</a>
+  </div>
+</div>
