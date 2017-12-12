@@ -38,7 +38,7 @@ app.post('/edit-profile', (req, res) => {
 
     if (!errors.isEmpty()) {
         let array = []
-        result = errors.array().forEach(item => array.push(item.msg))
+        errors.array().forEach(item => array.push(item.msg))
         res.json({ mssg: array })
     } else {
 
