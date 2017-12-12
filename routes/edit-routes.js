@@ -82,7 +82,7 @@ app.post('/change-avatar', upload.single('avatar'), (req, res) => {
 app.post('/resend_vl', (req, res) => {
   P.coroutine(function* () {
     let
-      { id } = req.session
+      { id } = req.session,
       e_q = yield db.query("SELECT email FROM users WHERE id=?", [ id ]),
       [{ email }] = e_q,
       url = `http://localhost:${process.env.PORT}/deep/most/topmost/activate/${id}`,
