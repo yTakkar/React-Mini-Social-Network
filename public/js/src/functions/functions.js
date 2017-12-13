@@ -162,7 +162,7 @@ const change_avatar = options => {
     { file } = options,
     form = new FormData()
 
-		$('.overlay-2').show()
+	$('.overlay-2').show()
     $('.avatar_span')
       .text('Changing avatar..')
       .addClass('sec_btn_disabled')

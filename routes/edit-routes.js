@@ -68,7 +68,7 @@ app.post('/change-avatar', upload.single('avatar'), (req, res) => {
       srcFile: req.file.path,
       width: 200,
       height: 200,
-      destFile: `${process.cwd()}/public/users/${req.session.id}/user.jpg`
+      destFile: `${root}/public/users/${req.session.id}/user.jpg`
     }
 
     yield ProcessImage(obj)
