@@ -28,12 +28,12 @@ A reactive single-page-social-network created with React. Screenshots below!!
 UI is taken from [Instagam-clone](https://github.com/yTakkar/Instagram-Clone) I created!!
 
 # Own the project
-1. First install all dependencies with npm or Yarn:
+1. First install all dependencies:
     ```bash
     # with npm
     npm install
     
-    # or yarn
+    # or with yarn
     yarn
     ```
 
