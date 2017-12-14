@@ -29,11 +29,11 @@ UI is taken from [Instagam-clone](https://github.com/yTakkar/Instagram-Clone) I 
 
 # Own the project
 1. First install all dependencies with npm or Yarn:
-    ```javascript
+    ```bash
+    # with npm
     npm install
-    ```
-    or
-    ```javascript
+    
+    # or yarn
     yarn
     ```
 
