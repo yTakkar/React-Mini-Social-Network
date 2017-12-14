@@ -26,7 +26,10 @@ export default class Edit extends React.Component{
   }
 
   componentDidMount = () => {
-    this.props.dispatch(user_action.user_details($('.data').data('username')))
+    let
+      { dispatch } = this.props,
+      username = $('.data').data('username')
+    dispatch(user_action.user_details(username))
   }
 
   componentWillReceiveProps = ({ user: { user_details: { username, email, bio } }}) => {

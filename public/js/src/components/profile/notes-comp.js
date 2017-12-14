@@ -15,8 +15,11 @@ import * as fn from '../../functions/functions'
 
 export default class Notes extends React.Component{
 	render(){
-		let { notes, user: { user_details: { username, id } } } = this.props
-		let map_notes = notes.map(note => <Note key={note.note_id} {...note} /> )
+    let
+      { notes,
+        user: { user_details: { username, id } }
+      } = this.props,
+		  map_notes = notes.map(note => <Note key={note.note_id} {...note} /> )
 
 		return(
 			<div class='notes' >

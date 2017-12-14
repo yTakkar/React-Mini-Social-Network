@@ -16,7 +16,9 @@ export default class Banner extends React.Component {
 
 	state = { is_following: false }
 
-	componentWillReceiveProps = ({ follow: { is_following } }) => this.setState({ is_following })
+	componentWillReceiveProps = ({ follow: { is_following } }) => {
+    this.setState({ is_following })
+  }
 
 	follow = e => {
 		e.preventDefault()
@@ -45,7 +47,11 @@ export default class Banner extends React.Component {
 
 	render(){
     let
-      { url, user: { user_details }, notes, follow: { profile_views, followers, followings} } = this.props,
+      { url,
+        user: { user_details },
+        notes,
+        follow: { profile_views, followers, followings}
+      } = this.props,
       { is_following } = this.state,
       s_username = $('.data').data('username')
 

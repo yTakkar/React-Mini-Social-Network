@@ -36,7 +36,11 @@ export default class Profile extends React.Component{
 	iur = () => this.setState({ invalid_user: true })
 
 	componentDidMount = () => {
-		let { match: { params: { username } }, dispatch, store: { user } } = this.props
+		let {
+      match: { params: { username } },
+      dispatch,
+      store: { user }
+    } = this.props
 		fn.forProfile({ dispatch, username, invalidUser: this.iur })
 	}
 

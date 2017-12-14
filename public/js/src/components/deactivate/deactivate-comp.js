@@ -16,7 +16,7 @@ export default class Deactivate extends React.Component{
     e ? e.preventDefault() : null
     switch (what) {
       case "deactivate":
-        this.setState({ deactivate: !this.state.deactivate })
+        this.setState(state => ({ deactivate: !state.deactivate }))
         break
     }
   }
