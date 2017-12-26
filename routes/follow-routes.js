@@ -90,7 +90,7 @@ app.post('/get-profile-views', (req, res) => {
     let
       { username } = req.body,
       id = yield db.getId(username),
-      [{ count }] = yield db.query('SELECT COUNT(view_id) AS count FROM profile_views WHERE view_to = ? ORDER BY view_time DESC', [id])
+      [{ count }] = yield db.query('SELECT COUNT(view_id) AS count FROM profile_views WHERE view_to = ?', [id])
     res.json(count)
   })()
 })
