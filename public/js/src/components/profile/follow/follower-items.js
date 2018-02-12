@@ -16,11 +16,11 @@ export default class Follower_items extends React.Component{
 
   state = { is_following: false }
 
-  componentDidMount() {
+  componentDidMount = async () => {
     let { follow_by, follow_by_username } = this.props
-    if(!fn.Me(follow_by)){
-      axios.post('/api/is-following', { username: follow_by_username })
-        .then(s => this.setState({ is_following: s.data }) )
+    if(!fn.Me(follow_by)) {
+      let { data } = await axios.post('/api/is-following', { username: follow_by_username })
+      this.setState({ is_following: data })
     }
   }
 

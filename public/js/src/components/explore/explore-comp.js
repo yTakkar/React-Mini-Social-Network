@@ -20,7 +20,9 @@ export default class Explore extends React.Component {
   render(){
     let
       { explore } = this.props,
-      map_explore = explore.map(e => <Explores_list key={e.id} {...e} />)
+      map_explore = explore.map(e =>
+        <Explores_list key={e.id} {...e} />
+      )
 
     return(
       <div className="explore" >

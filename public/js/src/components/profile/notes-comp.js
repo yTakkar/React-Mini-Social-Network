@@ -19,7 +19,9 @@ export default class Notes extends React.Component{
       { notes,
         user: { user_details: { username, id } }
       } = this.props,
-		  map_notes = notes.map(note => <Note key={note.note_id} {...note} /> )
+      map_notes = notes.map(note =>
+        <Note key={note.note_id} {...note} />
+      )
 
 		return(
 			<div class='notes' >

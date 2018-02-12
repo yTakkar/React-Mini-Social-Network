@@ -16,9 +16,8 @@ export default class Banner extends React.Component {
 
 	state = { is_following: false }
 
-	componentWillReceiveProps = ({ follow: { is_following } }) => {
+	componentWillReceiveProps = ({ follow: { is_following } }) =>
     this.setState({ is_following })
-  }
 
 	follow = e => {
 		e.preventDefault()

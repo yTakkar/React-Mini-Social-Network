@@ -32,26 +32,11 @@ export default class Edit extends React.Component{
     dispatch(user_action.user_details(username))
   }
 
-  componentWillReceiveProps = ({ user: { user_details: { username, email, bio } }}) => {
+  componentWillReceiveProps = ({ user: { user_details: { username, email, bio } }}) =>
     this.setState({ username, email, bio })
-  }
 
-  update_ = (e, of) => {
-    let v = e.target.value
-    switch (of) {
-      case "username":
-        this.setState({ username: v })
-        break
-      case "email":
-        this.setState({ email: v })
-        break
-      case "bio":
-        this.setState({ bio: v })
-        break
-      case "file":
-        this.setState({ file: v })
-        break
-    }
+  update_ = (e, what) => {
+    this.setState({ [what]: e.target.value })
   }
 
   edit_profile = e => {

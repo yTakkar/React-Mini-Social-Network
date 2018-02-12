@@ -25,7 +25,9 @@ export default class Likes extends React.Component{
   render(){
     let
       { note_int: { likes, note_details: { note_id } } } = this.props,
-      map_l = likes.map(l => <Like_items key={l.like_id} {...l} /> )
+      map_l = likes.map(l =>
+        <Like_items key={l.like_id} {...l} />
+      )
 
     return(
         <div class='likes modal modal_big' >

@@ -32,30 +32,21 @@ export default class View_note extends React.Component{
     invalid_note: false
   }
 
-  componentDidMount() {
+  componentDidMount = async () => {
     let { match: { params: { note } }, dispatch } = this.props
-
-    axios.post('/api/liked-or-not', { note }).then(l => this.setState({ liked: l.data }) )
-
+    let { data } = await axios.post('/api/liked-or-not', { note })
+    this.setState({ liked: data })
     dispatch(note_int_action.note_details(note))
     dispatch(note_int_action.likes(note))
   }
 
-  componentWillReceiveProps = ({ note_int: { note_details: { note_id } } }) => {
+  componentWillReceiveProps = ({ note_int: { note_details: { note_id } } }) =>
     !note_id ? this.setState({ invalid_note: true }) : null
-  }
 
   toggle_ = (e, what) => {
     e ? e.preventDefault() : null
-    switch (what) {
-      case "deleting":
-        this.setState({ deleting: !this.state.deleting })
-        break
-      case "editing":
-        this.setState({ editing: !this.state.editing })
-        $('.v_n_edit').blur()
-        break
-    }
+    this.setState({ [what]: !this.state[what] })
+    what == 'editing' ? $('.v_n_edit').blur() : null
   }
 
   back = e => fn.back(e, this.props.history)

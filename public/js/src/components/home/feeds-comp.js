@@ -17,7 +17,9 @@ export default class Feeds extends React.Component{
   render(){
     let
       { notes: { feeds } } = this.props,
-      map_feeds = feeds.map(feed => <Note key={feed.note_id} {...feed} /> )
+      map_feeds = feeds.map(feed =>
+        <Note key={feed.note_id} {...feed} />
+      )
 
     return(
       <div class='feeds_wrapper' >

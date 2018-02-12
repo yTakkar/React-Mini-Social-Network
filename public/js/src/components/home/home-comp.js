@@ -17,7 +17,8 @@ import * as note_action from '../../actions/notes-action'
 
 export default class Home extends React.Component{
 
-  componentDidMount = () => this.props.dispatch(note_action.getFeeds())
+  componentDidMount = () =>
+    this.props.dispatch(note_action.getFeeds())
 
   render(){
     let

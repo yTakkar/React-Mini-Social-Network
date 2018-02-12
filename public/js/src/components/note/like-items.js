@@ -14,11 +14,12 @@ export default class Like_items extends React.Component{
 
   state = { is_following: false }
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     let { like_by, like_by_username: username } = this.props
-    !fn.Me(like_by) ?
-      axios.post('/api/is-following', { username }).then(is => this.setState({ is_following: is.data }) )
-    : null
+    if(!fn.Me(like_by)) {
+      let { data } = await axios.post('/api/is-following', { username })
+      this.setState({ is_following: data })
+    }
   }
 
   follow = e => {

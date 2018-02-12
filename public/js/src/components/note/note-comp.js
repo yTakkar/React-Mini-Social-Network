@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 export default class Note extends React.Component{
   render(){
     let { title, content, note_id, user, username, note_time } = this.props
+
     return(
       <Link to={{ pathname:`/view-note/${note_id}`, state: { modal: true } }}>
         <div class='note' data-note={note_id}  >

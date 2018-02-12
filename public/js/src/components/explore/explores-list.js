@@ -11,10 +11,12 @@ export default class Explores_list extends React.Component{
     is_following: false
   }
 
-  componentDidMount = () => {
-    let { dispatch, id, username } = this.props
-    axios.post('/api/no-of-notes', { user: id }).then(s => this.setState({ no_of_notes: s.data }) )
-    axios.post('/api/is-following', { username }).then(s => this.setState({ is_following: s.data }) )
+  componentDidMount = async () => {
+    let
+      { dispatch, id, username } = this.props,
+      { data: no_of_notes } = await axios.post('/api/no-of-notes', { user: id }),
+      { data: is_following } = await axios.post('/api/is-following', { username })
+    this.setState({ no_of_notes, is_following })
   }
 
   follow = e => {
