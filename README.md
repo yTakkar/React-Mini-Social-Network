@@ -1,9 +1,9 @@
 # Single-Page-Social-Network
 A reactive single-page-social-network created with React. Screenshots below!!
 
-# Another Versions
-**[React-Instagram-Clone](https://github.com/yTakkar/React-Instagram-Clone-2.0)**
+**[Please visit this link](https://github.com/yTakkar/React-Instagram-Clone-2.0)** for the updated version of this project.
 
+# Another Versions
 **[Vue Version](https://github.com/yTakkar/Vue-Mini-Social-Network)**
 
 **[Golang Version](https://github.com/yTakkar/Go-Page-Social-Network)**
