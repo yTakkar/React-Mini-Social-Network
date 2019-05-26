@@ -1,6 +1,8 @@
 # Single-Page-Social-Network
 A reactive single-page-social-network created with React. Screenshots below!!
 
+**No longer maintained. But it works**
+
 **[Please visit this link](https://github.com/yTakkar/React-Instagram-Clone-2.0)** for the updated version of this project.
 
 # Other Versions
